@@ -3,8 +3,7 @@ import { getComponent } from "../../util/getComponent.js"
 import ReportLead from "./ReportLead.js"
 import Tabs from "../Tabs.js"
 
-
-class Report {
+class ReportLB {
     data = {
         day: {
             today: 20,
@@ -35,25 +34,24 @@ class Report {
         this.$reportBooking = new ReportLead({ title: 'Số lượng booking:', data: this.data })
 
         this.$navLead = document.createElement('div')
-        this.$navLead.className = 'menuLead'
+        this.$navLead.className = 'menuLead mb-2'
 
         this.$leadContent = document.createElement('div')
         this.$leadContent.className = 'leadContent'
-
-
     }
     getLayoutLead = () => {
-        if (!sessionStorage.getItem('tabLead')) {
-            sessionStorage.setItem('tabLead', 'leadWeek')
+        if (!sessionStorage.getItem('tabLB')) {
+            sessionStorage.setItem('tabLB', '[LB] week')
         }
-        this.$menuLead = new Tabs({ getLayout: this.getLayoutLead, tab: 'tabLead', tabs: tabLead })
+        this.$menuLead = new Tabs({ getLayout: this.getLayoutLead, tab: 'tabLB', tabs: tabLead })
         this.$navLead.innerHTML = ''
         this.$navLead.appendChild(this.$menuLead.render())
-        getComponent(this.$leadContent, tabLead, 'tabLead')
+        getComponent(this.$leadContent, tabLead, 'tabLB')
     }
 
     render() {
         this.$container.appendChild(this.$box)
+
         this.$box.appendChild(this.$reportLead.render())
         this.$box.appendChild(this.$reportBooking.render())
 
@@ -64,4 +62,4 @@ class Report {
         return this.$container
     }
 }
-export default Report
+export default ReportLB

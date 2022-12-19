@@ -1,4 +1,4 @@
-class ReportTableItem {
+class ReportBrandItem {
     constructor({ stt, name, lead, booking }) {
         this.$tr = document.createElement('tr')
         this.$tr.className = 'align-middle'
@@ -23,4 +23,4 @@ class ReportTableItem {
         return this.$tr
     }
 }
-export default ReportTableItem
+export default ReportBrandItem

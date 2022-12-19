@@ -4,7 +4,6 @@ class BarChart {
         this.dataSet = dataSet
         this.$chart
         this.$container = document.createElement('div')
-        this.$container.style.width = '65%'
         this.$canvas = document.createElement('canvas')
     }
     render() {

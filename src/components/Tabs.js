@@ -5,7 +5,7 @@ class Tabs {
         this.tab = tab
         this.getLayout = getLayout
         this.$container = document.createElement('div')
-        this.$container.className = 'd-flex mb-2 gap-2'
+        this.$container.className = 'd-flex gap-2'
     }
     render() {
         this.$container.innerHTML = ''

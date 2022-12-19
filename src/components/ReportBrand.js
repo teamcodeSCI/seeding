@@ -1,11 +1,10 @@
-import ReportTableItem from "./ReportTableItem.js"
+import ReportBrandItem from "./ReportBrandItem.js"
 
-class ReportTable {
+class ReportBrand {
     constructor({ data }) {
         this.data = data
         this.$table = document.createElement('table')
-        this.$table.className = 'table'
-        this.$table.style.width = '35%'
+        this.$table.className = 'table w-100'
         this.$thead = document.createElement('thead')
         this.$headerTr = document.createElement('tr')
 
@@ -27,7 +26,7 @@ class ReportTable {
     renderItem = () => {
         this.$tbody.innerHTML = ''
         this.data.forEach((item, idx) => {
-            this.$item = new ReportTableItem({
+            this.$item = new ReportBrandItem({
                 stt: idx + 1,
                 name: item.name,
                 lead: item.lead,
@@ -48,4 +47,4 @@ class ReportTable {
         return this.$table
     }
 }
-export default ReportTable
+export default ReportBrand

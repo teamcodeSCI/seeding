@@ -1,5 +1,5 @@
 import BarChart from "../BarChart.js"
-import ReportTable from "../ReportTable.js"
+import ReportBrand from "../ReportBrand.js"
 
 class ReportLeadMonth {
     labels = ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4']
@@ -38,12 +38,18 @@ class ReportLeadMonth {
     constructor() {
         this.$box = document.createElement('div')
         this.$box.className = 'd-flex gap-3 align-items-start'
+        this.$chartBox = document.createElement('div')
+        this.$chartBox.style.width = '65%'
+        this.$tableBox = document.createElement('div')
+        this.$tableBox.style.width = '35%'
         this.$barChart = new BarChart({ dataSet: this.dataSet, labels: this.labels })
-        this.$serviceBookingRp = new ReportTable({ data: this.branchData })
+        this.$serviceBookingRp = new ReportBrand({ data: this.branchData })
     }
     render() {
-        this.$box.appendChild(this.$barChart.render())
-        this.$box.appendChild(this.$serviceBookingRp.render())
+        this.$box.appendChild(this.$chartBox)
+        this.$chartBox.appendChild(this.$barChart.render())
+        this.$box.appendChild(this.$tableBox)
+        this.$tableBox.appendChild(this.$serviceBookingRp.render())
         return this.$box
     }
 }

@@ -1,4 +1,4 @@
-import ReportLeadItem from "./ReportLeadItem.js"
+import ReportCard from "../ReportCard.js"
 
 class ReportLead {
     constructor({ title, data }) {
@@ -13,10 +13,10 @@ class ReportLead {
         this.$boxLead = document.createElement('div')
         this.$boxLead.className = 'd-flex align-items-center gap-3'
 
-        this.$leadDay = new ReportLeadItem({ title: 'Theo ngày', today: this.data.day.today, desc: 'Hôm qua', part: this.data.day.yesterday })
-        this.$leadWeek = new ReportLeadItem({ title: 'Theo tuần', today: this.data.week.currentWeek, desc: 'Tuần trước', part: this.data.week.lastWeek })
-        this.$leadMonth = new ReportLeadItem({ title: 'Theo tháng', today: this.data.month.currentMonth, desc: 'Tháng trước', part: this.data.month.lastMonth })
-        this.$leadYear = new ReportLeadItem({ title: 'Theo năm', today: this.data.year.currentYear, desc: 'Năm trước', part: this.data.year.lastYear })
+        this.$leadDay = new ReportCard({ title: 'Theo ngày', today: this.data.day.today, desc: 'Hôm qua', part: this.data.day.yesterday })
+        this.$leadWeek = new ReportCard({ title: 'Theo tuần', today: this.data.week.currentWeek, desc: 'Tuần trước', part: this.data.week.lastWeek })
+        this.$leadMonth = new ReportCard({ title: 'Theo tháng', today: this.data.month.currentMonth, desc: 'Tháng trước', part: this.data.month.lastMonth })
+        this.$leadYear = new ReportCard({ title: 'Theo năm', today: this.data.year.currentYear, desc: 'Năm trước', part: this.data.year.lastYear })
 
     }
     render() {
