@@ -1,5 +1,5 @@
 import BarChart from "../BarChart.js"
-import ReportBrand from "../ReportBrand.js"
+import ReportTable from "./ReportTable.js"
 
 class ReportLeadYear {
 
@@ -45,7 +45,7 @@ class ReportLeadYear {
         this.$tableBox = document.createElement('div')
         this.$tableBox.style.width = '35%'
         this.$barChart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
-        this.$serviceBookingRp = new ReportBrand({ data: this.branchData })
+        this.$serviceBookingRp = new ReportTable({ data: this.branchData })
     }
     render() {
         this.$box.appendChild(this.$chartBox)

@@ -1,6 +1,6 @@
-import ReportBrandItem from "./ReportBrandItem.js"
+import ReportTableItem from "./ReportTableItem.js"
 
-class ReportBrand {
+class ReportTable {
     constructor({ data }) {
         this.data = data
         this.$table = document.createElement('table')
@@ -26,7 +26,7 @@ class ReportBrand {
     renderItem = () => {
         this.$tbody.innerHTML = ''
         this.data.forEach((item, idx) => {
-            this.$item = new ReportBrandItem({
+            this.$item = new ReportTableItem({
                 stt: idx + 1,
                 name: item.name,
                 lead: item.lead,
@@ -47,4 +47,4 @@ class ReportBrand {
         return this.$table
     }
 }
-export default ReportBrand
+export default ReportTable

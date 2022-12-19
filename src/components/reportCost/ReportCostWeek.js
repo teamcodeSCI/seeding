@@ -1,5 +1,6 @@
 import BarChart from "../BarChart.js"
 import ReportCard from "../ReportCard.js"
+import ReportBrand from "./ReportBrand.js"
 
 class ReportCostWeek {
     data = [
@@ -30,6 +31,23 @@ class ReportCostWeek {
         highlightStroke: 'red',
         data: [700000, 1000000, 2000000, 2000000, 4000000, 2000000, 1300000]
     }]
+    branchData = [{
+        name: 'Paris',
+        lead: '400',
+        booking: '350'
+    }, {
+        name: 'Kangnam',
+        lead: '500',
+        booking: '400'
+    }, {
+        name: 'Hồng Hà',
+        lead: '200',
+        booking: '150'
+    }, {
+        name: 'Đông Á',
+        lead: '300',
+        booking: '150'
+    }]
     constructor() {
         this.$container = document.createElement('div')
 
@@ -37,9 +55,20 @@ class ReportCostWeek {
         this.$cardGroup.className = 'd-flex align-items-center gap-3 mb-3'
 
         this.$chartBox = document.createElement('div')
-        this.$chartBox.className = 'chart'
+        this.$chartBox.className = 'chart mb-3'
 
+        this.$tableBox = document.createElement('div')
+        this.$tableBox.className = 'd-flex gap-2'
+
+        this.$tableBrand = document.createElement('div')
+        this.$tableBrand.className = 'tableBrand'
+
+        this.$tableService = document.createElement('div')
+        this.$tableService.className = 'tableService'
+
+        this.$brand = new ReportBrand({ data: this.branchData })
         this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
+
     }
     renderCardItem = () => {
         this.$cardGroup.innerHTML = ''
@@ -51,6 +80,10 @@ class ReportCostWeek {
     render() {
         this.$container.appendChild(this.$cardGroup)
         this.$container.appendChild(this.$chartBox)
+        this.$container.appendChild(this.$tableBox)
+        this.$tableBox.appendChild(this.$tableService)
+        this.$tableBox.appendChild(this.$tableBrand)
+        this.$tableBrand.appendChild(this.$brand.render())
         this.$chartBox.appendChild(this.$chart.render())
 
         this.renderCardItem()

@@ -1,5 +1,5 @@
 import BarChart from "../BarChart.js"
-import ReportBrand from "../ReportBrand.js"
+import ReportTable from "./ReportTable.js"
 
 class ReportLeadMonth {
     labels = ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4']
@@ -43,7 +43,7 @@ class ReportLeadMonth {
         this.$tableBox = document.createElement('div')
         this.$tableBox.style.width = '35%'
         this.$barChart = new BarChart({ dataSet: this.dataSet, labels: this.labels })
-        this.$serviceBookingRp = new ReportBrand({ data: this.branchData })
+        this.$serviceBookingRp = new ReportTable({ data: this.branchData })
     }
     render() {
         this.$box.appendChild(this.$chartBox)

@@ -9,17 +9,22 @@ class ReportBrandItem {
         this.$name = document.createElement('td')
         this.$name.innerHTML = name
 
-        this.$lead = document.createElement('td')
-        this.$lead.innerHTML = lead
+        this.$revenue = document.createElement('td')
+        this.$revenue.innerHTML = lead
 
-        this.$booking = document.createElement('td')
-        this.$booking.innerHTML = booking
+        this.$deposits = document.createElement('td')
+        this.$deposits.innerHTML = booking
+
+        this.$owed = document.createElement('td')
+        this.$owed.innerHTML = booking
     }
     render() {
         this.$tr.appendChild(this.$stt)
         this.$tr.appendChild(this.$name)
-        this.$tr.appendChild(this.$lead)
-        this.$tr.appendChild(this.$booking)
+        this.$tr.appendChild(this.$revenue)
+        this.$tr.appendChild(this.$deposits)
+        this.$tr.appendChild(this.$owed)
+
         return this.$tr
     }
 }
