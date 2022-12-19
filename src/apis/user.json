@@ -1,0 +1,25 @@
+[{
+        "name": "Nguyễn Văn A",
+        "username": "admin",
+        "password": "1",
+        "role": "ADMIN"
+    },
+    {
+        "name": "Nguyễn Văn B",
+        "username": "user1",
+        "password": "1",
+        "role": "MEMBER"
+    },
+    {
+        "name": "Nguyễn Văn C",
+        "username": "user2",
+        "password": "1",
+        "role": "MEMBER"
+    },
+    {
+        "name": "Nguyễn Văn D",
+        "username": "user3",
+        "password": "1",
+        "role": "MEMBER"
+    }
+]
