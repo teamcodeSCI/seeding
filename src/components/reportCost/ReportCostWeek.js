@@ -1,6 +1,9 @@
 import BarChart from "../BarChart.js"
+import Filter from "../Filter.js"
 import ReportCard from "../ReportCard.js"
+import SearchInput from "../SearchInput.js"
 import ReportBrand from "./ReportBrand.js"
+import ReportService from "./ReportService.js"
 
 class ReportCostWeek {
     data = [
@@ -33,20 +36,49 @@ class ReportCostWeek {
     }]
     branchData = [{
         name: 'Paris',
-        lead: '400',
-        booking: '350'
+        revenue: '1000000',
+        deposits: '300000',
+        owed: '700000'
     }, {
         name: 'Kangnam',
-        lead: '500',
-        booking: '400'
+        revenue: '1500000',
+        deposits: '500000',
+        owed: '1000000'
     }, {
         name: 'Hồng Hà',
-        lead: '200',
-        booking: '150'
+        revenue: '5000000',
+        deposits: '3000000',
+        owed: '2000000'
     }, {
         name: 'Đông Á',
-        lead: '300',
-        booking: '150'
+        revenue: '4000000',
+        deposits: '2000000',
+        owed: '2000000'
+    }]
+    serviceData = [{
+        name: 'Niềng răng',
+        brand: 'Paris',
+        revenue: '1000000',
+        deposits: '300000',
+        owed: '700000'
+    }, {
+        name: 'Nâng mũi',
+        brand: 'Kangnam',
+        revenue: '1500000',
+        deposits: '500000',
+        owed: '1000000'
+    }, {
+        name: 'Cắt mí',
+        brand: 'Hồng Hà',
+        revenue: '5000000',
+        deposits: '3000000',
+        owed: '2000000'
+    }, {
+        name: 'Nâng ngực',
+        brand: 'Đông Á',
+        revenue: '4000000',
+        deposits: '2000000',
+        owed: '2000000'
     }]
     constructor() {
         this.$container = document.createElement('div')
@@ -58,16 +90,24 @@ class ReportCostWeek {
         this.$chartBox.className = 'chart mb-3'
 
         this.$tableBox = document.createElement('div')
-        this.$tableBox.className = 'd-flex gap-2'
+        this.$tableBox.className = 'd-flex gap-3'
 
         this.$tableBrand = document.createElement('div')
         this.$tableBrand.className = 'tableBrand'
+        this.$tableBrand.style.width = '40%'
 
         this.$tableService = document.createElement('div')
         this.$tableService.className = 'tableService'
+        this.$tableService.style.width = '60%'
 
+        this.$filterSearch = document.createElement('div')
+        this.$filterSearch.className = 'mb-2 d-flex gap-3'
         this.$brand = new ReportBrand({ data: this.branchData })
         this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
+        this.$service = new ReportService({ data: this.serviceData })
+
+        this.$searchService = new SearchInput({ placeholder: 'Tìm theo tên dịch vụ ...', width: '30%' })
+        this.$filterService = new Filter({})
 
     }
     renderCardItem = () => {
@@ -83,7 +123,14 @@ class ReportCostWeek {
         this.$container.appendChild(this.$tableBox)
         this.$tableBox.appendChild(this.$tableService)
         this.$tableBox.appendChild(this.$tableBrand)
+
         this.$tableBrand.appendChild(this.$brand.render())
+
+        this.$tableService.appendChild(this.$filterSearch)
+        this.$filterSearch.appendChild(this.$searchService.render())
+        this.$filterSearch.appendChild(this.$filterService.render())
+        this.$tableService.appendChild(this.$service.render())
+
         this.$chartBox.appendChild(this.$chart.render())
 
         this.renderCardItem()

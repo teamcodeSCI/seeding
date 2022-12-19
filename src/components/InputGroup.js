@@ -15,8 +15,10 @@ class InputGroup {
         this.$label.innerHTML = `${title}:` || ''
 
         this.$reset = document.createElement('i')
-        this.$reset.className = 'bi bi-x position-absolute end-1'
+        this.$reset.className = 'bi bi-x position-absolute'
         this.$reset.style.right = '5px'
+        this.$reset.style.top = '50%'
+        this.$reset.style.transform = 'translateY(-50%)'
         this.$reset.style.cursor = 'pointer'
         this.$reset.style.zIndex = '10'
         this.$reset.addEventListener('click', () => {

@@ -33,6 +33,10 @@ html:not([dir=rtl]) .callout {
     color: rgba(44, 56, 74, .681)!important;
 }
 
+.dropdown-toggle::after {
+    margin-left: 0.7em;
+}
+
 .icon {
     display: inline-block;
     color: inherit;

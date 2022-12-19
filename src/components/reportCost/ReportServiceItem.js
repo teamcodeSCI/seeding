@@ -1,12 +1,17 @@
 import { formatNumber } from "../../util/util.js"
 
-class ReportBrandItem {
-    constructor({ name, revenue, deposits, owed }) {
+class ReportServiceItem {
+    constructor({ name, revenue, brand, deposits, owed }) {
         this.$tr = document.createElement('tr')
         this.$tr.className = 'align-middle'
 
+
+
         this.$name = document.createElement('td')
         this.$name.innerHTML = name
+
+        this.$brand = document.createElement('td')
+        this.$brand.innerHTML = brand
 
         this.$revenue = document.createElement('td')
         this.$revenue.innerHTML = `${formatNumber(revenue)} VND`
@@ -18,7 +23,10 @@ class ReportBrandItem {
         this.$owed.innerHTML = `${formatNumber(owed)} VND`
     }
     render() {
+
         this.$tr.appendChild(this.$name)
+        this.$tr.appendChild(this.$brand)
+
         this.$tr.appendChild(this.$revenue)
         this.$tr.appendChild(this.$deposits)
         this.$tr.appendChild(this.$owed)
@@ -26,4 +34,4 @@ class ReportBrandItem {
         return this.$tr
     }
 }
-export default ReportBrandItem
+export default ReportServiceItem

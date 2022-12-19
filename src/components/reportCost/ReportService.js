@@ -1,6 +1,6 @@
-import ReportBrandItem from "./ReportBrandItem.js"
+import ReportServiceItem from "./ReportServiceItem.js"
 
-class ReportBrand {
+class ReportService {
     constructor({ data }) {
         this.data = data
         this.$table = document.createElement('table')
@@ -10,10 +10,11 @@ class ReportBrand {
         this.$thead = document.createElement('thead')
         this.$headerTr = document.createElement('tr')
 
-
-
         this.$name = document.createElement('th')
-        this.$name.innerHTML = 'Thương hiệu'
+        this.$name.innerHTML = 'Tên dịch vụ'
+
+        this.$brand = document.createElement('th')
+        this.$brand.innerHTML = 'Thương hiệu'
 
         this.$revenue = document.createElement('th')
         this.$revenue.innerHTML = 'Doanh thu'
@@ -30,11 +31,12 @@ class ReportBrand {
     renderItem = () => {
         this.$tbody.innerHTML = ''
         this.data.forEach((item) => {
-            this.$item = new ReportBrandItem({
+            this.$item = new ReportServiceItem({
                 name: item.name,
                 revenue: item.revenue,
                 deposits: item.deposits,
-                owed: item.owed
+                owed: item.owed,
+                brand: item.brand
             })
             this.$tbody.appendChild(this.$item.render())
         })
@@ -46,10 +48,11 @@ class ReportBrand {
         this.$thead.appendChild(this.$headerTr)
 
         this.$headerTr.appendChild(this.$name)
+        this.$headerTr.appendChild(this.$brand)
         this.$headerTr.appendChild(this.$revenue)
         this.$headerTr.appendChild(this.$deposits)
         this.$headerTr.appendChild(this.$owed)
         return this.$table
     }
 }
-export default ReportBrand
+export default ReportService
