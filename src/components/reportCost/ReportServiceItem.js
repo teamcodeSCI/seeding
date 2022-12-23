@@ -5,8 +5,6 @@ class ReportServiceItem {
         this.$tr = document.createElement('tr')
         this.$tr.className = 'align-middle'
 
-
-
         this.$name = document.createElement('td')
         this.$name.innerHTML = name
 
@@ -14,13 +12,13 @@ class ReportServiceItem {
         this.$brand.innerHTML = brand
 
         this.$revenue = document.createElement('td')
-        this.$revenue.innerHTML = `${formatNumber(revenue)} VND`
+        this.$revenue.innerHTML = `${formatNumber(revenue)} đ`
 
         this.$deposits = document.createElement('td')
-        this.$deposits.innerHTML = `${formatNumber(deposits)} VND`
+        this.$deposits.innerHTML = `${formatNumber(deposits)} đ`
 
         this.$owed = document.createElement('td')
-        this.$owed.innerHTML = `${formatNumber(owed)} VND`
+        this.$owed.innerHTML = `${formatNumber(owed)} đ`
     }
     render() {
 

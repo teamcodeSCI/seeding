@@ -87,10 +87,11 @@ class ReportCostWeek {
         this.$cardGroup.className = 'd-flex align-items-center gap-3 mb-3'
 
         this.$chartBox = document.createElement('div')
-        this.$chartBox.className = 'chart mb-3'
+        this.$chartBox.className = 'chart'
+        this.$chartBox.style.width = '60%'
 
         this.$tableBox = document.createElement('div')
-        this.$tableBox.className = 'd-flex gap-3'
+        this.$tableBox.className = 'd-flex gap-3 mb-3'
 
         this.$tableBrand = document.createElement('div')
         this.$tableBrand.className = 'tableBrand'
@@ -98,15 +99,15 @@ class ReportCostWeek {
 
         this.$tableService = document.createElement('div')
         this.$tableService.className = 'tableService'
-        this.$tableService.style.width = '60%'
+
 
         this.$filterSearch = document.createElement('div')
-        this.$filterSearch.className = 'mb-2 d-flex gap-3'
+        this.$filterSearch.className = 'mb-2 d-flex justify-content-end gap-3'
         this.$brand = new ReportBrand({ data: this.branchData })
         this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
         this.$service = new ReportService({ data: this.serviceData })
 
-        this.$searchService = new SearchInput({ placeholder: 'Tìm theo tên dịch vụ ...', width: '30%' })
+        this.$searchService = new SearchInput({ placeholder: 'Tìm theo tên dịch vụ ...', width: '20%' })
         this.$filterService = new Filter({})
 
     }
@@ -121,14 +122,15 @@ class ReportCostWeek {
         this.$container.appendChild(this.$cardGroup)
         this.$container.appendChild(this.$chartBox)
         this.$container.appendChild(this.$tableBox)
-        this.$tableBox.appendChild(this.$tableService)
+        this.$container.appendChild(this.$tableService)
+        this.$tableBox.appendChild(this.$chartBox)
         this.$tableBox.appendChild(this.$tableBrand)
 
         this.$tableBrand.appendChild(this.$brand.render())
 
         this.$tableService.appendChild(this.$filterSearch)
-        this.$filterSearch.appendChild(this.$searchService.render())
         this.$filterSearch.appendChild(this.$filterService.render())
+        this.$filterSearch.appendChild(this.$searchService.render())
         this.$tableService.appendChild(this.$service.render())
 
         this.$chartBox.appendChild(this.$chart.render())

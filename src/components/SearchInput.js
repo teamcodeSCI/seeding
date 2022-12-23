@@ -4,6 +4,7 @@ class SearchInput {
         this.$container.className = 'position-relative'
         this.$container.style.borderBottom = '1px solid #dee2e6'
         this.$container.style.width = width || '100%'
+        this.$container.style.minWidth = '200px'
 
         this.$input = document.createElement('input')
         this.$input.className = 'w-100 fst-italic ps-1 pe-4 py-1'
@@ -13,13 +14,6 @@ class SearchInput {
         this.$input.type = type || 'text'
         this.$input.placeholder = placeholder || ''
         this.$input.value = value || ''
-        this.$input.addEventListener('input', () => {
-            this.$container.appendChild(this.$icon)
-            if (this.$input.value === '') {
-                this.$container.removeChild(this.$icon)
-                return
-            }
-        })
         this.$icon = document.createElement('i')
         this.$icon.className = 'bi bi-search position-absolute'
         this.$icon.style.fontSize = '14px'
@@ -41,6 +35,7 @@ class SearchInput {
     }
     render() {
         this.$container.appendChild(this.$input)
+        this.$container.appendChild(this.$icon)
         return this.$container
     }
 }

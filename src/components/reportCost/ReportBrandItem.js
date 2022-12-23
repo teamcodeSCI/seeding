@@ -9,13 +9,13 @@ class ReportBrandItem {
         this.$name.innerHTML = name
 
         this.$revenue = document.createElement('td')
-        this.$revenue.innerHTML = `${formatNumber(revenue)} VND`
+        this.$revenue.innerHTML = `${formatNumber(revenue)} đ`
 
         this.$deposits = document.createElement('td')
-        this.$deposits.innerHTML = `${formatNumber(deposits)} VND`
+        this.$deposits.innerHTML = `${formatNumber(deposits)} đ`
 
         this.$owed = document.createElement('td')
-        this.$owed.innerHTML = `${formatNumber(owed)} VND`
+        this.$owed.innerHTML = `${formatNumber(owed)} đ`
     }
     render() {
         this.$tr.appendChild(this.$name)

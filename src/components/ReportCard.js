@@ -22,7 +22,7 @@ class ReportCard {
             this.$now.style.fontWeight = 600
 
             this.$span = document.createElement('span')
-            this.$span.innerHTML = this.isMoney ? `${formatNumber(today)} VND` : formatNumber(today)
+            this.$span.innerHTML = this.isMoney ? `${formatNumber(today)} đ` : formatNumber(today)
 
             this.$arrowDown = document.createElement('i')
 
@@ -31,7 +31,7 @@ class ReportCard {
             this.$part.style.fontWeight = 600
             this.$part.style.fontSize = '13px'
 
-            this.$part.innerHTML = `${desc}: ${this.isMoney ? `${formatNumber(part)} VND` : formatNumber(part)}`
+            this.$part.innerHTML = `${desc}: ${this.isMoney ? `${formatNumber(part)} đ` : formatNumber(part)}`
 
         this.$infoBtn = document.createElement('i')
         this.$infoBtn.style.cursor = 'pointer'

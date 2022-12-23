@@ -106,10 +106,10 @@ class BookingDetail {
 
         this.$bookingCode = new BookingDetailItem({ title: 'Mã booking', value: 'PR-021312' })
         this.$service = new BookingDetailItem({ title: 'Dịch vụ', value: 'Trồng Implant' })
-        this.$unitPrice = new BookingDetailItem({ title: 'Đơn giá', value: '100.000.000 VND' })
-        this.$prepayment = new BookingDetailItem({ title: 'Tiền trước giảm', value: '100.000.000 VND' })
-        this.$receivable = new BookingDetailItem({ title: 'Tiền phải thu', value: '90.000.000 VND' })
-        this.$received = new BookingDetailItem({ title: 'Tiền đã thu', value: '40.000.000 VND' })
+        this.$unitPrice = new BookingDetailItem({ title: 'Đơn giá', value: '100.000.000 đ' })
+        this.$prepayment = new BookingDetailItem({ title: 'Tiền trước giảm', value: '100.000.000 đ' })
+        this.$receivable = new BookingDetailItem({ title: 'Tiền phải thu', value: '90.000.000 đ' })
+        this.$received = new BookingDetailItem({ title: 'Tiền đã thu', value: '40.000.000 đ' })
 
         this.$brand = new BookingDetailItem({ title: 'Thương hiệu', value: 'Paris' })
         this.$branch = new BookingDetailItem({ title: 'Chi nhánh', value: 'Paris Thái Thịnh' })
