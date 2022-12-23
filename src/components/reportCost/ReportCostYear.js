@@ -113,7 +113,7 @@ class ReportCostYear {
     renderCardItem = () => {
         this.$cardGroup.innerHTML = ''
         for (let item of this.data) {
-            this.$cardItem = new ReportCard({ title: item.title, today: item.now, desc: 'Hôm qua', part: item.part, isMoney: true })
+            this.$cardItem = new ReportCard({ title: item.title, today: item.now, desc: 'Năm trước', part: item.part, isMoney: true })
             this.$cardGroup.appendChild(this.$cardItem.render())
         }
     }
