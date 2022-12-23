@@ -148,3 +148,11 @@ input[type=number]::-webkit-outer-spin-button {
 .btn:focus {
     box-shadow: none;
 }
+
+.dropdownItem {
+    transition: all 0.2s linear;
+    padding: 5px 10px;
+    &:hover {
+        background: #e5e5e5;
+    }
+}

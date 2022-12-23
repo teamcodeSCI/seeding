@@ -1,7 +1,7 @@
 class FilterItem {
     constructor({ title, selectItem }) {
         this.$container = document.createElement('li')
-        this.$container.className = 'list-group-item'
+        this.$container.className = 'dropdownItem list-group-item'
         this.$container.style.cursor = 'pointer'
         this.$container.innerHTML = title
         this.$container.addEventListener('click', () => {
