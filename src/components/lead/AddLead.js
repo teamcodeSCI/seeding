@@ -1,5 +1,5 @@
 import { app } from '../../util/const.js'
-import LeadAddModal from './LeadAddModal.js.js'
+import LeadAddModal from './LeadAddModal.js'
 class AddLead {
     constructor() {
         this.$container = document.createElement('div')
