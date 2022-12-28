@@ -1,5 +1,5 @@
 import Booking from "../components/booking/Booking.js"
-import Lead from "../components/Lead/Lead.js.js.js"
+import Lead from "../components/_lead/Lead.js.js.js.js"
 import ReportLB from "../components/reportLB/ReportLB.js"
 import ReportLeadWeek from "../components/reportLB/ReportLeadWeek.js"
 import ReportLeadMonth from "../components/reportLB/ReportLeadMonth.js"
