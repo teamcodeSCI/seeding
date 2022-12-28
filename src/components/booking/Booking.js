@@ -5,7 +5,7 @@ import { formatDate, loading } from "../../util/util.js"
 
 import { app } from "../../util/const.js";
 import { getLead } from "../../apis/lead.js";
-import LeadSearchModal from "../_lead/LeadSearchModal.js.js.js.js";
+import LeadSearchModal from "../lead/LeadSearchModal.js.js.js.js.js";
 import Tag from "../Tag.js";
 
 class Booking {

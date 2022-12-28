@@ -3,7 +3,7 @@ import Pagination from "../Pagination.js";
 
 import { getLead } from "../../apis/lead.js"
 import { formatDate, loading } from "../../util/util.js"
-import AddLead from "./AddLead.js";
+import AddLead from "./AddLead.js.js";
 import LeadSearchModal from "./LeadSearchModal.js";
 import Tag from "../Tag.js";
 import { app } from "../../util/const.js";
