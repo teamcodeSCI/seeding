@@ -1,7 +1,7 @@
 import { getPage } from "../util/getPage.js";
 
 class Header {
-    constructor({ name }) {
+    constructor() {
         this.$nav = document.createElement("nav");
         this.$nav.className = `navbar bg-box`;
         this.$nav.style = `background-color: #3c4b64;`;
@@ -21,7 +21,7 @@ class Header {
         this.$avatar.height = "32";
 
         this.$name = document.createElement("strong");
-        this.$name.innerHTML = name;
+        this.$name.innerHTML = 'test';
 
         this.$logout = document.createElement("div");
         this.$logout.className = `text-cus text-decoration-none d-flex align-items-center gap-2`;
@@ -36,9 +36,9 @@ class Header {
         this.$icon.className = `bi bi-box-arrow-right`;
     }
     clickLogout = () => {
-        localStorage.removeItem('role')
+        localStorage.removeItem('accessToken')
         localStorage.removeItem('name')
-        getPage({ name: '' })
+        getPage()
     }
     render() {
         this.$nav.appendChild(this.$container);

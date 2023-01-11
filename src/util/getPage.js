@@ -11,12 +11,12 @@ export const setPage = (component) => {
     }
     currentPage = app.appendChild(component.render());
 };
-export const getPage = ({ name }) => {
-    if (localStorage.getItem("role") === 'MEMBER') {
-        const home = new Home({ name: name });
-        setPage(home);
+export const getPage = () => {
+    if (!localStorage.getItem("accessToken")) {
+        setPage(login);
         return;
     }
-    setPage(login);
-    return;
+    const home = new Home();
+    setPage(home);
+
 };

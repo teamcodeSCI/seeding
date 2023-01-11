@@ -1,4 +1,4 @@
-import { login } from "../apis/user.js";
+import { login } from "../apis/login.js";
 import { getPage } from "../util/getPage.js";
 import Input from "./Input.js";
 
@@ -26,16 +26,16 @@ class Login {
 
         this.$signIn = document.createElement("h3");
         this.$signIn.className = `mb-5 text-center`;
-        this.$signIn.innerHTML = "Sign In";
+        this.$signIn.innerHTML = "Đăng nhập";
 
-        this.$email = new Input({ type: "email", placeholder: "Email" });
-        this.$email.render().addEventListener('keypress', (e) => {
+        this.$phonenumber = new Input({ type: "text", placeholder: "Số điện thoại" });
+        this.$phonenumber.render().addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault()
                 this.clickLogin()
             }
         })
-        this.$pass = new Input({ type: "password", placeholder: "Password" });
+        this.$pass = new Input({ type: "password", placeholder: "Mật khẩu" });
         this.$pass.render().addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault()
@@ -54,20 +54,21 @@ class Login {
             this.clickLogin();
         });
     }
-    async clickLogin() {
-        const user = await login(
-            this.$email.getInputValue(),
-            this.$pass.getInputValue()
-        );
-        if (!user) {
-            this.$email.fail();
-            this.$pass.fail();
-            return;
+    clickLogin = async() => {
+        try {
+            const accessToken = await login({ login: this.$phonenumber.getInputValue(), password: this.$pass.getInputValue() })
+            if (!accessToken) {
+                this.$phonenumber.fail();
+                this.$pass.fail();
+                console.log('unauthorized');
+                return
+            }
+            localStorage.setItem('accessToken', accessToken)
+            getPage()
+
+        } catch (e) {
+            console.log(e);
         }
-        localStorage.setItem("role", user.role);
-        localStorage.setItem("name", user.name);
-        getPage({ name: user.name });
-        return;
     }
     render() {
         this.$bg.appendChild(this.$container);
@@ -76,7 +77,7 @@ class Login {
         this.$col.appendChild(this.$card);
         this.$card.appendChild(this.$cardBody);
         this.$cardBody.appendChild(this.$signIn);
-        this.$cardBody.appendChild(this.$email.render());
+        this.$cardBody.appendChild(this.$phonenumber.render());
         this.$cardBody.appendChild(this.$pass.render());
         this.$cardBody.appendChild(this.$boxButton);
         this.$boxButton.appendChild(this.$button);

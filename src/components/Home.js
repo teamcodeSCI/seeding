@@ -14,14 +14,14 @@ class Home {
     endDate = ''
     index = 1
 
-    constructor({ name }) {
-        this.name = name
+    constructor() {
+
 
         this.$bg = document.createElement("div");
         this.$bg.className = `min-vh-100`;
         this.$bg.style.background = '#efefef'
 
-        this.$header = new Header({ name: this.name });
+        this.$header = new Header();
 
         this.$container = document.createElement('div')
         this.$container.className = `container-lg py-4`;
