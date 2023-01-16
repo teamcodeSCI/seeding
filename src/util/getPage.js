@@ -1,22 +1,26 @@
 import Login from "../components/Login.js";
 import Home from "../components/Home.js";
 import { app } from "./const.js";
+import { splitStr } from "./splitStr.js";
 
 const login = new Login();
 let currentPage = null;
 
 export const setPage = (component) => {
-    if (currentPage) {
-        app.removeChild(currentPage);
-    }
-    currentPage = app.appendChild(component.render());
+  if (currentPage) {
+    app.removeChild(currentPage);
+  }
+  currentPage = app.appendChild(component.render());
 };
 export const getPage = () => {
-    if (!localStorage.getItem("accessToken")) {
-        setPage(login);
-        return;
-    }
+  if (!localStorage.getItem("token")) {
+    setPage(login);
+    return;
+  }
+  if (splitStr(localStorage.getItem("token")).rule === "user") {
     const home = new Home();
     setPage(home);
-
+    return;
+  }
+  console.log("rule not found");
 };
