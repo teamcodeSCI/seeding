@@ -7,7 +7,9 @@ class InputGroup {
     value,
     isDisabled,
     isSuggested,
-    getSuggest
+    getSuggest,
+    openSuggest,
+    closeSuggest
   }) {
     this.isSuggested = isSuggested || false;
     this.$container = document.createElement("div");
@@ -46,10 +48,11 @@ class InputGroup {
       this.$container.appendChild(this.$reset);
       if (this.isSuggested) {
         getSuggest(this.$input.value);
+        openSuggest();
       }
       if (this.$input.value === "" || type === "date") {
         this.$container.removeChild(this.$reset);
-
+        closeSuggest();
         return;
       }
     });

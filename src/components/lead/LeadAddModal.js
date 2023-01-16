@@ -59,18 +59,16 @@ class LeadAddModal {
     this.$branchBox.className = "branchBox position-relative";
     this.$branchBox.style.width = "48%";
     this.$branchBox.addEventListener("click", () => {
-      if (this.$branchBox !== this.$suggestBox.parentElement) {
-        this.$branchBox.appendChild(this.$suggestBox);
-      } else {
-        this.$branchBox.removeChild(this.$suggestBox);
-      }
+      this.handleSuggest();
     });
 
     this.$branch = new InputGroup({
       placeholder: "Chi nhánh",
       width: "100%",
       isSuggested: true,
-      getSuggest: this.getSuggest
+      getSuggest: this.getSuggest,
+      openSuggest: this.openSuggest,
+      closeSuggest: this.closeSuggest
     });
 
     this.$script = new InputGroup({ placeholder: "Kịch bản", width: "48%" });
@@ -83,7 +81,7 @@ class LeadAddModal {
     this.$suggestBox = document.createElement("div");
     this.$suggestBox.className =
       "position-absolute w-100 top-100 start-0 rounded-1";
-    this.$suggestBox.style.maxHeight = "100px";
+    this.$suggestBox.style.maxHeight = "300px";
     this.$suggestBox.style.overflow = "overlay";
     this.$suggestBox.style.background = "#fff";
     this.$suggestBox.style.zIndex = 1;
@@ -115,6 +113,19 @@ class LeadAddModal {
     this.$service.success();
     this.$branch.success();
     this.closeLeadAddModal();
+  };
+  handleSuggest = () => {
+    if (this.$branchBox !== this.$suggestBox.parentElement) {
+      this.openSuggest();
+    } else {
+      this.closeSuggest();
+    }
+  };
+  openSuggest = () => {
+    this.$branchBox.appendChild(this.$suggestBox);
+  };
+  closeSuggest = () => {
+    this.$branchBox.removeChild(this.$suggestBox);
   };
   getSuggest = async (input) => {
     const suggest = await getBrand({
