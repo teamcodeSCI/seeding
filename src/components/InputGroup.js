@@ -1,10 +1,15 @@
 class InputGroup {
-  $container;
-  $form;
-  $input;
-  $searchBtn;
-  $icon;
-  constructor({ placeholder, type, width, title, value, isDisabled }) {
+  constructor({
+    placeholder,
+    type,
+    width,
+    title,
+    value,
+    isDisabled,
+    isSuggested,
+    getSuggest
+  }) {
+    this.isSuggested = isSuggested || false;
     this.$container = document.createElement("div");
     this.$container.className = "input-group flex-column gap-1";
     this.$container.style.width = width || "100%";
@@ -39,12 +44,17 @@ class InputGroup {
     this.$input.disabled = isDisabled || false;
     this.$input.addEventListener("input", () => {
       this.$container.appendChild(this.$reset);
+      if (this.isSuggested) {
+        getSuggest(this.$input.value);
+      }
       if (this.$input.value === "" || type === "date") {
         this.$container.removeChild(this.$reset);
+
         return;
       }
     });
   }
+
   success() {
     this.$input.style.border = "1px solid #ced4da";
   }
@@ -60,6 +70,7 @@ class InputGroup {
   render() {
     this.$container.appendChild(this.$label);
     this.$container.appendChild(this.$input);
+
     return this.$container;
   }
 }

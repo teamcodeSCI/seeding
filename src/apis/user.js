@@ -1,5 +1,3 @@
-import { splitStr } from "../util/splitStr.js";
-
 const url = "https://scigroup.com.vn/cp/seeding/api";
 export const login = async (info) => {
   try {
