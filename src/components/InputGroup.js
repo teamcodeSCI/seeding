@@ -52,7 +52,9 @@ class InputGroup {
       }
       if (this.$input.value === "" || type === "date") {
         this.$container.removeChild(this.$reset);
-        closeSuggest();
+        if (this.isSuggested) {
+          closeSuggest();
+        }
         return;
       }
     });
