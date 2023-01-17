@@ -1,7 +1,7 @@
 import { removeAccents } from "../util/util.js";
 
 const url = "https://scigroup.com.vn/cp/seeding/api";
-const searchByNameFb = (input, data) => {
+const search = (input, data) => {
   const dataArr = [];
   const getInput = removeAccents(input);
   const nameDatas = [];
@@ -17,11 +17,26 @@ const searchByNameFb = (input, data) => {
   }
   return dataArr;
 };
-export const getBrand = async ({ token, input }) => {
+export const getBranch = async ({ token, input }) => {
   try {
     const response = await fetch(`${url}/get-company?token=${token}`);
     const data = await response.json();
-    const newData = searchByNameFb(input, data.data);
+    const newData = search(input, data.data);
+    if (!data) {
+      console.log("data not found");
+      return;
+    }
+    return input === "" ? data.data : newData;
+  } catch (e) {
+    console.log(e);
+    return e;
+  }
+};
+export const getBrand = async ({ token, input }) => {
+  try {
+    const response = await fetch(`${url}/get-brand?token=${token}`);
+    const data = await response.json();
+    const newData = search(input, data.data);
     if (!data) {
       console.log("data not found");
       return;

@@ -1,4 +1,4 @@
-import { getBrand } from "../../apis/getInfo.js";
+import { getBranch } from "../../apis/getInfo.js";
 import { splitStr } from "../../util/splitStr.js";
 import InputGroup from "../InputGroup.js";
 import SuggestItem from "../SuggestItem.js";
@@ -152,7 +152,7 @@ class LeadEditModal {
     this.$branchBox.removeChild(this.$suggestBox);
   };
   getSuggest = async (input) => {
-    const suggest = await getBrand({
+    const suggest = await getBranch({
       token: splitStr(localStorage.getItem("token")).token,
       input: input
     });
@@ -164,7 +164,7 @@ class LeadEditModal {
     suggest.forEach((item) => {
       this.$suggestItem = new SuggestItem({
         name: item.name,
-        code: item.code,
+        code: item.id,
         setBranchVal: this.$branch.setValue
       });
       this.$suggestBox.appendChild(this.$suggestItem.render());
