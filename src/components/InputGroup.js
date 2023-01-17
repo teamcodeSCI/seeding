@@ -5,6 +5,7 @@ class InputGroup {
     width,
     title,
     value,
+    hideValue,
     isDisabled,
     isSuggested,
     getSuggest,
@@ -32,6 +33,10 @@ class InputGroup {
       this.$input.value = "";
       this.$container.removeChild(this.$reset);
     });
+
+    this.$hideInput = document.createElement("input");
+    this.$hideInput.type = "hidden";
+    this.$hideInput.value = hideValue || "";
 
     this.$input = document.createElement("input");
     this.$input.className =
@@ -67,10 +72,11 @@ class InputGroup {
     this.$input.style.border = "1px solid red";
   }
   getValue = () => {
-    return this.$input.value;
+    return { value: this.$input.value, hideValue: this.$hideInput.value };
   };
-  setValue = (val) => {
+  setValue = ({ val, hideVal }) => {
     this.$input.value = val || "";
+    this.$hideInput.value = hideVal || "";
   };
   render() {
     this.$container.appendChild(this.$label);

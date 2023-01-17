@@ -86,17 +86,17 @@ class LeadAddModal {
     this.$suggestBox.style.background = "#fff";
     this.$suggestBox.style.zIndex = 1;
     this.$suggestBox.style.boxShadow = "1px 1px 3px 0px rgba(0,0,0,0.2)";
-    this.getSuggest();
+    this.getSuggest(this.$branch.getValue().value);
   }
 
   clickSave = () => {
     if (
-      this.$name.getValue() === "" ||
-      this.$phone.getValue() === "" ||
-      this.$nameFb.getValue() === "" ||
-      this.$linkFb.getValue() === "" ||
-      this.$service.getValue() === "" ||
-      this.$branch.getValue() === ""
+      this.$name.getValue().value === "" ||
+      this.$phone.getValue().value === "" ||
+      this.$nameFb.getValue().value === "" ||
+      this.$linkFb.getValue().value === "" ||
+      this.$service.getValue().value === "" ||
+      this.$branch.getValue().hideValue === ""
     ) {
       this.$name.fail();
       this.$phone.fail();
@@ -140,6 +140,7 @@ class LeadAddModal {
     suggest.forEach((item) => {
       this.$suggestItem = new SuggestItem({
         name: item.name,
+        code: item.code,
         setBranchVal: this.$branch.setValue
       });
       this.$suggestBox.appendChild(this.$suggestItem.render());

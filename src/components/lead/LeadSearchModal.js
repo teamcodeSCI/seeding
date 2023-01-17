@@ -97,6 +97,7 @@ class LeadSearchModal {
     this.$suggestBox.style.background = "#fff";
     this.$suggestBox.style.zIndex = 1;
     this.$suggestBox.style.boxShadow = "1px 1px 3px 0px rgba(0,0,0,0.2)";
+    this.getSuggest(this.$branch.getValue().value);
   }
   handleSuggest = () => {
     if (this.$branchBox !== this.$suggestBox.parentElement) {
@@ -124,6 +125,7 @@ class LeadSearchModal {
     suggest.forEach((item) => {
       this.$suggestItem = new SuggestItem({
         name: item.name,
+        code: item.code,
         setBranchVal: this.$branch.setValue
       });
       this.$suggestBox.appendChild(this.$suggestItem.render());
@@ -131,13 +133,13 @@ class LeadSearchModal {
   };
   search = () => {
     this.setSearchValue(
-      this.$searchName.getValue(),
-      this.$phone.getValue(),
-      this.$service.getValue(),
-      this.$nameFb.getValue(),
-      this.$branch.getValue(),
-      this.$startDate.getValue(),
-      this.$endDate.getValue()
+      this.$searchName.getValue().value,
+      this.$phone.getValue().value,
+      this.$service.getValue().value,
+      this.$nameFb.getValue().value,
+      this.$branch.getValue().hideValue,
+      this.$startDate.getValue().value,
+      this.$endDate.getValue().value
     );
     this.closeLeadSearchModal();
   };
