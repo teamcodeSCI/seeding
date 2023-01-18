@@ -3,7 +3,7 @@ import Menu from "./Menu.js";
 import Lead from "./lead/Lead.js";
 import { getComponent } from "../util/getComponent.js";
 import { menu } from "../util/const.js";
-import { getUser } from "../apis/user.js";
+
 class Home {
   tagTitle = "";
   searchName = "";
@@ -47,6 +47,7 @@ class Home {
     this.$bg.appendChild(this.$container);
     this.$container.appendChild(this.$nav);
     this.$container.appendChild(this.$content);
+
     this.getLayout();
 
     return this.$bg;
