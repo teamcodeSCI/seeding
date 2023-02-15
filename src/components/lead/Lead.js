@@ -144,9 +144,10 @@ class Lead {
                     endDate: this.endDate
                 })
                 // loading(false)
+
             if (res.pageCount === 0 || res.message !== 'Success') {
                 this.$table.className = 'text-center';
-                this.$table.innerHTML = 'Không có dữ liệu';
+                this.$table.innerHTML = res.message;
                 this.$pagiBox.innerHTML = ''
                 return
             }

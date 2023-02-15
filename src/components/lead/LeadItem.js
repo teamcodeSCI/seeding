@@ -2,14 +2,14 @@ import { app } from "../../util/const.js"
 import LeadEditModal from "./LeadEditModal.js"
 
 class LeadItem {
-    constructor({ name, phone, name_fb, link_fb, service, company, script, interactive_proof, note }) {
+    constructor({ name, phone, name_fb, link_fb, service, company_name, script, interactive_proof, note }) {
         this.data = {
             name: name,
             phone: phone,
             name_fb: name_fb,
             link_fb: link_fb,
             service: service,
-            company: company,
+            company: company_name,
             script: script,
             interactive_proof: interactive_proof,
             note: note,
@@ -48,7 +48,7 @@ class LeadItem {
         this.$branch.className = 'col text-truncate'
         this.$branchText = document.createElement('p')
         this.$branchText.className = 'm-0'
-        this.$branchText.innerHTML = company
+        this.$branchText.innerHTML = company_name
 
         this.$script = document.createElement('div')
         this.$script.className = 'col text-truncate'
