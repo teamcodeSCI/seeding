@@ -30,13 +30,13 @@ export const getLead = async({
         // Call API
         const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/get-form?token=${token}&brand_id=${''}&type=seeding&limit=${paginationLimit}&offset=${pageNum}&company_id=${branch}&name_fb=${fb}&phone=${phone}&service=${service}&name=${name}&start_date=${startDate}&end_date=${endDate}`);
         const data = await response.json();
+        console.log("data: ", data);
         const count = await getPageCount()
-        console.log("count: ", count);
 
         const pageCount = Math.ceil(count / paginationLimit);
 
-        // Pagination
         return {
+            message: data.message,
             render: data.data,
             pageCount: pageCount
         };

@@ -144,16 +144,15 @@ class Lead {
                     endDate: this.endDate
                 })
                 // loading(false)
-
-            this.$leadList = new LeadList({ data: res.render })
-            this.$pagination = new Pagination({ count: res.pageCount, index: this.index, setIndex: this.setIndex, getAllData: this.getAllLead })
-
-            if (res.pageCount === 0) {
+            if (res.pageCount === 0 || res.message !== 'Success') {
                 this.$table.className = 'text-center';
                 this.$table.innerHTML = 'Không có dữ liệu';
                 this.$pagiBox.innerHTML = ''
                 return
             }
+            this.$leadList = new LeadList({ data: res.render })
+            this.$pagination = new Pagination({ count: res.pageCount, index: this.index, setIndex: this.setIndex, getAllData: this.getAllLead })
+
             this.$table.innerHTML = ''
             this.$table.className = 'text-start';
             this.$table.appendChild(this.$leadList.render());
