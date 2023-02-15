@@ -2,16 +2,16 @@ import { app } from "../../util/const.js"
 import LeadEditModal from "./LeadEditModal.js"
 
 class LeadItem {
-    constructor({ name, phonenumber, nameFb, linkFb, service, branch, script, interactive, note }) {
+    constructor({ name, phone, name_fb, link_fb, service, company, script, interactive_proof, note }) {
         this.data = {
             name: name,
-            phonenumber: phonenumber,
-            nameFb: nameFb,
-            linkFb: linkFb,
+            phone: phone,
+            name_fb: name_fb,
+            link_fb: link_fb,
             service: service,
-            branch: branch,
+            company: company,
             script: script,
-            interactive: interactive,
+            interactive_proof: interactive_proof,
             note: note,
         }
 
@@ -28,15 +28,15 @@ class LeadItem {
         this.$phonenumber.className = 'col text-truncate'
         this.$phonenumberText = document.createElement('p')
         this.$phonenumberText.className = 'm-0'
-        this.$phonenumberText.innerHTML = phonenumber
+        this.$phonenumberText.innerHTML = phone
 
         this.$linkFb = document.createElement('div')
         this.$linkFb.className = 'col text-truncate'
         this.$linkFbText = document.createElement('a')
         this.$linkFbText.className = 'm-0'
         this.$linkFbText.target = '_blank'
-        this.$linkFbText.href = linkFb
-        this.$linkFbText.innerHTML = nameFb
+        this.$linkFbText.href = link_fb
+        this.$linkFbText.innerHTML = name_fb
 
         this.$service = document.createElement('div')
         this.$service.className = 'col text-truncate'
@@ -48,7 +48,7 @@ class LeadItem {
         this.$branch.className = 'col text-truncate'
         this.$branchText = document.createElement('p')
         this.$branchText.className = 'm-0'
-        this.$branchText.innerHTML = branch
+        this.$branchText.innerHTML = company
 
         this.$script = document.createElement('div')
         this.$script.className = 'col text-truncate'
@@ -59,7 +59,7 @@ class LeadItem {
         this.$interactive = document.createElement('div')
         this.$interactive.className = 'col text-truncate'
         this.$interactiveText = document.createElement('a')
-        this.$interactiveText.href = interactive
+        this.$interactiveText.href = interactive_proof
         this.$interactiveText.className = 'm-0'
         this.$interactiveText.target = '_blank'
         this.$interactiveText.innerHTML = 'Link ảnh'
