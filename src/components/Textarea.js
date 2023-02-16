@@ -14,10 +14,10 @@ class Textarea {
         this.$textarea.placeholder = palaceHolder
     }
     getValue = () => {
-        return this.$input.value
+        return this.$textarea.value
     }
     setValue = (val) => {
-        this.$input.value = val || ''
+        this.$textarea.value = val || ''
     }
     render() {
         this.$container.appendChild(this.$textarea)

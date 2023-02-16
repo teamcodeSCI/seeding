@@ -1,7 +1,7 @@
 import { app } from '../../util/const.js'
 import LeadAddModal from './LeadAddModal.js'
 class AddLead {
-    constructor() {
+    constructor({ getAllLead }) {
         this.$container = document.createElement('div')
         this.$btnAddLead = document.createElement('button')
         this.$btnAddLead.className = `btn btn-primary d-flex gap-2 justify-content-between w-100`
@@ -14,7 +14,7 @@ class AddLead {
         this.$text = document.createElement('span')
         this.$text.innerHTML = 'Thêm mới'
 
-        this.$modalAdd = new LeadAddModal({ closeLeadAddModal: this.closeLeadAddModal })
+        this.$modalAdd = new LeadAddModal({ closeLeadAddModal: this.closeLeadAddModal, getAllLead: getAllLead })
     }
     openLeadAddModal = () => {
         app.appendChild(this.$modalAdd.render())

@@ -6,8 +6,9 @@ import SuggestItem from "../SuggestItem.js";
 import Textarea from "../Textarea.js";
 
 class LeadAddModal {
-    constructor({ closeLeadAddModal }) {
+    constructor({ closeLeadAddModal, getAllLead }) {
         this.closeLeadAddModal = closeLeadAddModal;
+        this.getAllLead = getAllLead
         this.$container = document.createElement("div");
         this.$container.className = `modal d-flex align-items-center justify-content-center`;
         this.$container.style.background = "rgba(0,0,0,0.7)";
@@ -91,7 +92,6 @@ class LeadAddModal {
     }
 
     clickSave = async() => {
-        await createLead({})
         if (
             this.$name.getValue().value === "" ||
             this.$phone.getValue().value === "" ||
@@ -108,13 +108,20 @@ class LeadAddModal {
             this.$branch.fail();
             return;
         }
-        this.$name.success();
-        this.$phone.success();
-        this.$nameFb.success();
-        this.$linkFb.success();
-        this.$service.success();
-        this.$branch.success();
+        await createLead({
+            name: this.$name.getValue().value,
+            phone: this.$phone.getValue().value,
+            nameFb: this.$nameFb.getValue().value,
+            linkFb: this.$linkFb.getValue().value,
+            service: this.$service.getValue().value,
+            branch: this.$branch.getValue().hideValue,
+            script: this.$script.getValue().value,
+            note: this.$note.getValue(),
+            interactive: this.$interactive.getValue().value
+        })
+
         this.closeLeadAddModal();
+        this.getAllLead()
     };
     handleSuggest = () => {
         if (this.$branchBox !== this.$suggestBox.parentElement) {
@@ -134,6 +141,7 @@ class LeadAddModal {
             token: splitStr(localStorage.getItem("token")).token,
             input: input
         });
+
         if (!suggest) {
             console.log("data not found");
             return;
@@ -142,7 +150,7 @@ class LeadAddModal {
         suggest.forEach((item) => {
             this.$suggestItem = new SuggestItem({
                 name: item.name,
-                code: item.id,
+                code: item.code,
                 setBranchVal: this.$branch.setValue
             });
             this.$suggestBox.appendChild(this.$suggestItem.render());

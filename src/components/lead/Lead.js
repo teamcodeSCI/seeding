@@ -43,7 +43,7 @@ class Lead {
             this.reset()
         })
 
-        this.$addLead = new AddLead()
+        this.$addLead = new AddLead({ getAllLead: this.getAllLead })
 
         this.$desc = document.createElement('p')
         this.$desc.style.margin = '12px 0'

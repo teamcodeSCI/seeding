@@ -62,7 +62,7 @@ class LeadItem {
         this.$interactiveText.href = interactive_proof
         this.$interactiveText.className = 'm-0'
         this.$interactiveText.target = '_blank'
-        this.$interactiveText.innerHTML = 'Link ảnh'
+        this.$interactiveText.innerHTML = interactive_proof === '' ? '' : 'Link ảnh'
 
         this.$note = document.createElement('div')
         this.$note.className = 'col text-truncate'
