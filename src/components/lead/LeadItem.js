@@ -9,7 +9,7 @@ class LeadItem {
             name_fb: name_fb,
             link_fb: link_fb,
             service: service,
-            company: company_name,
+            company_name: company_name,
             script: script,
             interactive_proof: interactive_proof,
             note: note,
