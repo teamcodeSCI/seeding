@@ -1,7 +1,8 @@
 import LeadItem from "./LeadItem.js"
 
 class LeadList {
-    constructor({ data }) {
+    constructor({ data, getAllLead }) {
+        this.getAllLead = getAllLead
         this.data = data
         this.$container = document.createElement('div')
         this.$container.className = `table-responsive dataTable`
@@ -66,7 +67,8 @@ class LeadList {
         this.$tbody.innerHTML = ''
         for (let i = 0; i < this.data.length; i++) {
             this.$item = new LeadItem({
-                ...this.data[i]
+                ...this.data[i],
+                getAllLead: this.getAllLead
             })
             this.$tbody.appendChild(this.$item.render())
         }

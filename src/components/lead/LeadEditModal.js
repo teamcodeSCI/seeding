@@ -1,11 +1,13 @@
 import { getBranch } from "../../apis/getInfo.js";
+import { updateLead } from "../../apis/lead.js";
 import { splitStr } from "../../util/splitStr.js";
 import InputGroup from "../InputGroup.js";
 import SuggestItem from "../SuggestItem.js";
 import Textarea from "../Textarea.js";
 
 class LeadEditModal {
-    constructor({ data, closeLeadEditModal }) {
+    constructor({ data, closeLeadEditModal, getAllLead }) {
+        this.getAllLead = getAllLead
         this.data = data;
         this.closeLeadEditModal = closeLeadEditModal;
         this.$container = document.createElement("div");
@@ -83,6 +85,7 @@ class LeadEditModal {
             placeholder: "Chi nhánh",
             width: "100%",
             value: this.data.company_name,
+            hideValue: this.data.company_code,
             isSuggested: true,
             getSuggest: this.getSuggest,
             openSuggest: this.openSuggest,
@@ -113,7 +116,8 @@ class LeadEditModal {
         this.$suggestBox.style.boxShadow = "1px 1px 3px 0px rgba(0,0,0,0.2)";
         this.getSuggest(this.$branch.getValue().value);
     }
-    clickSave = () => {
+    clickSave = async() => {
+
         if (
             this.$name.getValue().value === "" ||
             this.$phone.getValue().value === "" ||
@@ -130,13 +134,21 @@ class LeadEditModal {
             this.$branch.fail();
             return;
         }
-        this.$name.success();
-        this.$phone.success();
-        this.$nameFb.success();
-        this.$linkFb.success();
-        this.$service.success();
-        this.$branch.success();
+        await updateLead({
+            codeForm: this.data.codeForm,
+            userId: this.data.seedingUserId,
+            name: this.$name.getValue().value,
+            phone: this.$phone.getValue().value,
+            nameFb: this.$nameFb.getValue().value,
+            linkFb: this.$linkFb.getValue().value,
+            service: this.$service.getValue().value,
+            branch: this.$branch.getValue().hideValue,
+            script: this.$script.getValue().value,
+            note: this.$note.getValue(),
+            interactive: this.$interactive.getValue().value
+        })
         this.closeLeadEditModal();
+        this.getAllLead()
     };
     handleSuggest = () => {
         if (this.$branchBox !== this.$suggestBox.parentElement) {
@@ -164,7 +176,7 @@ class LeadEditModal {
         suggest.forEach((item) => {
             this.$suggestItem = new SuggestItem({
                 name: item.name,
-                code: item.id,
+                code: item.code,
                 setBranchVal: this.$branch.setValue
             });
             this.$suggestBox.appendChild(this.$suggestItem.render());

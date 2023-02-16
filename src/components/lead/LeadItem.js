@@ -2,19 +2,23 @@ import { app } from "../../util/const.js"
 import LeadEditModal from "./LeadEditModal.js"
 
 class LeadItem {
-    constructor({ name, phone, name_fb, link_fb, service, company_name, script, interactive_proof, note }) {
+    constructor({ name, phone, name_fb, link_fb, service, company_name, company_code, script, interactive_proof, note, code_form, seeding_user_id, ctv_user_id, getAllLead }) {
         this.data = {
+            seedingUserId: seeding_user_id,
+            ctvUserId: ctv_user_id,
+            codeForm: code_form,
             name: name,
             phone: phone,
             name_fb: name_fb,
             link_fb: link_fb,
             service: service,
             company_name: company_name,
+            company_code: company_code,
             script: script,
             interactive_proof: interactive_proof,
             note: note,
         }
-
+        this.getAllLead = getAllLead
         this.$tr = document.createElement('div')
         this.$tr.className = 'row mx-0 p-2 position-relative'
 
@@ -81,7 +85,7 @@ class LeadItem {
         this.$editIcon.className = 'bi bi-pencil text-primary'
         this.$editIcon.style.fontSize = '13px'
 
-        this.$leadEditModal = new LeadEditModal({ closeLeadEditModal: this.closeLeadEditModal, data: this.data })
+        this.$leadEditModal = new LeadEditModal({ closeLeadEditModal: this.closeLeadEditModal, data: this.data, getAllLead: this.getAllLead })
     }
     openLeadEditModal = () => {
         app.appendChild(this.$leadEditModal.render())

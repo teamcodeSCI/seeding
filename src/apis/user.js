@@ -14,6 +14,7 @@ export const getUser = async(token) => {
     try {
         const response = await fetch(`${url}/get-name?token=${token}`);
         const data = await response.json();
+
         if (!data) {
             console.log("data not found");
             return;

@@ -151,7 +151,7 @@ class Lead {
                 this.$pagiBox.innerHTML = ''
                 return
             }
-            this.$leadList = new LeadList({ data: res.render })
+            this.$leadList = new LeadList({ data: res.render, getAllLead: this.getAllLead })
             this.$pagination = new Pagination({ count: res.pageCount, index: this.index, setIndex: this.setIndex, getAllData: this.getAllLead })
 
             this.$table.innerHTML = ''
