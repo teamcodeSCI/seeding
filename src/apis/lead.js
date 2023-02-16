@@ -31,7 +31,7 @@ export const createLead = async({ name, phone, nameFb, linkFb, service, branch, 
     try {
         const token = splitStr(localStorage.getItem('token')).token
         const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/create-form?token=${token}&name=${name}&phone=${phone}&link_fb=${linkFb}&name_fb=${nameFb}&service=${service}&note=${note}&script=${script}&interactive_proof=${interactive}&company_id=${branch}&type=seeding`)
-        const data = await response.json()
+
     } catch (e) {
         console.log(e);
         return {
@@ -43,7 +43,7 @@ export const updateLead = async({ codeForm, userId, name, phone, nameFb, linkFb,
     try {
         const token = splitStr(localStorage.getItem('token')).token
         const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/update-form?token=${token}&code_form=${codeForm}&name=${name}&phone=${phone}&link_fb=${linkFb}&name_fb=${nameFb}&service=${service}&note=${note}&script=${script}&interactive_proof=${interactive}&company_id=${branch}&type=seeding&seeding_user_id=${userId}&ctv_user_id=false&brand=${''}`)
-        console.log("response: ", await response.json());
+
     } catch (e) {
         console.log(e);
         return {
