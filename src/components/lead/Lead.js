@@ -15,6 +15,7 @@ class Lead {
     searchPhone = ''
     searchService = ''
     searchFb = ''
+    hideBranch = ''
     searchBranch = ''
     startDate = ''
     endDate = ''
@@ -83,11 +84,12 @@ class Lead {
         this.$actionLeft.removeChild(this.$reset)
         this.$title.innerHTML = ''
     }
-    setSearchValue = (name, phone, service, fb, branch, startDate, endDate) => {
+    setSearchValue = (name, phone, service, fb, hideBranch, branch, startDate, endDate) => {
         this.searchName = name || ''
         this.searchPhone = phone || ''
         this.searchService = service || ''
         this.searchFb = fb || ''
+        this.hideBranch = hideBranch || ''
         this.searchBranch = branch || ''
         this.startDate = startDate || ''
         this.endDate = endDate || ''
@@ -139,7 +141,7 @@ class Lead {
                     phone: this.searchPhone,
                     service: this.searchService,
                     fb: this.searchFb,
-                    branch: this.searchBranch,
+                    branch: this.hideBranch,
                     startDate: this.startDate,
                     endDate: this.endDate
                 })
