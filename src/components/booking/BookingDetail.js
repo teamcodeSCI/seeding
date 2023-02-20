@@ -114,7 +114,7 @@ class BookingDetail {
 
         this.$brand = new BookingDetailItem({ title: 'Thương hiệu', value: data.brand })
         this.$branch = new BookingDetailItem({ title: 'Chi nhánh', value: data.company })
-        this.$note = new BookingDetailItem({ title: 'Ghi chú', value: 'Không có' })
+        this.$note = new BookingDetailItem({ title: 'Ghi chú', value: data.note })
     }
     render() {
 
