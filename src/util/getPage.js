@@ -17,10 +17,7 @@ export const getPage = () => {
         setPage(login);
         return;
     }
-    if (splitStr(localStorage.getItem("token")).rule === "admin") {
-        const home = new Home();
-        setPage(home);
-        return;
-    }
-    console.log("rule not found");
+    const home = new Home();
+    setPage(home);
+    return;
 };
