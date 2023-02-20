@@ -31,3 +31,6 @@ export const formatDate = (date) => {
 export const formatNumber = (number) => {
     return new Intl.NumberFormat().format(number);
 };
+export const arrToStr = (arr) => {
+    return arr.toString().split(',')
+}

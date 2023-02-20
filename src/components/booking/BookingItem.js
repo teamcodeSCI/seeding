@@ -1,15 +1,10 @@
 import { app } from "../../util/const.js"
+import { formatDate } from "../../util/util.js"
 import BookingDetail from "./BookingDetail.js"
 
 class BookingItem {
-    constructor({ name, phonenumber, nameFb, service, branch }) {
-        this.data = {
-            name: name,
-            phonenumber: phonenumber,
-            nameFb: nameFb,
-            service: service,
-            branch: branch
-        }
+    constructor(data) {
+        this.data = data
         this.$tr = document.createElement('div')
         this.$tr.className = 'row mx-0 p-2'
 
@@ -17,37 +12,37 @@ class BookingItem {
         this.$name.className = 'col text-truncate'
         this.$nameText = document.createElement('p')
         this.$nameText.className = 'm-0'
-        this.$nameText.innerHTML = name
+        this.$nameText.innerHTML = data.contact_name
 
         this.$phonenumber = document.createElement('div')
         this.$phonenumber.className = 'col text-truncate'
         this.$phonenumberText = document.createElement('p')
         this.$phonenumberText.className = 'm-0'
-        this.$phonenumberText.innerHTML = phonenumber
+        this.$phonenumberText.innerHTML = data.phone_1
 
         this.$city = document.createElement('div')
         this.$city.className = 'col text-truncate'
         this.$cityText = document.createElement('p')
         this.$cityText.className = 'm-0'
-        this.$cityText.innerHTML = `Tỉnh/ Thành phố`
+        this.$cityText.innerHTML = data.city
 
         this.$appointmentDate = document.createElement('div')
         this.$appointmentDate.className = 'col text-truncate'
         this.$appointmentDateText = document.createElement('p')
         this.$appointmentDateText.className = 'm-0'
-        this.$appointmentDateText.innerHTML = nameFb
+        this.$appointmentDateText.innerHTML = formatDate(data.booking_date)
 
         this.$validDate = document.createElement('div')
         this.$validDate.className = 'col text-truncate'
         this.$validDateText = document.createElement('p')
         this.$validDateText.className = 'm-0'
-        this.$validDateText.innerHTML = service
+        this.$validDateText.innerHTML = formatDate(data.day_expire)
 
         this.$validStatus = document.createElement('div')
         this.$validStatus.className = 'col text-truncate'
         this.$validStatusText = document.createElement('p')
         this.$validStatusText.className = 'm-0'
-        this.$validStatusText.innerHTML = branch
+        this.$validStatusText.innerHTML = data.effect
 
         this.$viewMore = document.createElement('div')
         this.$viewMore.className = 'col text-truncate'
@@ -59,7 +54,8 @@ class BookingItem {
         this.$viewMoreText.innerHTML = 'Xem thêm'
 
         this.$bookingDetail = new BookingDetail({
-            closeBookingDetail: this.closeBookingDetail
+            closeBookingDetail: this.closeBookingDetail,
+            data: this.data
         })
     }
     openBookingDetail = () => {

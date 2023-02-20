@@ -1,7 +1,8 @@
+import { arrToStr, formatDate, formatNumber } from "../../util/util.js"
 import BookingDetailItem from "./BookingDetailItem.js"
 
 class BookingDetail {
-    constructor({ closeBookingDetail }) {
+    constructor({ closeBookingDetail, data }) {
         this.closeBookingDetail = closeBookingDetail
         this.$container = document.createElement('div')
         this.$container.className = `modal d-flex align-items-center justify-content-center`
@@ -96,23 +97,23 @@ class BookingDetail {
             closeBookingDetail()
         })
 
-        this.$name = new BookingDetailItem({ title: 'Họ tên', value: 'Đức Đoàn' })
-        this.$phonenumber1 = new BookingDetailItem({ title: 'Điện thoại 1', value: '0123456789' })
-        this.$phonenumber2 = new BookingDetailItem({ title: 'Điện thoại 2', value: '0123856789' })
-        this.$city = new BookingDetailItem({ title: 'Tỉnh/TP', value: 'Hà Nội' })
-        this.$appointmentDate = new BookingDetailItem({ title: 'Ngày hẹn lịch', value: '20-11-2022' })
-        this.$validDate = new BookingDetailItem({ title: 'Hiệu lực đến ngày', value: '30-11-2022' })
-        this.$validStatus = new BookingDetailItem({ title: 'Trạng thái hiệu lực', value: 'Hủy lịch' })
+        this.$name = new BookingDetailItem({ title: 'Họ tên', value: data.contact_name })
+        this.$phonenumber1 = new BookingDetailItem({ title: 'Điện thoại 1', value: data.phone_1 })
+        this.$phonenumber2 = new BookingDetailItem({ title: 'Điện thoại 2', value: data.phone_2 })
+        this.$city = new BookingDetailItem({ title: 'Tỉnh/TP', value: data.city })
+        this.$appointmentDate = new BookingDetailItem({ title: 'Ngày hẹn lịch', value: formatDate(data.booking_date) })
+        this.$validDate = new BookingDetailItem({ title: 'Hiệu lực đến ngày', value: formatDate(data.day_expire) })
+        this.$validStatus = new BookingDetailItem({ title: 'Trạng thái hiệu lực', value: data.effect })
 
-        this.$bookingCode = new BookingDetailItem({ title: 'Mã booking', value: 'PR-021312' })
-        this.$service = new BookingDetailItem({ title: 'Dịch vụ', value: 'Trồng Implant, Niềng răng' })
-        this.$unitPrice = new BookingDetailItem({ title: 'Đơn giá', value: '100.000.000 đ' })
-        this.$prepayment = new BookingDetailItem({ title: 'Tiền trước giảm', value: '100.000.000 đ' })
-        this.$receivable = new BookingDetailItem({ title: 'Tiền phải thu', value: '90.000.000 đ' })
-        this.$received = new BookingDetailItem({ title: 'Tiền đã thu', value: '40.000.000 đ' })
+        this.$bookingCode = new BookingDetailItem({ title: 'Mã booking', value: data.code_booking })
+        this.$service = new BookingDetailItem({ title: 'Dịch vụ', value: arrToStr(data.line_ids) })
+        this.$unitPrice = new BookingDetailItem({ title: 'Đơn giá', value: `${data.dongia} đ` })
+        this.$prepayment = new BookingDetailItem({ title: 'Tiền trước giảm', value: `${formatNumber(data.tien_truoc_giam)} đ` })
+        this.$receivable = new BookingDetailItem({ title: 'Tiền phải thu', value: `${formatNumber(data.tien_phai_thu)} đ` })
+        this.$received = new BookingDetailItem({ title: 'Tiền đã thu', value: `${formatNumber(data.tien_da_thu)} đ` })
 
-        this.$brand = new BookingDetailItem({ title: 'Thương hiệu', value: 'Paris' })
-        this.$branch = new BookingDetailItem({ title: 'Chi nhánh', value: 'Paris Thái Thịnh' })
+        this.$brand = new BookingDetailItem({ title: 'Thương hiệu', value: data.brand })
+        this.$branch = new BookingDetailItem({ title: 'Chi nhánh', value: data.company })
         this.$note = new BookingDetailItem({ title: 'Ghi chú', value: 'Không có' })
     }
     render() {
