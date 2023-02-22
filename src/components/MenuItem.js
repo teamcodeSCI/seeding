@@ -3,7 +3,7 @@ class MenuItem {
         this.getLayout = getLayout
         this.link = link
         this.$container = document.createElement('div')
-        this.$container.className = `p-2 text-center ${isActive?'rounded-top':''}`
+        this.$container.className = `py-2 px-3 text-center ${isActive?'rounded-top':''}`
         this.$container.style.background = isActive ? '#fff' : ''
         this.$container.style.fontWeight = isActive ? '600' : ''
         this.$container.style.minWidth = '100px'

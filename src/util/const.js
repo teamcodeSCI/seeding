@@ -28,8 +28,8 @@ export const app = document.getElementById('root')
 export const menu = [
     { title: 'Lead', link: 'lead', component: lead },
     { title: 'Booking', link: 'booking', component: booking },
-    { title: 'Lead và Booking', link: '[report] lead-booking', component: reportLB },
-    { title: 'Chi phí', link: '[report] cost', component: cost }
+    { title: 'Báo cáo số lượng', link: '[report] lead-booking', component: reportLB },
+    { title: 'Báo cáo Chi phí', link: '[report] cost', component: cost }
 ]
 export const tabLead = [
     { title: 'Tuần', link: '[LB] week', component: reportLeadWeek },
