@@ -15,7 +15,7 @@ class ReportCost {
     }
     getLayoutCost = () => {
         if (!sessionStorage.getItem('tabCost')) {
-            sessionStorage.setItem('tabCost', '[cost] week')
+            sessionStorage.setItem('tabCost', '[cost] day')
         }
         this.$menuCost = new Tabs({ getLayout: this.getLayoutCost, tab: 'tabCost', tabs: tabCost })
         this.$navCost.innerHTML = ''

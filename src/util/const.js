@@ -8,6 +8,9 @@ import ReportCost from "../components/reportCost/ReportCost.js"
 import ReportCostWeek from "../components/reportCost/ReportCostWeek.js"
 import ReportCostMonth from "../components/reportCost/ReportCostMonth.js"
 import ReportCostYear from "../components/reportCost/ReportCostYear.js"
+import ReportSuccessWeek from "../components/reportLB/ReportSuccessWeek.js"
+import ReportSuccessYear from "../components/reportLB/ReportSuccessYear.js"
+import ReportSuccessMonth from "../components/reportLB/ReportSuccessMonth.js"
 
 
 const lead = new Lead()
@@ -23,6 +26,10 @@ const reportCostWeek = new ReportCostWeek()
 const reportCostMonth = new ReportCostMonth()
 const reportCostYear = new ReportCostYear()
 
+const reportSuccessWeek = new ReportSuccessWeek()
+const reportSuccessMonth = new ReportSuccessMonth()
+const reportSuccessYear = new ReportSuccessYear()
+
 export const app = document.getElementById('root')
 
 export const menu = [
@@ -32,12 +39,19 @@ export const menu = [
     { title: 'Báo cáo Chi phí', link: '[report] cost', component: cost }
 ]
 export const tabLead = [
-    { title: 'Tuần', link: '[LB] week', component: reportLeadWeek },
+    { title: 'Ngày', link: '[LB] day', component: reportLeadWeek },
     { title: 'Tháng', link: '[LB] month', component: reportLeadMonth },
     { title: 'Năm', link: '[LB] year', component: reportLeadYear }
 ]
+
+export const tabSuccess = [
+    { title: 'Ngày', link: '[Success] day', component: reportSuccessWeek },
+    { title: 'Tháng', link: '[Success] month', component: reportSuccessMonth },
+    { title: 'Năm', link: '[Success] year', component: reportSuccessYear }
+]
+
 export const tabCost = [
-    { title: 'Tuần', link: '[cost] week', component: reportCostWeek },
+    { title: 'Ngày', link: '[cost] day', component: reportCostWeek },
     { title: 'Tháng', link: '[cost] month', component: reportCostMonth },
     { title: 'Năm', link: '[cost] year', component: reportCostYear }
 ]
