@@ -1,5 +1,6 @@
+import AreaChart from "../AreaChart.js"
 import Filter from "../Filter.js"
-import LineChart from "../LineChart.js"
+
 import SearchInput from "../SearchInput.js"
 import SuccessTable from "./SuccessTable.js"
 
@@ -72,22 +73,24 @@ class ReportSuccessWeek {
         this.$tableBox = document.createElement('div')
         this.$tableBox.style.width = '50%'
 
-        this.$lineChart = new LineChart({ labels: this.labels, dataSet: this.dataSet })
+        this.$areaChart = new AreaChart()
         this.$searchService = new SearchInput({ placeholder: 'Tìm theo tên dịch vụ ...', width: '20%' })
         this.$filterService = new Filter({})
 
         this.$serviceBookingRp = new SuccessTable({ data: this.branchData })
     }
     render() {
+        console.log(this.$areaChart);
         this.$box.appendChild(this.$tableBox)
         this.$box.appendChild(this.$chartBox)
 
+        // this.$chartBox.appendChild(this.$areaChart.render())
         this.$tableBox.appendChild(this.$filterSearch)
         this.$tableBox.appendChild(this.$serviceBookingRp.render())
         this.$filterSearch.appendChild(this.$filterService.render())
         this.$filterSearch.appendChild(this.$searchService.render())
 
-        this.$chartBox.appendChild(this.$lineChart.render())
+
         return this.$box
     }
 }

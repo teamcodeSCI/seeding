@@ -1,4 +1,3 @@
-import BarChart from "../BarChart.js"
 import Filter from "../Filter.js"
 import ReportCard from "../ReportCard.js"
 import SearchInput from "../SearchInput.js"
@@ -104,7 +103,7 @@ class ReportCostWeek {
         this.$filterSearch = document.createElement('div')
         this.$filterSearch.className = 'mb-2 d-flex justify-content-end gap-3'
         this.$brand = new ReportBrand({ data: this.branchData })
-        this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
+
         this.$service = new ReportService({ data: this.serviceData })
 
         this.$searchService = new SearchInput({ placeholder: 'Tìm theo tên dịch vụ ...', width: '20%' })
@@ -120,7 +119,7 @@ class ReportCostWeek {
     }
     render() {
         this.$container.appendChild(this.$cardGroup)
-        this.$container.appendChild(this.$chartBox)
+
         this.$container.appendChild(this.$tableBox)
         this.$container.appendChild(this.$tableService)
         this.$tableBox.appendChild(this.$chartBox)
@@ -133,7 +132,7 @@ class ReportCostWeek {
         this.$filterSearch.appendChild(this.$searchService.render())
         this.$tableService.appendChild(this.$service.render())
 
-        this.$chartBox.appendChild(this.$chart.render())
+
 
         this.renderCardItem()
         return this.$container
