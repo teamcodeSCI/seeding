@@ -95,6 +95,11 @@ class TargetMonth {
         this.$revenueTitle.innerHTML = 'Doanh thu theo dịch vụ'
 
         this.$targetChart = new DoughnutChart({ labels: this.targetLabels, dataSet: this.targetDataSet })
+
+
+        this.$revenueOverflow = document.createElement('div')
+        this.$revenueOverflow.style.maxHeight = '220px'
+        this.$revenueOverflow.style.overflow = 'auto'
         this.$revenueTable = new RevenueTable({ data: this.revenueData })
 
         this.$revenueBrandBox = document.createElement('div')
@@ -119,7 +124,8 @@ class TargetMonth {
 
         this.$revenueServiceBox.appendChild(this.$revenueTitle)
         this.$revenueServiceBox.appendChild(this.$filterSearch)
-        this.$revenueServiceBox.appendChild(this.$revenueTable.render())
+        this.$revenueServiceBox.appendChild(this.$revenueOverflow)
+        this.$revenueOverflow.appendChild(this.$revenueTable.render())
 
         this.$revenueBrandBox.appendChild(this.$revenueBrandTitle)
         this.$revenueBrandBox.appendChild(this.$revenueBrandChart.render())
