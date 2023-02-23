@@ -23,7 +23,15 @@ class RevenueTable {
         this.$revenue.innerHTML = 'Doanh thu'
 
         this.$tbody = document.createElement('tbody')
-        this.$item = new RevenueTableItem({})
+
+
+    }
+    renderItem = () => {
+        this.$tbody.innerHTML = ''
+        this.data.forEach((item, idx) => {
+            this.$item = new RevenueTableItem({ stt: idx + 1, service: item.service, brand: item.brand, revenue: item.revenue })
+            this.$tbody.appendChild(this.$item.render())
+        })
     }
     render() {
         this.$table.appendChild(this.$thead)
@@ -33,7 +41,7 @@ class RevenueTable {
         this.$headerTr.appendChild(this.$service)
         this.$headerTr.appendChild(this.$brand)
         this.$headerTr.appendChild(this.$revenue)
-        this.$tbody.appendChild(this.$item.render())
+        this.renderItem()
         return this.$table
     }
 }

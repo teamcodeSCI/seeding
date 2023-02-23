@@ -1,16 +1,18 @@
+import { formatNumber } from "../../util/util.js"
+
 class RevenueTableItem {
-    constructor({ stt, name, lead, booking }) {
+    constructor({ stt, service, brand, revenue }) {
         this.$tr = document.createElement('tr')
         this.$tr.className = 'align-middle'
 
         this.$stt = document.createElement('td')
-        this.$stt.innerHTML = 'STT'
+        this.$stt.innerHTML = stt
 
         this.$service = document.createElement('td')
-        this.$service.innerHTML = 'Dịch vụ'
+        this.$service.innerHTML = service
 
         this.$brand = document.createElement('td')
-        this.$brand.innerHTML = 'Thương hiệu'
+        this.$brand.innerHTML = brand
 
         this.$revenue = document.createElement('td')
         this.$revenue.style.width = '45%'
@@ -27,7 +29,7 @@ class RevenueTableItem {
         this.$progressBar.style.width = '50%'
 
         this.$number = document.createElement('span')
-        this.$number.innerHTML = '50000000'
+        this.$number.innerHTML = `${formatNumber(revenue)}Đ`
 
     }
     render() {

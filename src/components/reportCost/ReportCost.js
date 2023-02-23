@@ -12,9 +12,7 @@ class ReportCost {
 
 
         this.$contentTarget = document.createElement('div')
-        this.$contentTarget.className = 'contentTarget mb-4'
-
-
+        this.$contentTarget.className = 'contentTarget'
     }
     getLayoutTarget = () => {
         if (!sessionStorage.getItem('tabTarget')) {
