@@ -1,4 +1,4 @@
-import { tabCost } from "../../util/const.js"
+import { tabTarget } from "../../util/const.js"
 import { getComponent } from "../../util/getComponent.js"
 import Tabs from "../Tabs.js"
 
@@ -10,23 +10,30 @@ class ReportCost {
         this.$navCost = document.createElement('div')
         this.$navCost.className = 'costMenu mb-3'
 
-        this.$box = document.createElement('div')
-        this.$box.className = 'box'
+        this.$targetTitle = document.createElement('div')
+        this.$targetTitle.className = 'targetTitle fs-5 fw-bold text-uppercase mb-2'
+        this.$targetTitle.innerHTML = 'Mục tiêu/ doanh số'
+
+        this.$contentTarget = document.createElement('div')
+        this.$contentTarget.className = 'contentTarget mb-4'
+
+
     }
-    getLayoutCost = () => {
-        if (!sessionStorage.getItem('tabCost')) {
-            sessionStorage.setItem('tabCost', '[cost] day')
+    getLayoutTarget = () => {
+        if (!sessionStorage.getItem('tabTarget')) {
+            sessionStorage.setItem('tabTarget', '[Target] day')
         }
-        this.$menuCost = new Tabs({ getLayout: this.getLayoutCost, tab: 'tabCost', tabs: tabCost })
+        this.$menuTarget = new Tabs({ getLayout: this.getLayoutTarget, tab: 'tabTarget', tabs: tabTarget })
         this.$navCost.innerHTML = ''
-        this.$navCost.appendChild(this.$menuCost.render())
-        getComponent(this.$box, tabCost, 'tabCost')
+        this.$navCost.appendChild(this.$menuTarget.render())
+        getComponent(this.$contentTarget, tabTarget, 'tabTarget')
     }
     render() {
 
+        this.$container.appendChild(this.$targetTitle)
         this.$container.appendChild(this.$navCost)
-        this.$container.appendChild(this.$box)
-        this.getLayoutCost()
+        this.$container.appendChild(this.$contentTarget)
+        this.getLayoutTarget()
         return this.$container
     }
 }

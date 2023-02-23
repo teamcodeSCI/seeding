@@ -5,12 +5,12 @@ import ReportLeadWeek from "../components/reportLB/ReportLeadWeek.js"
 import ReportLeadMonth from "../components/reportLB/ReportLeadMonth.js"
 import ReportLeadYear from "../components/reportLB/ReportLeadYear.js"
 import ReportCost from "../components/reportCost/ReportCost.js"
-import ReportCostWeek from "../components/reportCost/ReportCostWeek.js"
-import ReportCostMonth from "../components/reportCost/ReportCostMonth.js"
-import ReportCostYear from "../components/reportCost/ReportCostYear.js"
 import ReportSuccessWeek from "../components/reportLB/ReportSuccessWeek.js"
 import ReportSuccessYear from "../components/reportLB/ReportSuccessYear.js"
 import ReportSuccessMonth from "../components/reportLB/ReportSuccessMonth.js"
+import TargetDay from "../components/reportCost/TargetDay.js"
+import TargetMonth from "../components/reportCost/TargetMonth.js"
+import TargetYear from "../components/reportCost/TargetYear.js"
 
 
 const lead = new Lead()
@@ -22,13 +22,14 @@ const reportLeadWeek = new ReportLeadWeek()
 const reportLeadMonth = new ReportLeadMonth()
 const reportLeadYear = new ReportLeadYear()
 
-const reportCostWeek = new ReportCostWeek()
-const reportCostMonth = new ReportCostMonth()
-const reportCostYear = new ReportCostYear()
-
 const reportSuccessWeek = new ReportSuccessWeek()
 const reportSuccessMonth = new ReportSuccessMonth()
 const reportSuccessYear = new ReportSuccessYear()
+
+const targetDay = new TargetDay()
+const targetMonth = new TargetMonth()
+const targetYear = new TargetYear()
+
 
 export const app = document.getElementById('root')
 
@@ -49,9 +50,8 @@ export const tabSuccess = [
     { title: 'Tháng', link: '[Success] month', component: reportSuccessMonth },
     { title: 'Năm', link: '[Success] year', component: reportSuccessYear }
 ]
-
-export const tabCost = [
-    { title: 'Ngày', link: '[cost] day', component: reportCostWeek },
-    { title: 'Tháng', link: '[cost] month', component: reportCostMonth },
-    { title: 'Năm', link: '[cost] year', component: reportCostYear }
+export const tabTarget = [
+    { title: 'Ngày', link: '[Target] day', component: targetDay },
+    { title: 'Tháng', link: '[Target] month', component: targetMonth },
+    { title: 'Năm', link: '[Target] year', component: targetYear }
 ]
