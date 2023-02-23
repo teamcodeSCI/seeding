@@ -1,3 +1,4 @@
+import BarChart from "../BarChart.js"
 import ReportTable from "./ReportTable.js"
 
 class ReportLeadWeek {
@@ -44,9 +45,11 @@ class ReportLeadWeek {
         this.$tableBox.style.width = '35%'
 
         this.$serviceBookingRp = new ReportTable({ data: this.branchData })
+        this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
     }
     render() {
         this.$box.appendChild(this.$chartBox)
+        this.$chartBox.appendChild(this.$chart.render())
 
         this.$box.appendChild(this.$tableBox)
         this.$tableBox.appendChild(this.$serviceBookingRp.render())
