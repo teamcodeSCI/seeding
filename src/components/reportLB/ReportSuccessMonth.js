@@ -1,3 +1,4 @@
+import { random } from "../../util/util.js"
 import Filter from "../Filter.js"
 import LineChart from "../LineChart.js"
 import SearchInput from "../SearchInput.js"
@@ -7,19 +8,44 @@ import SuccessTable from "./SuccessTable.js"
 class ReportSuccessMonth {
     labels = ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4']
     dataSet = [{
-        label: 'Lead',
-        backgroundColor: '#1a73e8',
-        borderColor: '#1a73e8',
-        highlightFill: '#1a73e8',
-        highlightStroke: '#1a73e8',
-        data: [10, 20, 30, 40]
+        label: 'Tất cả',
+        borderColor: "#ff6a00",
+        backgroundColor: "rgba(209, 237, 228,0.3)",
+        borderWidth: 3,
+        pointRadius: 2,
+        data: [random(), random(), random(), random()]
     }, {
-        label: 'Booking',
-        backgroundColor: 'red',
-        borderColor: 'red',
-        highlightFill: 'red',
-        highlightStroke: 'red',
-        data: [5, 15, 20, 30]
+        label: 'Paris',
+        borderColor: "rgb(0, 86, 162)",
+        backgroundColor: "rgba(209, 237, 228,0.3)",
+        borderWidth: 2,
+        pointRadius: 1,
+        hidden: true,
+        data: [random(), random(), random(), random()]
+    }, {
+        label: 'Kangnam',
+        borderColor: "rgb(183, 44, 38)",
+        backgroundColor: "rgba(209, 237, 228,0.3)",
+        borderWidth: 2,
+        pointRadius: 1,
+        hidden: true,
+        data: [random(), random(), random(), random()]
+    }, {
+        label: 'Đông Á',
+        borderColor: "#009f97",
+        backgroundColor: "rgba(209, 237, 228,0.3)",
+        borderWidth: 2,
+        pointRadius: 1,
+        hidden: true,
+        data: [random(), random(), random(), random()]
+    }, {
+        label: 'Hồng Hà',
+        borderColor: "#a100f3",
+        backgroundColor: "rgba(209, 237, 228,0.3)",
+        borderWidth: 2,
+        pointRadius: 1,
+        hidden: true,
+        data: [random(), random(), random(), random()]
     }]
     branchData = [{
         name: 'Paris',

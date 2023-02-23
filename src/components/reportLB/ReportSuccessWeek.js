@@ -3,45 +3,50 @@ import Filter from "../Filter.js"
 import SearchInput from "../SearchInput.js"
 import SuccessTable from "./SuccessTable.js"
 import LineChart from "../LineChart.js"
+import { random } from "../../util/util.js"
 
 class ReportSuccessWeek {
 
     labels = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật']
     dataSet = [{
         label: 'Tất cả',
-        borderColor: "rgba(26, 115, 232,1)",
-        backgroundColor: "rgba(26, 115, 232,0.1)",
-        borderWidth: 2,
-        pointRadius: 0,
-        data: [10, 20, 30, 40, 50, 60, 70]
+        borderColor: "#ff6a00",
+        backgroundColor: "rgba(209, 237, 228,0.3)",
+        borderWidth: 3,
+        pointRadius: 2,
+        data: [random(), random(), random(), random(), random(), random(), random()]
     }, {
         label: 'Paris',
-        borderColor: "rgba(0,0,255,1)",
-        backgroundColor: "rgba(0,0,255,0.1)",
+        borderColor: "rgb(0, 86, 162)",
+        backgroundColor: "rgba(209, 237, 228,0.3)",
         borderWidth: 2,
-        pointRadius: 0,
-        data: [16, 20, 40, 35, 26, 17, 45]
+        pointRadius: 1,
+        hidden: true,
+        data: [random(), random(), random(), random(), random(), random(), random()]
     }, {
         label: 'Kangnam',
-        borderColor: "rgb(255, 165, 0,1)",
-        backgroundColor: "rgba(255, 165, 0,0.1)",
+        borderColor: "rgb(183, 44, 38)",
+        backgroundColor: "rgba(209, 237, 228,0.3)",
         borderWidth: 2,
-        pointRadius: 0,
-        data: [20, 46, 40, 30, 35, 22, 37]
+        pointRadius: 1,
+        hidden: true,
+        data: [random(), random(), random(), random(), random(), random(), random()]
     }, {
         label: 'Đông Á',
-        borderColor: "rgba(0,128,0,1)",
-        backgroundColor: "rgba(0,128,0,0.1)",
+        borderColor: "#009f97",
+        backgroundColor: "rgba(209, 237, 228,0.3)",
         borderWidth: 2,
-        pointRadius: 0,
-        data: [25, 40, 22, 15, 40, 42, 50]
+        pointRadius: 1,
+        hidden: true,
+        data: [random(), random(), random(), random(), random(), random(), random()]
     }, {
         label: 'Hồng Hà',
-        borderColor: "rgba(255,0,0,1)",
-        backgroundColor: "rgba(255,0,0,0.1)",
+        borderColor: "#a100f3",
+        backgroundColor: "rgba(209, 237, 228,0.3)",
         borderWidth: 2,
-        pointRadius: 0,
-        data: [5, 10, 15, 20, 15, 17, 14]
+        pointRadius: 1,
+        hidden: true,
+        data: [random(), random(), random(), random(), random(), random(), random()]
     }]
     branchData = [{
         service: 'Niềng răng',

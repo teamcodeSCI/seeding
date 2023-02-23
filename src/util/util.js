@@ -34,3 +34,6 @@ export const formatNumber = (number) => {
 export const arrToStr = (arr) => {
     return arr.toString().split(',')
 }
+export const random = () => {
+    return Math.floor(Math.random() * 100);
+}
