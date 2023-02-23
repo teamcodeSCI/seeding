@@ -17,7 +17,7 @@ class ReportLeadWeek {
         borderColor: 'red',
         highlightFill: 'red',
         highlightStroke: 'red',
-        data: [5, 15, 20, 30, 35, 42, 25, 53]
+        data: [15, 20, 30, 35, 42, 25, 53]
     }]
     branchData = [{
         name: 'Paris',
