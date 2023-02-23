@@ -5,6 +5,7 @@ class ReportTable {
         this.data = data
         this.$table = document.createElement('table')
         this.$table.className = 'table w-100'
+        this.$table.style.fontSize = '15px'
         this.$thead = document.createElement('thead')
         this.$headerTr = document.createElement('tr')
 
