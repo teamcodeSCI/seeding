@@ -1,7 +1,8 @@
 import FilterItem from "./FilterItem.js";
 class Filter {
     data = ['Tất cả', 'Kangnam', 'Paris', 'Hồng Hà', 'Đông Á']
-    constructor() {
+    constructor({ filterSearch }) {
+        this.filterSearch = filterSearch
         this.$container = document.createElement('div')
         this.$container.className = 'border-bottom position-relative'
         this.$container.style.minWidth = '100px'
@@ -23,7 +24,11 @@ class Filter {
     }
     selectItem = (val) => {
         this.$filterBtn.innerHTML = val
+        this.filterSearch()
         this.closeFilter()
+    }
+    getValue = () => {
+        return this.$filterBtn.innerHTML
     }
     openFilter = () => {
         if (this.$filterBox.parentElement !== this.$container) {

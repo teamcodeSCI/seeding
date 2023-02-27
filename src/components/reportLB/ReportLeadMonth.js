@@ -1,3 +1,4 @@
+import { getNumberBrand } from "../../apis/reportNumber.js"
 import BarChart from "../BarChart.js"
 import ReportTable from "./ReportTable.js"
 
@@ -18,23 +19,7 @@ class ReportLeadMonth {
         highlightStroke: 'red',
         data: [5, 15, 20, 30]
     }]
-    branchData = [{
-        name: 'Paris',
-        lead: '50',
-        booking: '40'
-    }, {
-        name: 'Kangnam',
-        lead: '80',
-        booking: '50'
-    }, {
-        name: 'Hồng Hà',
-        lead: '20',
-        booking: '8'
-    }, {
-        name: 'Đông Á',
-        lead: '40',
-        booking: '25'
-    }]
+
     constructor() {
         this.$box = document.createElement('div')
         this.$box.className = 'd-flex gap-3 align-items-start'
@@ -43,16 +28,19 @@ class ReportLeadMonth {
         this.$tableBox = document.createElement('div')
         this.$tableBox.style.width = '35%'
 
-        this.$serviceBookingRp = new ReportTable({ data: this.branchData })
         this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
+    }
+    getBrandData = async() => {
+        const brandData = await getNumberBrand()
+        this.$serviceBookingRp = new ReportTable({ data: brandData.data })
+        this.$tableBox.innerHTML = ''
+        this.$tableBox.appendChild(this.$serviceBookingRp.render())
     }
     render() {
         this.$box.appendChild(this.$chartBox)
         this.$chartBox.appendChild(this.$chart.render())
-
-
         this.$box.appendChild(this.$tableBox)
-        this.$tableBox.appendChild(this.$serviceBookingRp.render())
+        this.getBrandData()
         return this.$box
     }
 }

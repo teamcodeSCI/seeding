@@ -37,3 +37,7 @@ export const arrToStr = (arr) => {
 export const random = () => {
     return Math.floor(Math.random() * 100);
 }
+
+export const getDuplicate = (arr1, arr2) => {
+    return arr1.filter((item) => arr2.indexOf(item) > -1)
+}

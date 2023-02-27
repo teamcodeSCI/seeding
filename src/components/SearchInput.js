@@ -1,5 +1,5 @@
 class SearchInput {
-    constructor({ type, placeholder, value, width }) {
+    constructor({ type, placeholder, value, width, filterSearch }) {
         this.$container = document.createElement('div')
         this.$container.className = 'position-relative'
         this.$container.style.borderBottom = '1px solid #dee2e6'
@@ -14,6 +14,10 @@ class SearchInput {
         this.$input.type = type || 'text'
         this.$input.placeholder = placeholder || ''
         this.$input.value = value || ''
+        this.$input.addEventListener('input', () => {
+            filterSearch()
+        })
+
         this.$icon = document.createElement('i')
         this.$icon.className = 'bi bi-search position-absolute'
         this.$icon.style.fontSize = '14px'
@@ -22,6 +26,8 @@ class SearchInput {
         this.$icon.style.transform = 'translateY(-50%)'
         this.$icon.style.cursor = 'pointer'
         this.$icon.style.zIndex = '10'
+
+
 
         window.onload = () => {
             this.$input.focus();

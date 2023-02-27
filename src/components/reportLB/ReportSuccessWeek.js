@@ -4,6 +4,7 @@ import SearchInput from "../SearchInput.js"
 import SuccessTable from "./SuccessTable.js"
 import LineChart from "../LineChart.js"
 import { random } from "../../util/util.js"
+import { getCustomerSuccess } from "../../apis/reportNumber.js"
 
 class ReportSuccessWeek {
 
@@ -48,23 +49,8 @@ class ReportSuccessWeek {
         hidden: true,
         data: [random(), random(), random(), random(), random(), random(), random()]
     }]
-    branchData = [{
-        service: 'Niềng răng',
-        brand: 'Paris',
-        lead: '20',
-    }, {
-        service: 'Cắt mí',
-        brand: 'Kangnam',
-        booking: '20'
-    }, {
-        service: 'Hút mỡ',
-        brand: 'Hồng Hà',
-        booking: '5'
-    }, {
-        service: 'Nâng ngực',
-        brand: 'Đông Á',
-        booking: '15'
-    }]
+    search = ''
+    filter = ''
     constructor() {
         this.$box = document.createElement('div')
         this.$box.className = 'd-flex gap-3 align-items-start'
@@ -78,22 +64,34 @@ class ReportSuccessWeek {
         this.$tableBox = document.createElement('div')
         this.$tableBox.style.width = '50%'
 
-        this.$lineChart = new LineChart({ labels: this.labels, dataSet: this.dataSet })
-        this.$searchService = new SearchInput({ placeholder: 'Tìm theo tên dịch vụ ...', width: '20%' })
-        this.$filterService = new Filter({})
+        this.$table = document.createElement('div')
+        this.$table.style.maxHeight = '220px'
+        this.$table.style.overflowY = 'auto'
 
-        this.$serviceBookingRp = new SuccessTable({ data: this.branchData })
+        this.$lineChart = new LineChart({ labels: this.labels, dataSet: this.dataSet })
+        this.$searchService = new SearchInput({ placeholder: 'Tìm theo tên dịch vụ ...', width: '20%', filterSearch: this.filterSearch })
+        this.$filterService = new Filter({ filterSearch: this.filterSearch })
+    }
+    filterSearch = () => {
+        this.search = this.$searchService.getValue()
+        this.filter = this.$filterService.getValue()
+        this.getCustomer()
+    }
+    getCustomer = async() => {
+        const getData = await getCustomerSuccess({ search: this.search, filter: this.filter })
+        this.$serviceBookingRp = new SuccessTable({ data: getData.data })
+        this.$table.innerHTML = ''
+        this.$table.appendChild(this.$serviceBookingRp.render())
     }
     render() {
+        this.getCustomer()
         this.$box.appendChild(this.$tableBox)
         this.$box.appendChild(this.$chartBox)
-
         this.$chartBox.appendChild(this.$lineChart.render())
-        this.$tableBox.appendChild(this.$filterSearch)
-        this.$tableBox.appendChild(this.$serviceBookingRp.render())
         this.$filterSearch.appendChild(this.$filterService.render())
         this.$filterSearch.appendChild(this.$searchService.render())
-
+        this.$tableBox.appendChild(this.$filterSearch)
+        this.$tableBox.appendChild(this.$table)
 
         return this.$box
     }

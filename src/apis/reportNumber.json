@@ -1,0 +1,25 @@
+[{
+        "id": "1",
+        "name": "Paris",
+        "lead": "20",
+        "booking": "15"
+    },
+    {
+        "id": "2",
+        "name": "Kangnam",
+        "lead": "25",
+        "booking": "15"
+    },
+    {
+        "id": "3",
+        "name": "Hồng Hà",
+        "lead": "30",
+        "booking": "20"
+    },
+    {
+        "id": "4",
+        "name": "Đông Á",
+        "lead": "10",
+        "booking": "5"
+    }
+]

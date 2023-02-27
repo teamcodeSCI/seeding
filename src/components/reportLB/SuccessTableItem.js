@@ -1,16 +1,16 @@
 class SuccessTableItem {
-    constructor({ stt, name, lead, booking }) {
+    constructor({ stt, service, brand, number }) {
         this.$tr = document.createElement('tr')
         this.$tr.className = 'align-middle'
 
         this.$stt = document.createElement('td')
-        this.$stt.innerHTML = 'STT'
+        this.$stt.innerHTML = stt
 
         this.$service = document.createElement('td')
-        this.$service.innerHTML = 'Dịch vụ'
+        this.$service.innerHTML = service
 
         this.$brand = document.createElement('td')
-        this.$brand.innerHTML = 'Thương hiệu'
+        this.$brand.innerHTML = brand
 
         this.$numberic = document.createElement('td')
         this.$numberic.style.width = '45%'
@@ -27,7 +27,7 @@ class SuccessTableItem {
         this.$progressBar.style.width = '50%'
 
         this.$number = document.createElement('span')
-        this.$number.innerHTML = '500'
+        this.$number.innerHTML = number
 
     }
     render() {

@@ -23,7 +23,20 @@ class SuccessTable {
         this.$numberic.innerHTML = 'Số lượng'
 
         this.$tbody = document.createElement('tbody')
-        this.$item = new SuccessTableItem({})
+
+    }
+    renderItem = async() => {
+        this.$tbody.innerHTML = ''
+        this.data.forEach((item, idx) => {
+            this.$item = new SuccessTableItem({
+                stt: idx + 1,
+                service: item.service,
+                brand: item.brand,
+                number: item.number
+            })
+            this.$tbody.appendChild(this.$item.render())
+        })
+
     }
     render() {
         this.$table.appendChild(this.$thead)
@@ -33,7 +46,7 @@ class SuccessTable {
         this.$headerTr.appendChild(this.$service)
         this.$headerTr.appendChild(this.$brand)
         this.$headerTr.appendChild(this.$numberic)
-        this.$tbody.appendChild(this.$item.render())
+        this.renderItem()
         return this.$table
     }
 }
