@@ -1,4 +1,4 @@
-import { app } from "../../util/const.js"
+import { app, role } from "../../util/const.js"
 import { formatDate } from "../../util/util.js"
 import BookingDetail from "./BookingDetail.js"
 
@@ -44,6 +44,12 @@ class BookingItem {
         this.$validStatusText.className = 'm-0'
         this.$validStatusText.innerHTML = data.effect
 
+        this.$user = document.createElement('div')
+        this.$user.className = 'col text-truncate'
+        this.$userText = document.createElement('p')
+        this.$userText.className = 'm-0'
+        this.$userText.innerHTML = data.user || 'user'
+
         this.$viewMore = document.createElement('div')
         this.$viewMore.className = 'col text-truncate'
         this.$viewMore.addEventListener('click', () => {
@@ -82,6 +88,11 @@ class BookingItem {
 
         this.$tr.appendChild(this.$validStatus)
         this.$validStatus.appendChild(this.$validStatusText)
+
+        if (role === 'admin') {
+            this.$tr.appendChild(this.$user)
+            this.$user.appendChild(this.$userText)
+        }
 
         this.$tr.appendChild(this.$viewMore)
         this.$viewMore.appendChild(this.$viewMoreText)

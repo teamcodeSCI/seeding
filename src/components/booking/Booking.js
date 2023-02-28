@@ -14,6 +14,7 @@ class Booking {
     searchName = ''
     searchPhone = ''
     searchCode = ''
+    searchUser = ''
     startDate = ''
     endDate = ''
     index = 1
@@ -77,15 +78,15 @@ class Booking {
         this.$actionLeft.removeChild(this.$reset)
         this.$title.innerHTML = ''
     }
-    setSearchValue = (name, phone, code, startDate, endDate) => {
-
+    setSearchValue = (name, phone, code, user, startDate, endDate) => {
         this.searchName = name || ''
         this.searchPhone = phone || ''
         this.searchCode = code || ''
+        this.searchUser = user || ''
         this.startDate = startDate || ''
         this.endDate = endDate || ''
         this.$tagGroup.innerHTML = ''
-        this.inputGroup = [this.searchName, this.searchPhone, this.searchCode, this.startDate, this.endDate]
+        this.inputGroup = [this.searchName, this.searchPhone, this.searchCode, this.startDate, this.endDate, this.searchUser]
 
         for (let i = 0; i < this.inputGroup.length; i++) {
             if (this.inputGroup[i] !== '') {
@@ -104,6 +105,9 @@ class Booking {
                         break;
                     case 4:
                         this.tagTitle = `Ngày kết thúc: ${this.inputGroup[i]}`
+                        break;
+                    case 5:
+                        this.tagTitle = `Nnân viên: ${this.inputGroup[i]}`
                         break;
                     default:
                         break;
@@ -126,6 +130,7 @@ class Booking {
                     phone: this.searchPhone,
                     startDate: this.startDate,
                     endDate: this.endDate,
+                    user: this.user,
                     code: ''
                 })
                 // loading(false)

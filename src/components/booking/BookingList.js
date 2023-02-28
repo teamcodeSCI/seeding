@@ -1,3 +1,4 @@
+import { role } from "../../util/const.js"
 import BookingItem from "./BookingItem.js"
 
 class BookingList {
@@ -45,6 +46,12 @@ class BookingList {
         this.$validStatusText.className = 'm-0 fw-bold'
         this.$validStatusText.innerHTML = `Trạng thái hiệu lực`
 
+        this.$user = document.createElement('div')
+        this.$user.className = 'col text-truncate'
+        this.$userText = document.createElement('p')
+        this.$userText.className = 'm-0 fw-bold'
+        this.$userText.innerHTML = `Nhân viên`
+
         this.$viewMore = document.createElement('div')
         this.$viewMore.className = 'col text-truncate'
         this.$viewMoreText = document.createElement('p')
@@ -89,6 +96,11 @@ class BookingList {
 
         this.$theadTr.appendChild(this.$validStatus)
         this.$validStatus.appendChild(this.$validStatusText)
+
+        if (role === 'admin') {
+            this.$theadTr.appendChild(this.$user)
+            this.$user.appendChild(this.$userText)
+        }
 
         this.$theadTr.appendChild(this.$viewMore)
         this.$viewMore.appendChild(this.$viewMoreText)

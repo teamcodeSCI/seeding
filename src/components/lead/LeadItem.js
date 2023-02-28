@@ -1,8 +1,8 @@
-import { app } from "../../util/const.js"
+import { app, role } from "../../util/const.js"
 import LeadEditModal from "./LeadEditModal.js"
 
 class LeadItem {
-    constructor({ name, phone, name_fb, link_fb, service, company_name, company_code, script, interactive_proof, note, code_form, seeding_user_id, ctv_user_id, getAllLead }) {
+    constructor({ name, phone, name_fb, link_fb, service, company_name, company_code, script, interactive_proof, note, code_form, seeding_user_id, ctv_user_id, getAllLead, user }) {
         this.data = {
             seedingUserId: seeding_user_id,
             ctvUserId: ctv_user_id,
@@ -17,6 +17,7 @@ class LeadItem {
             script: script,
             interactive_proof: interactive_proof,
             note: note,
+            user: user
         }
         this.getAllLead = getAllLead
         this.$tr = document.createElement('div')
@@ -68,6 +69,12 @@ class LeadItem {
         this.$interactiveText.target = '_blank'
         this.$interactiveText.innerHTML = interactive_proof === '' ? '' : 'Link ảnh'
 
+        this.$user = document.createElement('div')
+        this.$user.className = 'col text-truncate'
+        this.$userText = document.createElement('p')
+        this.$userText.className = 'm-0'
+        this.$userText.innerHTML = user || 'user'
+
         this.$note = document.createElement('div')
         this.$note.className = 'col text-truncate'
         this.$noteText = document.createElement('p')
@@ -114,6 +121,11 @@ class LeadItem {
 
         this.$tr.appendChild(this.$interactive)
         this.$interactive.appendChild(this.$interactiveText)
+
+        if (role === 'admin') {
+            this.$tr.appendChild(this.$user)
+            this.$user.appendChild(this.$userText)
+        }
 
         this.$tr.appendChild(this.$note)
         this.$note.appendChild(this.$noteText)

@@ -1,4 +1,5 @@
 import { getBranch } from "../../apis/getInfo.js";
+import { role } from "../../util/const.js";
 import { splitStr } from "../../util/splitStr.js";
 import InputGroup from "../InputGroup.js";
 import SuggestItem from "../SuggestItem.js";
@@ -63,6 +64,7 @@ class LeadSearchModal {
         });
         this.$nameFb = new InputGroup({ placeholder: "Tên FB", width: "48%" });
         this.$service = new InputGroup({ placeholder: "Dịch vụ", width: "48%" });
+        this.$user = new InputGroup({ placeholder: "Nhân viên", width: "48%" });
         this.$branchBox = document.createElement("div");
         this.$branchBox.className = "branchBox position-relative";
         this.$branchBox.style.width = "48%";
@@ -139,6 +141,7 @@ class LeadSearchModal {
             this.$nameFb.getValue().value,
             this.$branch.getValue().hideValue,
             this.$branch.getValue().value,
+            this.$user.getValue().value,
             this.$startDate.getValue().value,
             this.$endDate.getValue().value
         );
@@ -162,6 +165,7 @@ class LeadSearchModal {
         this.$border.appendChild(this.$service.render());
         this.$border.appendChild(this.$branchBox);
         this.$branchBox.appendChild(this.$branch.render());
+        if (role === 'admin') this.$border.appendChild(this.$user.render());
         this.$advance.appendChild(this.$startDate.render());
         this.$advance.appendChild(this.$endDate.render());
 

@@ -19,6 +19,7 @@ class Lead {
     searchBranch = ''
     startDate = ''
     endDate = ''
+    user = ''
     index = 1
     isLoading = false
 
@@ -84,17 +85,18 @@ class Lead {
         this.$actionLeft.removeChild(this.$reset)
         this.$title.innerHTML = ''
     }
-    setSearchValue = (name, phone, service, fb, hideBranch, branch, startDate, endDate) => {
+    setSearchValue = (name, phone, service, fb, hideBranch, branch, user, startDate, endDate) => {
         this.searchName = name || ''
         this.searchPhone = phone || ''
         this.searchService = service || ''
         this.searchFb = fb || ''
         this.hideBranch = hideBranch || ''
         this.searchBranch = branch || ''
+        this.user = user || ''
         this.startDate = startDate || ''
         this.endDate = endDate || ''
         this.$tagGroup.innerHTML = ''
-        this.inputGroup = [this.searchName, this.searchPhone, this.searchService, this.searchFb, this.searchBranch, this.startDate, this.endDate]
+        this.inputGroup = [this.searchName, this.searchPhone, this.searchService, this.searchFb, this.searchBranch, this.startDate, this.endDate, this.user]
 
         for (let i = 0; i < this.inputGroup.length; i++) {
             if (this.inputGroup[i] !== '') {
@@ -120,6 +122,9 @@ class Lead {
                     case 6:
                         this.tagTitle = `Ngày kết thúc: ${formatDate(this.inputGroup[i])}`
                         break;
+                    case 7:
+                        this.tagTitle = `Nhân viên: ${this.inputGroup[i]}`
+                        break;
                     default:
                         break;
                 }
@@ -143,7 +148,8 @@ class Lead {
                     fb: this.searchFb,
                     branch: this.hideBranch,
                     startDate: this.startDate,
-                    endDate: this.endDate
+                    endDate: this.endDate,
+                    user: this.user
                 })
                 // loading(false)
 

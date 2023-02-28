@@ -1,3 +1,4 @@
+import { role } from "../../util/const.js";
 import InputGroup from "../InputGroup.js";
 
 
@@ -61,6 +62,8 @@ class BookingSearchModal {
         });
         this.$bookingCode = new InputGroup({ placeholder: "Mã booking", width: "48%" });
 
+        this.$user = new InputGroup({ placeholder: "Nhân viên", width: "48%" });
+
         this.$startDate = new InputGroup({
             placeholder: "Từ",
             title: "Từ",
@@ -82,15 +85,13 @@ class BookingSearchModal {
         this.setSearchValue(
             this.$searchName.getValue().value,
             this.$phone.getValue().value,
-
             this.$bookingCode.getValue().value,
-
+            this.$user.getValue().value,
             this.$startDate.getValue().value,
             this.$endDate.getValue().value
         );
         this.closeBookingSearchModal();
     };
-
     render() {
         this.$container.appendChild(this.$dialog);
         this.$dialog.appendChild(this.$content);
@@ -106,7 +107,7 @@ class BookingSearchModal {
         this.$border.appendChild(this.$phone.render());
         this.$border.appendChild(this.$bookingCode.render());
 
-
+        if (role === 'admin') this.$border.appendChild(this.$user.render());
 
         this.$advance.appendChild(this.$startDate.render());
         this.$advance.appendChild(this.$endDate.render());

@@ -11,12 +11,15 @@ import ReportSuccessMonth from "../components/reportLB/ReportSuccessMonth.js"
 import TargetDay from "../components/reportCost/TargetDay.js"
 import TargetMonth from "../components/reportCost/TargetMonth.js"
 import TargetYear from "../components/reportCost/TargetYear.js"
+import { splitStr } from "./splitStr.js"
+import User from "../components/user/user.js"
 
 
 const lead = new Lead()
 const booking = new Booking()
 const reportLB = new ReportLB()
 const cost = new ReportCost()
+const user = new User()
 
 const reportLeadWeek = new ReportLeadWeek()
 const reportLeadMonth = new ReportLeadMonth()
@@ -33,11 +36,20 @@ const targetYear = new TargetYear()
 
 export const app = document.getElementById('root')
 
-export const menu = [
+export const role = localStorage.getItem('token') ? splitStr(localStorage.getItem('token')).rule : ''
+
+export const menu = role === 'admin' ? [
+    { title: 'Lead', link: 'lead', component: lead },
+    { title: 'Booking', link: 'booking', component: booking },
+    { title: 'Báo cáo số lượng', link: '[report] lead-booking', component: reportLB },
+    { title: 'Báo cáo Chi phí', link: '[report] cost', component: cost },
+    { title: 'Quản lý nhân viên', link: '[report] user', component: user }
+] : [
     { title: 'Lead', link: 'lead', component: lead },
     { title: 'Booking', link: 'booking', component: booking },
     { title: 'Báo cáo số lượng', link: '[report] lead-booking', component: reportLB },
     { title: 'Báo cáo Chi phí', link: '[report] cost', component: cost }
+
 ]
 export const tabLead = [
     { title: 'Ngày', link: '[LB] day', component: reportLeadWeek },

@@ -1,3 +1,4 @@
+import { role } from "../../util/const.js"
 import LeadItem from "./LeadItem.js"
 
 class LeadList {
@@ -52,6 +53,12 @@ class LeadList {
         this.$interactiveText.className = 'm-0 fw-bold'
         this.$interactiveText.innerHTML = `Tương tác`
 
+        this.$user = document.createElement('div')
+        this.$user.className = 'col text-truncate'
+        this.$userText = document.createElement('p')
+        this.$userText.className = 'm-0 fw-bold'
+        this.$userText.innerHTML = `Nhân viên`
+
         this.$note = document.createElement('div')
         this.$note.className = 'col text-truncate'
         this.$noteText = document.createElement('p')
@@ -99,6 +106,11 @@ class LeadList {
 
         this.$theadTr.appendChild(this.$interactive)
         this.$interactive.appendChild(this.$interactiveText)
+
+        if (role === 'admin') {
+            this.$theadTr.appendChild(this.$user)
+            this.$user.appendChild(this.$userText)
+        }
 
         this.$theadTr.appendChild(this.$note)
         this.$note.appendChild(this.$noteText)
