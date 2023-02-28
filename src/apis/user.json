@@ -1,0 +1,31 @@
+ [{
+         "id": "1",
+         "userCode": "NV-001",
+         "name": "Nguyễn Văn A",
+         "birthday": "18/06/2000"
+     },
+     {
+         "id": "2",
+         "userCode": "NV-002",
+         "name": "Nguyễn Văn B",
+         "birthday": "18/06/2000"
+     },
+     {
+         "id": "3",
+         "userCode": "NV-003",
+         "name": "Nguyễn Văn C",
+         "birthday": "18/06/2000"
+     },
+     {
+         "id": "4",
+         "userCode": "NV-004",
+         "name": "Nguyễn Văn D",
+         "birthday": "18/06/2000"
+     },
+     {
+         "id": "5",
+         "userCode": "NV-005",
+         "name": "Nguyễn Văn E",
+         "birthday": "18/06/2000"
+     }
+ ]
