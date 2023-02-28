@@ -20,6 +20,13 @@ class UserItem {
         this.$birthdayText = document.createElement('p')
         this.$birthdayText.className = 'm-0'
         this.$birthdayText.innerHTML = birthday
+
+        this.$editBtn = document.createElement('button')
+        this.$editBtn.className = 'position-absolute w-auto border-0 p-0 bg-transparent'
+        this.$editBtn.style.right = '15px'
+        this.$editIcon = document.createElement('i')
+        this.$editIcon.className = 'bi bi-pencil text-primary'
+
     }
     render() {
         this.$tr.appendChild(this.$userCode)
@@ -30,6 +37,9 @@ class UserItem {
 
         this.$tr.appendChild(this.$birthday)
         this.$birthday.appendChild(this.$birthdayText)
+
+        this.$tr.appendChild(this.$editBtn)
+        this.$editBtn.appendChild(this.$editIcon)
         return this.$tr
     }
 }
