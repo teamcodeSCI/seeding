@@ -12,7 +12,7 @@ import TargetDay from "../components/reportCost/TargetDay.js"
 import TargetMonth from "../components/reportCost/TargetMonth.js"
 import TargetYear from "../components/reportCost/TargetYear.js"
 import { splitStr } from "./splitStr.js"
-import User from "../components/user/user.js"
+import User from "../components/user/User.js"
 
 
 const lead = new Lead()
