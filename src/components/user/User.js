@@ -1,6 +1,6 @@
 import { getUser } from "../../apis/userList.js";
 import SearchInput from "../SearchInput.js";
-import UserList from "./_UserList.js";
+import UserList from "./UserList.js";
 
 class User {
     search = ''
