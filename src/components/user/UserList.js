@@ -22,11 +22,23 @@ class UserList {
         this.$nameText.className = 'm-0 fw-bold'
         this.$nameText.innerHTML = `Họ và tên`
 
+        this.$phonenumber = document.createElement('div')
+        this.$phonenumber.className = 'col text-truncate'
+        this.$phonenumberText = document.createElement('p')
+        this.$phonenumberText.className = 'm-0 fw-bold'
+        this.$phonenumberText.innerHTML = `Số điện thoại`
+
         this.$birthday = document.createElement('div')
         this.$birthday.className = 'col text-truncate'
         this.$birthdayText = document.createElement('p')
         this.$birthdayText.className = 'm-0 fw-bold'
         this.$birthdayText.innerHTML = `Ngày sinh`
+
+        this.$status = document.createElement('div')
+        this.$status.className = 'col text-truncate'
+        this.$statusText = document.createElement('p')
+        this.$statusText.className = 'm-0 fw-bold'
+        this.$statusText.innerHTML = `Trạng thái`
 
         this.$tbody = document.createElement('div')
         this.$tbody.className = 'bg-item'
@@ -54,8 +66,14 @@ class UserList {
         this.$theadTr.appendChild(this.$name)
         this.$name.appendChild(this.$nameText)
 
+        this.$theadTr.appendChild(this.$phonenumber)
+        this.$phonenumber.appendChild(this.$phonenumberText)
+
         this.$theadTr.appendChild(this.$birthday)
         this.$birthday.appendChild(this.$birthdayText)
+
+        this.$theadTr.appendChild(this.$status)
+        this.$status.appendChild(this.$statusText)
 
         return this.$container
     }

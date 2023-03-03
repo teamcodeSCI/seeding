@@ -1,5 +1,6 @@
 import { getUser } from "../../apis/userList.js";
 import SearchInput from "../SearchInput.js";
+import AddUser from "./AddUser.js";
 import UserList from "./UserList.js";
 
 class User {
@@ -11,9 +12,8 @@ class User {
         this.$action = document.createElement('div')
         this.$action.className = 'd-flex justify-content-between align-items-center mb-3'
 
-        this.$addBtn = document.createElement('button')
-        this.$addBtn.className = 'addBtn btn btn-primary'
-        this.$addBtn.innerHTML = 'Thêm mới'
+        this.$addBtn = new AddUser({ getAllUser: this.getAllUser })
+
 
         this.$search = new SearchInput({ placeholder: 'Tìm kiếm theo mã nhân viên ...', width: '20%', filterSearch: this.filterSearch })
         this.$content = document.createElement('div')
@@ -32,7 +32,7 @@ class User {
         this.getAllUser()
         this.$dataTable.appendChild(this.$action)
         this.$action.appendChild(this.$search.render())
-        this.$action.appendChild(this.$addBtn)
+        this.$action.appendChild(this.$addBtn.render())
         this.$dataTable.appendChild(this.$content)
         return this.$dataTable
     }
