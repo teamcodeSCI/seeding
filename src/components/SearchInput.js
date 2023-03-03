@@ -15,7 +15,9 @@ class SearchInput {
         this.$input.placeholder = placeholder || ''
         this.$input.value = value || ''
         this.$input.addEventListener('input', () => {
-            filterSearch()
+            if (this.$input.value === '') {
+                filterSearch()
+            }
         })
 
         this.$icon = document.createElement('i')
@@ -26,12 +28,10 @@ class SearchInput {
         this.$icon.style.transform = 'translateY(-50%)'
         this.$icon.style.cursor = 'pointer'
         this.$icon.style.zIndex = '10'
+        this.$icon.addEventListener('click', () => {
+            filterSearch()
+        })
 
-
-
-        window.onload = () => {
-            this.$input.focus();
-        }
     }
     getValue = () => {
         return this.$input.value

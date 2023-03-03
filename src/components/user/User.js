@@ -14,7 +14,6 @@ class User {
 
         this.$addBtn = new AddUser({ getAllUser: this.getAllUser })
 
-
         this.$search = new SearchInput({ placeholder: 'Tìm kiếm theo mã nhân viên ...', width: '20%', filterSearch: this.filterSearch })
         this.$content = document.createElement('div')
     }
