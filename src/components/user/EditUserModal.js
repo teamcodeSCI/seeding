@@ -1,7 +1,9 @@
 import InputGroup from '../InputGroup.js'
-class AddUserModal {
-    constructor({ closeUserAddModal }) {
-        this.closeUserAddModal = closeUserAddModal
+import Select from '../Select.js';
+class EditUserModal {
+    select = ['active', 'unactive']
+    constructor({ closeUserEditModal }) {
+        this.closeUserEditModal = closeUserEditModal
         this.$container = document.createElement("div");
         this.$container.className = `modal d-flex align-items-center justify-content-center`;
         this.$container.style.background = "rgba(0,0,0,0.7)";
@@ -19,12 +21,12 @@ class AddUserModal {
 
         this.$title = document.createElement("h5");
         this.$title.className = `modal-title`;
-        this.$title.innerHTML = `Thêm thông tin`;
+        this.$title.innerHTML = `Sửa thông tin`;
 
         this.$closeBtn = document.createElement("button");
         this.$closeBtn.className = `btn-close`;
         this.$closeBtn.addEventListener("click", () => {
-            closeUserAddModal()
+            closeUserEditModal()
         });
 
         this.$body = document.createElement("div");
@@ -33,36 +35,27 @@ class AddUserModal {
         this.$border = document.createElement("div");
         this.$border.className = `bg-white d-flex justify-content-between flex-wrap gap-3`;
 
-        this.$name = new InputGroup({ placeholder: 'Họ tên' })
-        this.$phonenumber1 = new InputGroup({ placeholder: 'Số điện thoại 1' })
-        this.$phonenumber2 = new InputGroup({ placeholder: 'Số điện thoại 2' })
-        this.$birthday = new InputGroup({ placeholder: 'Ngày sinh' })
-        this.$password = new InputGroup({ placeholder: 'Mật khẩu', type: 'password' })
-        this.$retypePassword = new InputGroup({ placeholder: 'Nhập lại mật khẩu', type: 'password' })
+
+        this.$password = new InputGroup({ placeholder: 'Nhập mật khẩu mới', type: 'password' })
+        this.$retypePassword = new InputGroup({ placeholder: 'Nhập lại mật khẩu mới', type: 'password' })
+
+        this.$active = new Select({ data: this.select })
 
         this.$footer = document.createElement("div");
         this.$footer.className = `modal-footer`;
 
         this.$saveBtn = document.createElement("button");
         this.$saveBtn.className = "btn btn-primary";
-        this.$saveBtn.innerHTML = "Thêm mới";
+        this.$saveBtn.innerHTML = "Cập nhật";
         this.$saveBtn.addEventListener("click", () => {
             this.save()
         });
     }
     save = () => {
         if (
-            this.$name.getValue().value === "" ||
-            this.$phonenumber1.getValue().value === "" ||
-            this.$phonenumber2.getValue().value === "" ||
-            this.$birthday.getValue().value === "" ||
             this.$password.getValue().value === "" ||
             this.$retypePassword.getValue().value === ""
         ) {
-            this.$name.fail()
-            this.$phonenumber1.fail()
-            this.$phonenumber2.fail()
-            this.$birthday.fail()
             this.$password.fail()
             this.$retypePassword.fail()
             return;
@@ -76,16 +69,14 @@ class AddUserModal {
         this.$header.appendChild(this.$closeBtn);
         this.$content.appendChild(this.$body);
         this.$body.appendChild(this.$border);
-        this.$border.appendChild(this.$name.render())
-        this.$border.appendChild(this.$phonenumber1.render())
-        this.$border.appendChild(this.$phonenumber2.render())
-        this.$border.appendChild(this.$birthday.render())
+
         this.$border.appendChild(this.$password.render())
         this.$border.appendChild(this.$retypePassword.render())
+        this.$border.appendChild(this.$active.render())
 
         this.$content.appendChild(this.$footer);
         this.$footer.appendChild(this.$saveBtn);
         return this.$container;
     }
 }
-export default AddUserModal
+export default EditUserModal

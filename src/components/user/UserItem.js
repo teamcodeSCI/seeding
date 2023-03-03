@@ -1,3 +1,5 @@
+import { app } from '../../util/const.js'
+import EditUserModal from './EditUserModal.js'
 class UserItem {
     constructor({ userCode, name, birthday, phonenumber, status }) {
         this.$tr = document.createElement('div')
@@ -33,12 +35,23 @@ class UserItem {
         this.$statusText.className = 'm-0'
         this.$statusText.innerHTML = status
 
+        this.$editUserModal = new EditUserModal({ closeUserEditModal: this.closeModal })
+
         this.$editBtn = document.createElement('button')
         this.$editBtn.className = 'position-absolute w-auto border-0 p-0 bg-transparent'
         this.$editBtn.style.right = '15px'
         this.$editIcon = document.createElement('i')
         this.$editIcon.className = 'bi bi-pencil text-primary'
+        this.$editBtn.addEventListener('click', () => {
+            app.appendChild(this.$editUserModal.render())
+        })
 
+    }
+    closeModal = () => {
+        app.removeChild(this.$editUserModal.render())
+    }
+    openModal = () => {
+        app.appendChild(this.$editUserModal.render())
     }
     render() {
         this.$tr.appendChild(this.$userCode)
