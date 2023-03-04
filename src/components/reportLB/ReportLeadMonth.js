@@ -31,10 +31,22 @@ class ReportLeadMonth {
         this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
     }
     getBrandData = async() => {
-        const brandData = await getNumberBrand()
-        this.$serviceBookingRp = new ReportTable({ data: brandData.data })
-        this.$tableBox.innerHTML = ''
-        this.$tableBox.appendChild(this.$serviceBookingRp.render())
+        try {
+            const date = new Date()
+            const year = date.getFullYear()
+            const month = date.getMonth();
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+
+            const brandData = await getNumberBrand({ startDate: firstDay, endDate: lastDay })
+
+            this.$serviceBookingRp = new ReportTable({ data: brandData.data })
+            this.$tableBox.innerHTML = ''
+            this.$tableBox.appendChild(this.$serviceBookingRp.render())
+        } catch (e) {
+            console.log(e);
+            return
+        }
     }
     render() {
         this.$box.appendChild(this.$chartBox)

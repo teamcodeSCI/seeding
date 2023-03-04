@@ -34,7 +34,12 @@ class ReportLeadYear {
         this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
     }
     getBrandData = async() => {
-        const brandData = await getNumberBrand()
+        const date = new Date()
+        const year = date.getFullYear()
+        const firstDay = new Date(year, 0, 1);
+        const lastDay = new Date(year, 11, 31);
+
+        const brandData = await getNumberBrand({ startDate: firstDay, endDate: lastDay })
         this.$serviceBookingRp = new ReportTable({ data: brandData.data })
         this.$tableBox.innerHTML = ''
         this.$tableBox.appendChild(this.$serviceBookingRp.render())

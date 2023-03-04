@@ -22,9 +22,7 @@ export const removeDuplicates = (array) => {
 export const formatDate = (date) => {
     if (date) {
         const newDate = new Date(date);
-        return `${newDate.getDate()}/${
-      newDate.getMonth() + 1
-    }/${newDate.getFullYear()}`;
+        return `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDate()}`;
     }
     return ''
 };
