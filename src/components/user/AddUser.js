@@ -3,6 +3,7 @@ import AddUserModal from './AddUserModal.js'
 
 class AddUser {
     constructor({ getAllUser }) {
+
         this.$container = document.createElement('div')
         this.$btnAddUser = document.createElement('button')
         this.$btnAddUser.className = `btn btn-primary d-flex gap-2 justify-content-between w-100`

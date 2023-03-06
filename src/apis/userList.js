@@ -1,18 +1,39 @@
-import { removeAccents } from "../util/util.js"
+import { splitStr } from "../util/splitStr.js"
 
-const searchByCode = (data, input) => {
-    if (input === '') return data
-    return data.filter(item => removeAccents(item.userCode).search(removeAccents(input)) !== -1)
-}
-export const getUser = async({ limit, pageNum, userCode }) => {
+export const getUser = async({ userCode }) => {
     try {
-        const response = await fetch('src/apis/user.json ')
+        const token = splitStr(localStorage.getItem('token')).token
+        const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/get-user?token=${token}&code_user=${userCode}`)
         const data = await response.json()
-        const renderData = searchByCode(data, userCode)
-        return { message: 'Success', data: renderData }
+        return {
+            message: 'Success',
+            data: data.data.sort((a, b) => {
+                if (a.active_user !== undefined && b.active_user !== undefined) {
+                    return (a === b) ? 0 : a ? -1 : 1;
+                }
+            })
+        }
 
     } catch (e) {
         console.log(e);
         return
     }
+}
+export const createUser = async({ name, phone, mobile, birth }) => {
+    const token = splitStr(localStorage.getItem('token')).token
+    const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/create-user?token=${token}&name=${name}&phone=${phone}&mobile=${mobile}&date_of_birth=${birth}`);
+    const data = await response.json();
+    return data
+}
+export const updatePassUser = async({ user, password }) => {
+    const token = splitStr(localStorage.getItem('token')).token
+    const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/update-password-member?token=${token}&login=${user}&password=${password}`);
+    const data = await response.json();
+    return data
+}
+export const activeUser = async({ codeUser, active }) => {
+    const token = splitStr(localStorage.getItem('token')).token
+    const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/update-active-user?token=${token}&code_user=${codeUser}&active=${active}`);
+    const data = await response.json();
+    return data
 }

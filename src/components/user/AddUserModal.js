@@ -1,6 +1,8 @@
+import { createUser } from '../../apis/userList.js';
 import InputGroup from '../InputGroup.js'
 class AddUserModal {
-    constructor({ closeUserAddModal }) {
+    constructor({ closeUserAddModal, getAllUser }) {
+        this.getAllUser = getAllUser
         this.closeUserAddModal = closeUserAddModal
         this.$container = document.createElement("div");
         this.$container.className = `modal d-flex align-items-center justify-content-center`;
@@ -33,12 +35,15 @@ class AddUserModal {
         this.$border = document.createElement("div");
         this.$border.className = `bg-white d-flex justify-content-between flex-wrap gap-3`;
 
+        this.$notify = document.createElement('p')
+        this.$notify.className = 'm-0 text-center fst-italic text-danger'
+        this.$notify.style.fontSize = '14px'
+
         this.$name = new InputGroup({ placeholder: 'Họ tên' })
         this.$phonenumber1 = new InputGroup({ placeholder: 'Số điện thoại 1' })
         this.$phonenumber2 = new InputGroup({ placeholder: 'Số điện thoại 2' })
-        this.$birthday = new InputGroup({ placeholder: 'Ngày sinh' })
-        this.$password = new InputGroup({ placeholder: 'Mật khẩu', type: 'password' })
-        this.$retypePassword = new InputGroup({ placeholder: 'Nhập lại mật khẩu', type: 'password' })
+        this.$birthday = new InputGroup({ placeholder: 'Ngày sinh', type: 'date' })
+
 
         this.$footer = document.createElement("div");
         this.$footer.className = `modal-footer`;
@@ -50,23 +55,23 @@ class AddUserModal {
             this.save()
         });
     }
-    save = () => {
+    save = async() => {
         if (
             this.$name.getValue().value === "" ||
             this.$phonenumber1.getValue().value === "" ||
-            this.$phonenumber2.getValue().value === "" ||
-            this.$birthday.getValue().value === "" ||
-            this.$password.getValue().value === "" ||
-            this.$retypePassword.getValue().value === ""
+            this.$birthday.getValue().value === ""
         ) {
-            this.$name.fail()
-            this.$phonenumber1.fail()
-            this.$phonenumber2.fail()
-            this.$birthday.fail()
-            this.$password.fail()
-            this.$retypePassword.fail()
+            this.$notify.innerHTML = 'Vui lòng nhập đủ thông tin'
             return;
         }
+        await createUser({
+            name: this.$name.getValue().value,
+            phone: this.$phonenumber1.getValue().value,
+            mobile: this.$phonenumber2.getValue().value,
+            birth: this.$birthday.getValue().value
+        })
+        this.closeUserAddModal()
+        this.getAllUser()
     }
     render() {
         this.$container.appendChild(this.$dialog);
@@ -74,14 +79,16 @@ class AddUserModal {
         this.$content.appendChild(this.$header);
         this.$header.appendChild(this.$title);
         this.$header.appendChild(this.$closeBtn);
+
         this.$content.appendChild(this.$body);
+
         this.$body.appendChild(this.$border);
+        this.$body.appendChild(this.$notify);
+
         this.$border.appendChild(this.$name.render())
         this.$border.appendChild(this.$phonenumber1.render())
         this.$border.appendChild(this.$phonenumber2.render())
         this.$border.appendChild(this.$birthday.render())
-        this.$border.appendChild(this.$password.render())
-        this.$border.appendChild(this.$retypePassword.render())
 
         this.$content.appendChild(this.$footer);
         this.$footer.appendChild(this.$saveBtn);

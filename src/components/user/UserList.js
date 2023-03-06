@@ -42,11 +42,13 @@ class UserList {
 
         this.$tbody = document.createElement('div')
         this.$tbody.className = 'bg-item'
+        this.$tbody.style.maxHeight = '650px'
+        this.$tbody.style.overflowY = 'auto'
         this.getAllUsers()
     }
     getAllUsers = () => {
         this.$tbody.innerHTML = ''
-        for (let i = 0; i < this.data.length; i++) {
+        for (let i = 1; i < this.data.length; i++) {
             this.$item = new UserItem({
                 ...this.data[i],
                 getAllUser: this.getAllUser

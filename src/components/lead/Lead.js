@@ -2,7 +2,7 @@ import LeadList from "./LeadList.js";
 import Pagination from "../Pagination.js";
 
 import { getLead } from "../../apis/lead.js"
-import { formatDate, loading } from "../../util/util.js"
+
 import AddLead from "./AddLead.js";
 import LeadSearchModal from "./LeadSearchModal.js";
 import Tag from "../Tag.js";
@@ -117,10 +117,10 @@ class Lead {
                         this.tagTitle = `Chi nhánh: ${this.inputGroup[i]}`
                         break;
                     case 5:
-                        this.tagTitle = `Ngày bắt đầu: ${formatDate(this.inputGroup[i])}`
+                        this.tagTitle = `Ngày bắt đầu: ${this.inputGroup[i]}`
                         break;
                     case 6:
-                        this.tagTitle = `Ngày kết thúc: ${formatDate(this.inputGroup[i])}`
+                        this.tagTitle = `Ngày kết thúc: ${this.inputGroup[i]}`
                         break;
                     case 7:
                         this.tagTitle = `Nhân viên: ${this.inputGroup[i]}`

@@ -1,5 +1,5 @@
 import { splitStr } from "../util/splitStr.js";
-import { formatDate } from "../util/util.js";
+
 
 export const getBooking = async({ pageNum, startDate, endDate, name, phone, code }) => {
     try {
@@ -7,7 +7,7 @@ export const getBooking = async({ pageNum, startDate, endDate, name, phone, code
         const token = splitStr(localStorage.getItem('token')).token
         const paginationLimit = 15;
         // Call API
-        const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/get-booking?token=${token}&limit=${paginationLimit}&type=opportunity&offset=${pageNum > 0?(pageNum-1)*paginationLimit:pageNum*paginationLimit}&start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&name=${name}&phone=${phone}&code=${code}`);
+        const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/get-booking?token=${token}&limit=${paginationLimit}&type=opportunity&offset=${pageNum > 0?(pageNum-1)*paginationLimit:pageNum*paginationLimit}&start_date=${startDate}&end_date=${endDate}&name=${name}&phone=${phone}&code=${code}`);
         const data = await response.json();
 
         if (!data) {

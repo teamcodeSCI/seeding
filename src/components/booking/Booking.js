@@ -1,8 +1,6 @@
 import BookingList from "./BookingList.js";
 import Pagination from "../Pagination.js";
 
-import { formatDate, loading } from "../../util/util.js"
-
 import { app } from "../../util/const.js";
 
 import BookingSearchModal from "../booking/BookingSearchModal.js";

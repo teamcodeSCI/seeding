@@ -1,8 +1,11 @@
+import { updatePassUser } from '../../apis/userList.js';
 import InputGroup from '../InputGroup.js'
 import Select from '../Select.js';
 class EditUserModal {
-    select = ['active', 'unactive']
-    constructor({ closeUserEditModal }) {
+
+    constructor({ closeUserEditModal, user, getAllUser }) {
+        this.getAllUser = getAllUser
+        this.user = user
         this.closeUserEditModal = closeUserEditModal
         this.$container = document.createElement("div");
         this.$container.className = `modal d-flex align-items-center justify-content-center`;
@@ -23,23 +26,18 @@ class EditUserModal {
         this.$title.className = `modal-title`;
         this.$title.innerHTML = `Sửa thông tin`;
 
-        this.$closeBtn = document.createElement("button");
-        this.$closeBtn.className = `btn-close`;
-        this.$closeBtn.addEventListener("click", () => {
-            closeUserEditModal()
-        });
+        this.$notify = document.createElement('p')
+        this.$notify.className = 'm-0 text-center fst-italic text-danger'
+        this.$notify.style.fontSize = '14px'
 
         this.$body = document.createElement("div");
         this.$body.className = `modal-body p-4`;
 
         this.$border = document.createElement("div");
-        this.$border.className = `bg-white d-flex justify-content-between flex-wrap gap-3`;
-
+        this.$border.className = `bg-white d-flex justify-content-between flex-wrap gap-3 mb-2`;
 
         this.$password = new InputGroup({ placeholder: 'Nhập mật khẩu mới', type: 'password' })
         this.$retypePassword = new InputGroup({ placeholder: 'Nhập lại mật khẩu mới', type: 'password' })
-
-        this.$active = new Select({ data: this.select })
 
         this.$footer = document.createElement("div");
         this.$footer.className = `modal-footer`;
@@ -50,16 +48,28 @@ class EditUserModal {
         this.$saveBtn.addEventListener("click", () => {
             this.save()
         });
+        this.$closeBtn = document.createElement("button");
+        this.$closeBtn.className = `btn-close`;
+        this.$closeBtn.addEventListener("click", () => {
+            closeUserEditModal()
+            this.$password.reset()
+            this.$retypePassword.reset()
+        });
     }
-    save = () => {
-        if (
-            this.$password.getValue().value === "" ||
-            this.$retypePassword.getValue().value === ""
-        ) {
-            this.$password.fail()
-            this.$retypePassword.fail()
+    save = async() => {
+        if (this.$password.getValue().value === "" || this.$retypePassword.getValue().value === "") {
+            this.$notify.innerHTML = 'Hãy nhập đầy đủ thông tin!'
             return;
         }
+        if (this.$password.getValue().value !== this.$retypePassword.getValue().value) {
+            this.$notify.innerHTML = 'Mật khẩu không khớp!'
+            return;
+        }
+        this.$notify.innerHTML = ''
+        await updatePassUser({ user: this.user, password: this.$password.getValue().value })
+        this.getAllUser()
+        this.closeUserEditModal()
+
     }
     render() {
         this.$container.appendChild(this.$dialog);
@@ -68,13 +78,13 @@ class EditUserModal {
         this.$header.appendChild(this.$title);
         this.$header.appendChild(this.$closeBtn);
         this.$content.appendChild(this.$body);
+        this.$content.appendChild(this.$footer);
         this.$body.appendChild(this.$border);
+        this.$body.appendChild(this.$notify);
 
         this.$border.appendChild(this.$password.render())
         this.$border.appendChild(this.$retypePassword.render())
-        this.$border.appendChild(this.$active.render())
 
-        this.$content.appendChild(this.$footer);
         this.$footer.appendChild(this.$saveBtn);
         return this.$container;
     }
