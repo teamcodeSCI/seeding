@@ -48,8 +48,11 @@ class Login {
         this.$boxButton = document.createElement("div");
         this.$boxButton.className = `text-center`;
 
+        this.$notify = document.createElement('p')
+        this.$notify.className = 'm-0 text-center fst-italic text-danger'
+
         this.$button = document.createElement("button");
-        this.$button.className = `btn btn-primary btn-lg btn-block w-50 text-center`;
+        this.$button.className = `btn btn-primary btn-lg btn-block w-50 mb-2 text-center`;
         this.$button.type = `submit`;
         this.$button.style = `border-radius: 2rem;`;
         this.$button.innerHTML = "Đăng nhập";
@@ -63,17 +66,23 @@ class Login {
                 login: this.$phonenumber.getInputValue(),
                 password: this.$pass.getInputValue()
             });
-            if (!accessToken) {
+
+            if (!accessToken.token) {
                 this.$phonenumber.fail();
                 this.$pass.fail();
                 console.log("unauthorized");
                 return;
             }
-            const user = await getUser(accessToken);
+            if (!accessToken.active) {
+                this.$notify.innerHTML = 'Tài khoản đã bị vô hiệu hóa'
+                return
+            }
+            const user = await getUser(accessToken.token);
             if (!user) {
                 console.log("data not found");
                 return;
             }
+            this.$notify.innerHTML = ''
             window.location.reload()
                 // getPage();
         } catch (e) {
@@ -91,6 +100,7 @@ class Login {
         this.$cardBody.appendChild(this.$pass.render());
         this.$cardBody.appendChild(this.$boxButton);
         this.$boxButton.appendChild(this.$button);
+        this.$boxButton.appendChild(this.$notify)
         return this.$bg;
     }
 }

@@ -5,7 +5,7 @@ export const login = async(info) => {
             `${url}/get-token?login=${info.login}&password=${info.password}`
         );
         const data = await response.json();
-        return data.access_token;
+        return { token: data.access_token, active: data.active };
     } catch (e) {
         console.log(e);
     }
