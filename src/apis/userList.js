@@ -7,13 +7,8 @@ export const getUser = async({ userCode }) => {
         const data = await response.json()
         return {
             message: 'Success',
-            data: data.data.sort((a, b) => {
-                if (a.active_user !== undefined && b.active_user !== undefined) {
-                    return (a === b) ? 0 : a ? -1 : 1;
-                }
-            })
+            data: data.data
         }
-
     } catch (e) {
         console.log(e);
         return

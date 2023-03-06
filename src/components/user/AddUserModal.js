@@ -72,6 +72,10 @@ class AddUserModal {
         })
         this.closeUserAddModal()
         this.getAllUser()
+        this.$name.reset()
+        this.$phonenumber1.reset()
+        this.$phonenumber2.reset()
+        this.$birthday.reset()
     }
     render() {
         this.$container.appendChild(this.$dialog);

@@ -2,8 +2,6 @@ import { splitStr } from "../util/splitStr.js";
 
 export const getLead = async({ pageNum, name, phone, service, fb, branch, startDate, endDate }) => {
     try {
-        console.log("startDate: ", startDate);
-
         const token = splitStr(localStorage.getItem('token')).token
         const paginationLimit = 15;
         // Call API

@@ -31,10 +31,8 @@ export const getUser = async(token) => {
 };
 export const updatePassword = async(info) => {
     try {
-        console.log(info);
         const response = await fetch(`${url}/update-password?token=${info.token}&password=${info.password}`);
         const data = await response.json();
-        console.log('5. Update Password', data);
         return data
     } catch (e) {
         console.log(e);

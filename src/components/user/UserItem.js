@@ -1,7 +1,9 @@
 import { app } from '../../util/const.js'
+import Select from '../Select.js'
 import EditUserModal from './EditUserModal.js'
 class UserItem {
     constructor({ getAllUser, code_user, name, date_of_birth, phone, active_user }) {
+        this.data = [{ value: false, text: 'Vô hiệu hóa' }, { value: true, text: 'Đang hoạt động' }]
         this.getAllUser = getAllUser
         this.$tr = document.createElement('div')
         this.$tr.className = 'row mx-0 p-2 position-relative'
@@ -33,10 +35,8 @@ class UserItem {
 
         this.$status = document.createElement('div')
         this.$status.className = 'col text-truncate'
-        this.$statusText = document.createElement('p')
+        this.$statusText = new Select({ data: this.data, select: active_user, getAllUser: this.getAllUser, codeUser: code_user })
         this.$statusText.className = 'm-0'
-        this.$statusText.innerHTML = active_user ? 'Đang hoạt động' : 'Vô hiệu hóa'
-
         this.$editUserModal = new EditUserModal({ closeUserEditModal: this.closeModal, user: phone, getAllUser: this.getAllUser })
 
         this.$editBtn = document.createElement('button')
@@ -69,7 +69,7 @@ class UserItem {
         this.$birthday.appendChild(this.$birthdayText)
 
         this.$tr.appendChild(this.$status)
-        this.$status.appendChild(this.$statusText)
+        this.$status.appendChild(this.$statusText.render())
 
         this.$tr.appendChild(this.$editBtn)
         this.$editBtn.appendChild(this.$editIcon)
