@@ -123,15 +123,16 @@ class Booking {
         try {
             // loading(true)
             const res = await getBooking({
-                    pageNum: this.index,
-                    name: this.searchName,
-                    phone: this.searchPhone,
-                    startDate: this.startDate,
-                    endDate: this.endDate,
-                    user: this.user,
-                    code: ''
-                })
-                // loading(false)
+                pageNum: this.index,
+                name: this.searchName,
+                phone: this.searchPhone,
+                startDate: this.startDate,
+                endDate: this.endDate,
+                user: this.user,
+                code: ''
+            })
+            console.log(res.render);
+            // loading(false)
             if (res.message !== 'Success') {
                 this.$table.className = 'text-center';
                 this.$table.innerHTML = res.message;

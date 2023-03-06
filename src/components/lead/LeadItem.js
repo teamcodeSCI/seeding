@@ -2,10 +2,9 @@ import { app, role } from "../../util/const.js"
 import LeadEditModal from "./LeadEditModal.js"
 
 class LeadItem {
-    constructor({ name, phone, name_fb, link_fb, service, company_name, company_code, script, interactive_proof, note, code_form, seeding_user_id, ctv_user_id, getAllLead, user }) {
+    constructor({ name, phone, name_fb, link_fb, service, company_name, company_code, script, interactive_proof, note, code_form, seeding_user_id, getAllLead, user }) {
         this.data = {
             seedingUserId: seeding_user_id,
-            ctvUserId: ctv_user_id,
             codeForm: code_form,
             name: name,
             phone: phone,
@@ -73,7 +72,7 @@ class LeadItem {
         this.$user.className = 'col text-truncate'
         this.$userText = document.createElement('p')
         this.$userText.className = 'm-0'
-        this.$userText.innerHTML = user || 'user'
+        this.$userText.innerHTML = seeding_user_id
 
         this.$note = document.createElement('div')
         this.$note.className = 'col text-truncate'
