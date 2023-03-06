@@ -40,7 +40,7 @@ class InputGroup {
 
         this.$input = document.createElement("input");
         this.$input.className =
-            "form-control w-100 fst-italic px-3 ps-2 pe-3 position-relative";
+            "form-control w-100 fst-italic py-2 ps-2 pe-3 position-relative";
         this.$input.style.border = "1px solid transparent";
         this.$input.style.borderRadius = "4px";
         this.$input.style.fontSize = "14px";

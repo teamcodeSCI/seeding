@@ -39,7 +39,7 @@ class LeadEditModal {
         this.$body.className = `modal-body p-4`;
 
         this.$border = document.createElement("div");
-        this.$border.className = `bg-white d-flex justify-content-between flex-wrap gap-3`;
+        this.$border.className = `bg-white d-flex justify-content-between gap-3 flex-column`;
 
         this.$footer = document.createElement("div");
         this.$footer.className = `modal-footer`;
@@ -52,32 +52,31 @@ class LeadEditModal {
         });
         this.$name = new InputGroup({
             placeholder: "Họ và tên",
-            width: "48%",
+
             value: this.data.name
         });
         this.$phone = new InputGroup({
             placeholder: "Điện thoại",
-            width: "48%",
+
             value: this.data.phone
         });
         this.$nameFb = new InputGroup({
             placeholder: "Tên FB",
-            width: "48%",
+
             value: this.data.name_fb
         });
         this.$linkFb = new InputGroup({
             placeholder: "Link FB",
-            width: "48%",
+
             value: this.data.link_fb
         });
         this.$service = new InputGroup({
             placeholder: "Dịch vụ đăng ký",
-            width: "48%",
+
             value: this.data.service
         });
         this.$branchBox = document.createElement("div");
         this.$branchBox.className = "branchBox position-relative";
-        this.$branchBox.style.width = "48%";
         this.$branchBox.addEventListener("click", () => {
             this.handleSuggest();
         });
@@ -93,12 +92,12 @@ class LeadEditModal {
         });
         this.$script = new InputGroup({
             placeholder: "Kịch bản",
-            width: "48%",
+
             value: this.data.script
         });
         this.$interactive = new InputGroup({
             placeholder: "Tương tác",
-            width: "48%",
+
             value: this.data.interactive_proof
         });
         this.$note = new Textarea({

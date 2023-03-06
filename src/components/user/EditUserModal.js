@@ -34,7 +34,7 @@ class EditUserModal {
         this.$body.className = `modal-body p-4`;
 
         this.$border = document.createElement("div");
-        this.$border.className = `bg-white d-flex justify-content-between flex-wrap gap-3 mb-2`;
+        this.$border.className = `bg-white d-flex justify-content-between gap-3 flex-column mb-2`;
 
         this.$password = new InputGroup({ placeholder: 'Nhập mật khẩu mới', type: 'password' })
         this.$retypePassword = new InputGroup({ placeholder: 'Nhập lại mật khẩu mới', type: 'password' })

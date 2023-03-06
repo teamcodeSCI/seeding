@@ -4,7 +4,6 @@ class SelectItem {
         this.$option.value = value
         this.$option.innerHTML = text
         this.$option.selected = select
-
     }
     render() {
         return this.$option

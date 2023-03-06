@@ -42,7 +42,7 @@ class LeadSearchModal {
         this.$line.style.height = "1px";
 
         this.$border = document.createElement("div");
-        this.$border.className = `bg-white d-flex justify-content-between flex-wrap gap-3`;
+        this.$border.className = `bg-white d-flex justify-content-between gap-3 flex-column`;
 
         this.$advance = document.createElement("div");
         this.$advance.className = `bg-white d-flex justify-content-between flex-wrap gap-3`;
@@ -57,17 +57,16 @@ class LeadSearchModal {
             this.search();
         });
 
-        this.$searchName = new InputGroup({ placeholder: "Họ Tên", width: "48%" });
+        this.$searchName = new InputGroup({ placeholder: "Họ Tên" });
         this.$phone = new InputGroup({
-            placeholder: "Số điện thoại",
-            width: "48%"
+            placeholder: "Số điện thoại"
         });
-        this.$nameFb = new InputGroup({ placeholder: "Tên FB", width: "48%" });
-        this.$service = new InputGroup({ placeholder: "Dịch vụ", width: "48%" });
-        this.$user = new InputGroup({ placeholder: "Nhân viên", width: "48%" });
+        this.$nameFb = new InputGroup({ placeholder: "Tên FB" });
+        this.$service = new InputGroup({ placeholder: "Dịch vụ" });
+        this.$user = new InputGroup({ placeholder: "Nhân viên" });
         this.$branchBox = document.createElement("div");
         this.$branchBox.className = "branchBox position-relative";
-        this.$branchBox.style.width = "48%";
+
         this.$branchBox.addEventListener("click", () => {
             this.handleSuggest();
         });

@@ -40,7 +40,7 @@ class BookingSearchModal {
         this.$line.style.height = "1px";
 
         this.$border = document.createElement("div");
-        this.$border.className = `bg-white d-flex justify-content-between flex-wrap gap-3`;
+        this.$border.className = `bg-white d-flex justify-content-between gap-3 flex-column`;
 
         this.$advance = document.createElement("div");
         this.$advance.className = `bg-white d-flex justify-content-between flex-wrap gap-3`;
@@ -55,14 +55,11 @@ class BookingSearchModal {
             this.search();
         });
 
-        this.$searchName = new InputGroup({ placeholder: "Họ Tên", width: "48%" });
-        this.$phone = new InputGroup({
-            placeholder: "Số điện thoại",
-            width: "48%"
-        });
-        this.$bookingCode = new InputGroup({ placeholder: "Mã booking", width: "48%" });
+        this.$searchName = new InputGroup({ placeholder: "Họ Tên" });
+        this.$phone = new InputGroup({ placeholder: "Số điện thoại" });
+        this.$bookingCode = new InputGroup({ placeholder: "Mã booking" });
 
-        this.$user = new InputGroup({ placeholder: "Nhân viên", width: "48%" });
+        this.$user = new InputGroup({ placeholder: "Nhân viên" });
 
         this.$startDate = new InputGroup({
             placeholder: "Từ",

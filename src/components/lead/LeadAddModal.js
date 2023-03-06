@@ -38,7 +38,7 @@ class LeadAddModal {
         this.$body.className = `modal-body p-4`;
 
         this.$border = document.createElement("div");
-        this.$border.className = `bg-white d-flex justify-content-between flex-wrap gap-3`;
+        this.$border.className = `bg-white d-flex justify-content-between flex-column gap-3`;
 
         this.$footer = document.createElement("div");
         this.$footer.className = `modal-footer`;
@@ -49,17 +49,17 @@ class LeadAddModal {
         this.$saveBtn.addEventListener("click", () => {
             this.clickSave();
         });
-        this.$name = new InputGroup({ placeholder: "Họ và tên", width: "48%" });
-        this.$phone = new InputGroup({ placeholder: "Điện thoại", width: "48%" });
-        this.$nameFb = new InputGroup({ placeholder: "Tên FB", width: "48%" });
-        this.$linkFb = new InputGroup({ placeholder: "Link FB", width: "48%" });
+        this.$name = new InputGroup({ placeholder: "Họ và tên" });
+        this.$phone = new InputGroup({ placeholder: "Điện thoại" });
+        this.$nameFb = new InputGroup({ placeholder: "Tên FB" });
+        this.$linkFb = new InputGroup({ placeholder: "Link FB" });
         this.$service = new InputGroup({
-            placeholder: "Dịch vụ đăng ký",
-            width: "48%"
+            placeholder: "Dịch vụ đăng ký"
+
         });
         this.$branchBox = document.createElement("div");
         this.$branchBox.className = "branchBox position-relative";
-        this.$branchBox.style.width = "48%";
+
         this.$branchBox.addEventListener("click", () => {
             this.handleSuggest();
         });
@@ -73,10 +73,10 @@ class LeadAddModal {
             closeSuggest: this.closeSuggest
         });
 
-        this.$script = new InputGroup({ placeholder: "Kịch bản", width: "48%" });
+        this.$script = new InputGroup({ placeholder: "Kịch bản" });
         this.$interactive = new InputGroup({
-            placeholder: "Tương tác",
-            width: "48%"
+            placeholder: "Tương tác"
+
         });
         this.$note = new Textarea({ palaceHolder: "Ghi chú" });
 
