@@ -5,7 +5,7 @@ export const getLead = async({ pageNum, name, phone, service, fb, branch, startD
         const token = splitStr(localStorage.getItem('token')).token
         const paginationLimit = 15;
         // Call API
-        const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/get-form?token=${token}&brand_id=${''}&type=seeding&limit=${paginationLimit}&offset=${pageNum > 0?(pageNum-1)*paginationLimit:pageNum*paginationLimit}&company_id=${branch}&name_fb=${fb}&phone=${phone}&service=${service}&name=${name}&start_date=${startDate}&end_date=${endDate}&code_user=${user}`);
+        const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/get-form?token=${token}&brand_id=${''}&type=seeding&limit=${paginationLimit}&offset=${pageNum > 0?(pageNum-1)*paginationLimit:pageNum*paginationLimit}&company_id=${branch}&name_fb=${fb}&phone=${phone}&service=${service}&name=${name}&start_date=${startDate}&end_date=${endDate}&user_seeding=${user}`);
         const data = await response.json();
 
         if (!data.data) {

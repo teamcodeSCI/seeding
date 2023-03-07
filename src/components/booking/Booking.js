@@ -17,7 +17,7 @@ class Booking {
     startDate = ''
     endDate = ''
     index = 1
-    isLoading = false
+
     constructor() {
         this.$loading = new Loading()
         this.$dataTable = document.createElement('div')
@@ -123,7 +123,7 @@ class Booking {
     }
     getAllBooking = async() => {
         try {
-            app.appendChild(this.$loading.render())
+
             const res = await getBooking({
                 pageNum: this.index,
                 name: this.searchName,
@@ -154,7 +154,7 @@ class Booking {
 
             this.$pagiBox.innerHTML = ''
             this.$pagiBox.appendChild(this.$pagination.render());
-            app.removeChild(this.$loading.render())
+
 
         } catch (e) {
             console.log(e);

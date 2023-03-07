@@ -143,7 +143,7 @@ class Lead {
     }
     getAllLead = async() => {
         try {
-            app.appendChild(this.$loading.render())
+
             const res = await getLead({
                 pageNum: this.index,
                 name: this.searchName,
@@ -177,7 +177,7 @@ class Lead {
 
             this.$pagiBox.innerHTML = ''
             this.$pagiBox.appendChild(this.$pagination.render());
-            app.removeChild(this.$loading.render())
+
         } catch (e) {
             console.log(e);
             return

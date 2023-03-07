@@ -137,6 +137,9 @@ class LeadAddModal {
         this.$branchBox.removeChild(this.$suggestBox);
     };
     getSuggest = async(input) => {
+        if (!localStorage.getItem("token")) {
+            return
+        }
         const suggest = await getBranch({
             token: splitStr(localStorage.getItem("token")).token,
             input: input
