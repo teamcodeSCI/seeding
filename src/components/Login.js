@@ -66,25 +66,31 @@ class Login {
                 login: this.$phonenumber.getInputValue(),
                 password: this.$pass.getInputValue()
             });
-
+            if (accessToken.type !== 'Access Success') {
+                this.$phonenumber.fail();
+                this.$pass.fail();
+                this.$notify.innerHTML = accessToken.message
+                return;
+            }
             if (!accessToken.token) {
                 this.$phonenumber.fail();
                 this.$pass.fail();
-                console.log("unauthorized");
+                this.$notify.innerHTML = 'Kiểm tra lại tên đăng nhập hoặc mật khẩu'
                 return;
             }
             if (!accessToken.active) {
                 this.$notify.innerHTML = 'Tài khoản đã bị vô hiệu hóa'
                 return
             }
+
             const user = await getUser(accessToken.token);
             if (!user) {
-                console.log("data not found");
+                this.$notify.innerHTML = 'Kiểm tra lại tên đăng nhập hoặc mật khẩu'
                 return;
             }
             this.$notify.innerHTML = ''
             window.location.reload()
-                // getPage();
+
         } catch (e) {
             console.log(e);
         }

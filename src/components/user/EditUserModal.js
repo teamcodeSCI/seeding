@@ -1,6 +1,5 @@
 import { updatePassUser } from '../../apis/userList.js';
 import InputGroup from '../InputGroup.js'
-import Select from '../Select.js';
 class EditUserModal {
 
     constructor({ closeUserEditModal, user, getAllUser }) {
