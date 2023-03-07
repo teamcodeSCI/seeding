@@ -76,7 +76,11 @@ export default class ChangePass {
             this.showNote("Mật khẩu không khớp!");
             return;
         }
-        await updatePassword({ token: splitStr(localStorage.getItem("token")).token, password: this.$newPass.getValue().value })
+        const update = await updatePassword({ token: splitStr(localStorage.getItem("token")).token, password: this.$newPass.getValue().value })
+        if (update.type !== 0) {
+            this.showNote(update.message);
+            return
+        }
         this.showNote("Đổi mật khẩu thành công !");
         setTimeout(() => {
             this.closeChangePass();
