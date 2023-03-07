@@ -10,6 +10,17 @@ class Pagination {
         this.$container.id = 'page2'
         this.$container.classList.add('pagination', 'justify-content-center')
 
+        //nút Về đầu trang
+        this.$firstPageBtn = document.createElement('li')
+        this.$firstPageBtn.className = `page-item ${this.index <= 1 || this.dataLength === 0 ? 'd-none' : ''}`
+        this.$firstPageBtn.style.cursor = 'pointer'
+        this.$firstPageBtn.addEventListener('click', () => {
+            this.firstPage()
+        })
+        this.$firstPageLink = document.createElement('span')
+        this.$firstPageLink.classList.add('page-link')
+        this.$firstPageLink.innerHTML = '&laquo;&laquo;'
+
         //nút Quay lại
         this.$preBtn = document.createElement('li')
         this.$preBtn.className = `page-item ${this.index <= 1 || this.dataLength === 0 ? 'd-none' : ''}`
@@ -32,7 +43,20 @@ class Pagination {
         this.$nextLink.classList.add('page-link')
         this.$nextLink.innerHTML = '&raquo;'
 
-
+        //nút Về đầu trang
+        this.$endBtn = document.createElement('li')
+        this.$endBtn.className = `page-item ${this.index >= this.dataLength ?'d-none':''}`
+        this.$endBtn.style.cursor = 'pointer'
+        this.$endBtn.addEventListener('click', () => {
+            this.endPage()
+        })
+        this.$endLink = document.createElement('span')
+        this.$endLink.classList.add('page-link')
+        this.$endLink.innerHTML = '&raquo;&raquo;'
+    }
+    firstPage() {
+        this.setIndex(1)
+        this.getAllData()
     }
     prePage() {
         this.index = this.index <= 1 ? 1 : this.index - 1
@@ -44,9 +68,15 @@ class Pagination {
         this.setIndex(this.index)
         this.getAllData()
     }
+    endPage() {
+        this.setIndex(this.dataLength)
+        this.getAllData()
+    }
 
     render() {
         this.$container.innerHTML = ''
+        this.$container.appendChild(this.$firstPageBtn)
+        this.$firstPageBtn.appendChild(this.$firstPageLink)
         this.$container.appendChild(this.$preBtn)
         this.$preBtn.appendChild(this.$preLink)
 
@@ -73,6 +103,9 @@ class Pagination {
         }
         this.$container.appendChild(this.$nextBtn)
         this.$nextBtn.appendChild(this.$nextLink)
+
+        this.$container.appendChild(this.$endBtn)
+        this.$endBtn.appendChild(this.$endLink)
         return this.$container
     }
 
