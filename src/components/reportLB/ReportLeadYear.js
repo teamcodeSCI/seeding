@@ -1,5 +1,8 @@
 import { getNumberBrand } from "../../apis/reportNumber.js"
+import { app } from "../../util/const.js"
+
 import BarChart from "../BarChart.js"
+import Loading from "../Loading.js"
 import ReportTable from "./ReportTable.js"
 
 class ReportLeadYear {
@@ -29,11 +32,12 @@ class ReportLeadYear {
         this.$chartBox.style.width = '65%'
         this.$tableBox = document.createElement('div')
         this.$tableBox.style.width = '35%'
-
+        this.$loading = new Loading()
 
         this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
     }
     getBrandData = async() => {
+        app.appendChild(this.$loading.render())
         const date = new Date()
         const year = date.getFullYear()
         const firstDay = new Date(year, 0, 1);
@@ -43,13 +47,17 @@ class ReportLeadYear {
         this.$serviceBookingRp = new ReportTable({ data: brandData.data })
         this.$tableBox.innerHTML = ''
         this.$tableBox.appendChild(this.$serviceBookingRp.render())
+        app.removeChild(this.$loading.render())
     }
     render() {
+
         this.$box.appendChild(this.$chartBox)
         this.$chartBox.appendChild(this.$chart.render())
         this.$box.appendChild(this.$tableBox)
         this.getBrandData()
+
         return this.$box
+
     }
 }
 export default ReportLeadYear

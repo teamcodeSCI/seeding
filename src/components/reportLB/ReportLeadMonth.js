@@ -1,5 +1,7 @@
 import { getNumberBrand } from "../../apis/reportNumber.js"
+import { app } from "../../util/const.js"
 import BarChart from "../BarChart.js"
+import Loading from "../Loading.js"
 import ReportTable from "./ReportTable.js"
 
 class ReportLeadMonth {
@@ -21,6 +23,7 @@ class ReportLeadMonth {
     }]
 
     constructor() {
+        this.$loading = new Loading()
         this.$box = document.createElement('div')
         this.$box.className = 'd-flex gap-3 align-items-start'
         this.$chartBox = document.createElement('div')
@@ -31,22 +34,21 @@ class ReportLeadMonth {
         this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
     }
     getBrandData = async() => {
-        try {
-            const date = new Date()
-            const year = date.getFullYear()
-            const month = date.getMonth();
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
 
-            const brandData = await getNumberBrand({ startDate: firstDay, endDate: lastDay })
+        app.appendChild(this.$loading.render())
+        const date = new Date()
+        const year = date.getFullYear()
+        const month = date.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
 
-            this.$serviceBookingRp = new ReportTable({ data: brandData.data })
-            this.$tableBox.innerHTML = ''
-            this.$tableBox.appendChild(this.$serviceBookingRp.render())
-        } catch (e) {
-            console.log(e);
-            return
-        }
+        const brandData = await getNumberBrand({ startDate: firstDay, endDate: lastDay })
+
+        this.$serviceBookingRp = new ReportTable({ data: brandData.data })
+        this.$tableBox.innerHTML = ''
+        this.$tableBox.appendChild(this.$serviceBookingRp.render())
+        app.removeChild(this.$loading.render())
+
     }
     render() {
         this.$box.appendChild(this.$chartBox)

@@ -7,6 +7,7 @@ import AddLead from "./AddLead.js";
 import LeadSearchModal from "./LeadSearchModal.js";
 import Tag from "../Tag.js";
 import { app } from "../../util/const.js";
+import Loading from "../Loading.js";
 
 
 class Lead {
@@ -24,6 +25,9 @@ class Lead {
     isLoading = false
 
     constructor() {
+
+        this.$loading = new Loading()
+
         this.$dataTable = document.createElement('div')
         this.$dataTable.className = `datatable px-3 py-4 bg-white`;
 
@@ -139,19 +143,18 @@ class Lead {
     }
     getAllLead = async() => {
         try {
-            // loading(true)
+            app.appendChild(this.$loading.render())
             const res = await getLead({
-                    pageNum: this.index,
-                    name: this.searchName,
-                    phone: this.searchPhone,
-                    service: this.searchService,
-                    fb: this.searchFb,
-                    branch: this.hideBranch,
-                    startDate: this.startDate,
-                    endDate: this.endDate,
-                    user: this.user
-                })
-                // loading(false)
+                pageNum: this.index,
+                name: this.searchName,
+                phone: this.searchPhone,
+                service: this.searchService,
+                fb: this.searchFb,
+                branch: this.hideBranch,
+                startDate: this.startDate,
+                endDate: this.endDate,
+                user: this.user
+            })
 
             if (res.message !== 'Success') {
                 this.$table.className = 'text-center';
@@ -174,7 +177,7 @@ class Lead {
 
             this.$pagiBox.innerHTML = ''
             this.$pagiBox.appendChild(this.$pagination.render());
-
+            app.removeChild(this.$loading.render())
         } catch (e) {
             console.log(e);
             return
@@ -182,6 +185,7 @@ class Lead {
     }
 
     render() {
+
         this.$searchBtn.appendChild(this.$searchText)
         this.$searchBtn.appendChild(this.$searchIcon)
 
@@ -197,6 +201,7 @@ class Lead {
 
         this.$dataTable.appendChild(this.$table);
         this.$dataTable.appendChild(this.$pagiBox);
+
         return this.$dataTable;
     }
 }

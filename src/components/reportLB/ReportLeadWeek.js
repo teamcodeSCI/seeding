@@ -1,5 +1,7 @@
 import { getNumberBrand } from "../../apis/reportNumber.js"
+import { app } from "../../util/const.js"
 import BarChart from "../BarChart.js"
+import Loading from "../Loading.js"
 import ReportTable from "./ReportTable.js"
 
 class ReportLeadWeek {
@@ -22,6 +24,7 @@ class ReportLeadWeek {
     }]
 
     constructor() {
+        this.$loading = new Loading()
         this.$box = document.createElement('div')
         this.$box.className = 'd-flex gap-3 align-items-start'
         this.$chartBox = document.createElement('div')
@@ -31,6 +34,7 @@ class ReportLeadWeek {
         this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet })
     }
     getBrandData = async() => {
+        app.appendChild(this.$loading.render())
         const curr = new Date(); // get current date
         const first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
         const last = first + 6; // last day is the first day + 6
@@ -40,6 +44,7 @@ class ReportLeadWeek {
         this.$serviceBookingRp = new ReportTable({ data: brandData.data })
         this.$tableBox.innerHTML = ''
         this.$tableBox.appendChild(this.$serviceBookingRp.render())
+        app.removeChild(this.$loading.render())
     }
     render() {
         this.$box.appendChild(this.$chartBox)

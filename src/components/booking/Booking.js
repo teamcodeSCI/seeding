@@ -6,6 +6,7 @@ import { app } from "../../util/const.js";
 import BookingSearchModal from "../booking/BookingSearchModal.js";
 import Tag from "../Tag.js";
 import { getBooking } from "../../apis/booking.js";
+import Loading from "../Loading.js";
 
 class Booking {
     tagTitle = ''
@@ -18,6 +19,7 @@ class Booking {
     index = 1
     isLoading = false
     constructor() {
+        this.$loading = new Loading()
         this.$dataTable = document.createElement('div')
         this.$dataTable.className = `datatable px-3 py-4 bg-white`;
 
@@ -121,7 +123,7 @@ class Booking {
     }
     getAllBooking = async() => {
         try {
-            // loading(true)
+            app.appendChild(this.$loading.render())
             const res = await getBooking({
                 pageNum: this.index,
                 name: this.searchName,
@@ -131,8 +133,6 @@ class Booking {
                 user: this.user,
                 code: ''
             })
-            console.log(res.render);
-            // loading(false)
             if (res.message !== 'Success') {
                 this.$table.className = 'text-center';
                 this.$table.innerHTML = res.message;
@@ -154,7 +154,7 @@ class Booking {
 
             this.$pagiBox.innerHTML = ''
             this.$pagiBox.appendChild(this.$pagination.render());
-
+            app.removeChild(this.$loading.render())
 
         } catch (e) {
             console.log(e);
@@ -163,6 +163,7 @@ class Booking {
     }
 
     render() {
+
         this.$searchBtn.appendChild(this.$searchText)
         this.$searchBtn.appendChild(this.$searchIcon)
 
@@ -176,6 +177,7 @@ class Booking {
 
         this.$dataTable.appendChild(this.$table);
         this.$dataTable.appendChild(this.$pagiBox);
+
         return this.$dataTable;
     }
 }

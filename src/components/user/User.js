@@ -1,4 +1,6 @@
 import { getUser } from "../../apis/userList.js";
+import { app } from "../../util/const.js";
+import Loading from "../Loading.js";
 import SearchInput from "../SearchInput.js";
 import AddUser from "./AddUser.js";
 import UserList from "./UserList.js";
@@ -6,6 +8,7 @@ import UserList from "./UserList.js";
 class User {
     search = ''
     constructor() {
+        this.$loading = new Loading()
         this.$dataTable = document.createElement('div')
         this.$dataTable.className = `datatable px-3 py-4 bg-white`;
 
@@ -22,10 +25,12 @@ class User {
         this.getAllUser()
     }
     getAllUser = async() => {
+        app.appendChild(this.$loading.render())
         this.$content.innerHTML = ''
         const users = await getUser({ userCode: this.search })
         this.$userList = new UserList({ data: users.data, getAllUser: this.getAllUser })
         this.$content.appendChild(this.$userList.render())
+        app.removeChild(this.$loading.render())
     }
     render() {
         this.getAllUser()

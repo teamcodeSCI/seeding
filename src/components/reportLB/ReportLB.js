@@ -1,10 +1,12 @@
-import { tabLead, tabSuccess } from "../../util/const.js"
+import { app, tabLead, tabSuccess } from "../../util/const.js"
 import { getComponent } from "../../util/getComponent.js"
+import Loading from "../Loading.js"
 
 import Tabs from "../Tabs.js"
 
 class ReportLB {
     constructor() {
+
         this.$container = document.createElement('div')
         this.$container.className = 'report px-3 py-4 bg-white'
 
@@ -47,6 +49,7 @@ class ReportLB {
         this.$navSuccess.innerHTML = ''
         this.$navSuccess.appendChild(this.$menuSuccess.render())
         getComponent(this.$contentSuccess, tabSuccess, 'tabSuccess')
+
     }
 
     render() {

@@ -14,6 +14,7 @@ import TargetYear from "../components/reportCost/TargetYear.js"
 import { splitStr } from "./splitStr.js"
 import User from "../components/user/User.js"
 
+export const app = document.getElementById('root')
 
 const lead = new Lead()
 const booking = new Booking()
@@ -34,7 +35,6 @@ const targetMonth = new TargetMonth()
 const targetYear = new TargetYear()
 
 
-export const app = document.getElementById('root')
 
 export const role = localStorage.getItem('token') ? splitStr(localStorage.getItem('token')).rule : ''
 

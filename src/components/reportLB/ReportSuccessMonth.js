@@ -1,7 +1,9 @@
 import { getCustomerSuccess } from "../../apis/reportNumber.js"
+import { app } from "../../util/const.js"
 import { random } from "../../util/util.js"
 import Filter from "../Filter.js"
 import LineChart from "../LineChart.js"
+import Loading from "../Loading.js"
 import SearchInput from "../SearchInput.js"
 import SuccessTable from "./SuccessTable.js"
 
@@ -51,6 +53,7 @@ class ReportSuccessMonth {
     filter = ''
 
     constructor() {
+        this.$loading = new Loading()
         this.$box = document.createElement('div')
         this.$box.className = 'd-flex gap-3 align-items-start'
 
@@ -77,10 +80,12 @@ class ReportSuccessMonth {
         this.getCustomer()
     }
     getCustomer = async() => {
+        app.appendChild(this.$loading.render())
         const getData = await getCustomerSuccess({ search: this.search, filter: this.filter })
         this.$serviceBookingRp = new SuccessTable({ data: getData.data })
         this.$table.innerHTML = ''
         this.$table.appendChild(this.$serviceBookingRp.render())
+        app.removeChild(this.$loading.render())
     }
     render() {
         this.getCustomer()
