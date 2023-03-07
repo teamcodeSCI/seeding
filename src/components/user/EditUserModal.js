@@ -66,7 +66,11 @@ class EditUserModal {
             return;
         }
         this.$notify.innerHTML = ''
-        await updatePassUser({ user: this.user, password: this.$password.getValue().value })
+        const update = await updatePassUser({ user: this.user, password: this.$password.getValue().value })
+        if (update.type !== 0) {
+            this.$notify.innerHTML = update.message
+            return
+        }
         this.getAllUser()
         this.closeUserEditModal()
 

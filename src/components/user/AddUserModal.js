@@ -64,12 +64,16 @@ class AddUserModal {
             this.$notify.innerHTML = 'Vui lòng nhập đủ thông tin'
             return;
         }
-        await createUser({
+        const addNew = await createUser({
             name: this.$name.getValue().value,
             phone: this.$phonenumber1.getValue().value,
             mobile: this.$phonenumber2.getValue().value,
             birth: this.$birthday.getValue().value
         })
+        if (addNew.type !== 0) {
+            this.$notify.innerHTML = addNew.message
+            return
+        }
         this.closeUserAddModal()
         this.getAllUser()
         this.$name.reset()

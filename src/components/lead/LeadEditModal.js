@@ -19,6 +19,10 @@ class LeadEditModal {
         this.$dialog.style.maxWidth = "650px";
         this.$dialog.style.width = "90%";
 
+        this.$notify = document.createElement('p')
+        this.$notify.className = 'm-0 text-center fst-italic text-danger mt-2'
+        this.$notify.style.fontSize = '14px'
+
         this.$content = document.createElement("div");
         this.$content.className = `modal-content`;
 
@@ -133,7 +137,7 @@ class LeadEditModal {
             this.$branch.fail();
             return;
         }
-        await updateLead({
+        const update = await updateLead({
             codeForm: this.data.codeForm,
             userId: this.data.seedingUserId,
             name: this.$name.getValue().value,
@@ -146,6 +150,10 @@ class LeadEditModal {
             note: this.$note.getValue(),
             interactive: this.$interactive.getValue().value
         })
+        if (update.type !== 0) {
+            this.$notify.innerHTML = update.message
+            return
+        }
         this.closeLeadEditModal();
         this.getAllLead()
     };
@@ -189,6 +197,7 @@ class LeadEditModal {
         this.$header.appendChild(this.$closeBtn);
         this.$content.appendChild(this.$body);
         this.$body.appendChild(this.$border);
+        this.$body.appendChild(this.$notify);
 
         this.$border.appendChild(this.$name.render());
         this.$border.appendChild(this.$phone.render());

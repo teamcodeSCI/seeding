@@ -45,6 +45,8 @@ export const updateLead = async({ codeForm, userId, name, phone, nameFb, linkFb,
         const token = splitStr(localStorage.getItem('token')).token
         const response = await fetch(`https://scigroup.com.vn/cp/seeding/api/update-form?token=${token}&code_form=${codeForm}&name=${name}&phone=${phone}&link_fb=${linkFb}&name_fb=${nameFb}&service=${service}&note=${note}&script=${script}&interactive_proof=${interactive}&company_id=${branch}&type=seeding&seeding_user_id=${userId}&ctv_user_id=false&brand=${''}`)
         const data = await response.json()
+        console.log(data.result.message);
+        return { type: data.result.message.type, message: data.result.message.content }
 
     } catch (e) {
         console.log(e);
