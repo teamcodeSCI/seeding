@@ -18,7 +18,7 @@ class BookingSearchModal {
     this.$content.className = `modal-content`;
 
     this.$header = document.createElement("div");
-    this.$header.className = `modal-header`;
+    this.$header.className = `modal-header px-3 py-2`;
 
     this.$title = document.createElement("h5");
     this.$title.className = `modal-title`;
