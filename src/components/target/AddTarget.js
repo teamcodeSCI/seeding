@@ -1,9 +1,7 @@
-import { createUser } from "../../apis/userList.js";
 import InputGroup from "../InputGroup.js";
-class AddUserModal {
-  constructor({ closeUserAddModal, getAllUser }) {
-    this.getAllUser = getAllUser;
-    this.closeUserAddModal = closeUserAddModal;
+
+class AddTarget {
+  constructor({ handleAddTarget }) {
     this.$container = document.createElement("div");
     this.$container.className = `modal d-flex align-items-center justify-content-center`;
     this.$container.style.background = "rgba(0,0,0,0.7)";
@@ -26,7 +24,7 @@ class AddUserModal {
     this.$closeBtn = document.createElement("button");
     this.$closeBtn.className = `btn-close`;
     this.$closeBtn.addEventListener("click", () => {
-      closeUserAddModal();
+      handleAddTarget();
     });
 
     this.$body = document.createElement("div");
@@ -39,10 +37,31 @@ class AddUserModal {
     this.$notify.className = "m-0 text-center fst-italic text-danger";
     this.$notify.style.fontSize = "14px";
 
-    this.$name = new InputGroup({ placeholder: "Họ tên" });
-    this.$phonenumber1 = new InputGroup({ placeholder: "Số điện thoại 1" });
-    this.$phonenumber2 = new InputGroup({ placeholder: "Số điện thoại 2" });
-    this.$birthday = new InputGroup({ placeholder: "Ngày sinh", type: "date" });
+    this.$targetBox = document.createElement("div");
+    this.$targetBox.className = "targetBox position-relative w-100";
+    this.$targetBox.addEventListener("click", () => {
+      this.handleSuggest();
+    });
+
+    this.$suggestBox = document.createElement("div");
+    this.$suggestBox.className =
+      "position-absolute w-100 top-100 start-0 rounded-1 px-2 py-3";
+    this.$suggestBox.style.maxHeight = "150px";
+    this.$suggestBox.style.overflow = "overlay";
+    this.$suggestBox.style.background = "#fff";
+    this.$suggestBox.style.zIndex = 1;
+    this.$suggestBox.style.boxShadow = "1px 1px 3px 0px rgba(0,0,0,0.2)";
+
+    this.$name = new InputGroup({ placeholder: "Nhân viên" });
+    this.$target = new InputGroup({
+      placeholder: "Mục tiêu",
+      width: "100%",
+      isSuggested: true,
+      getSuggest: this.getSuggest,
+      openSuggest: this.openSuggest,
+      closeSuggest: this.closeSuggest
+    });
+    this.$date = new InputGroup({ placeholder: "Tháng", type: "date" });
 
     this.$footer = document.createElement("div");
     this.$footer.className = `modal-footer`;
@@ -50,36 +69,22 @@ class AddUserModal {
     this.$saveBtn = document.createElement("button");
     this.$saveBtn.className = "btn btn-primary";
     this.$saveBtn.innerHTML = "Thêm mới";
-    this.$saveBtn.addEventListener("click", () => {
-      this.save();
-    });
+    this.$saveBtn.addEventListener("click", () => {});
   }
-  save = async () => {
-    if (
-      this.$name.getValue().value === "" ||
-      this.$phonenumber1.getValue().value === "" ||
-      this.$birthday.getValue().value === ""
-    ) {
-      this.$notify.innerHTML = "Vui lòng nhập đủ thông tin";
-      return;
-    }
-    const addNew = await createUser({
-      name: this.$name.getValue().value,
-      phone: this.$phonenumber1.getValue().value,
-      mobile: this.$phonenumber2.getValue().value,
-      birth: this.$birthday.getValue().value
-    });
-    if (addNew.type !== 0) {
-      this.$notify.innerHTML = addNew.message;
-      return;
-    }
-    this.closeUserAddModal();
-    this.getAllUser();
-    this.$name.reset();
-    this.$phonenumber1.reset();
-    this.$phonenumber2.reset();
-    this.$birthday.reset();
+  openSuggest = () => {
+    this.$targetBox.appendChild(this.$suggestBox);
   };
+  closeSuggest = () => {
+    this.$targetBox.removeChild(this.$suggestBox);
+  };
+  handleSuggest = () => {
+    if (this.$targetBox !== this.$suggestBox.parentElement) {
+      this.openSuggest();
+    } else {
+      this.closeSuggest();
+    }
+  };
+  getSuggest = () => {};
   render() {
     this.$container.appendChild(this.$dialog);
     this.$dialog.appendChild(this.$content);
@@ -93,13 +98,14 @@ class AddUserModal {
     this.$body.appendChild(this.$notify);
 
     this.$border.appendChild(this.$name.render());
-    this.$border.appendChild(this.$phonenumber1.render());
-    this.$border.appendChild(this.$phonenumber2.render());
-    this.$border.appendChild(this.$birthday.render());
+    this.$border.appendChild(this.$targetBox);
+    this.$border.appendChild(this.$date.render());
+
+    this.$targetBox.appendChild(this.$target.render());
 
     this.$content.appendChild(this.$footer);
     this.$footer.appendChild(this.$saveBtn);
     return this.$container;
   }
 }
-export default AddUserModal;
+export default AddTarget;
