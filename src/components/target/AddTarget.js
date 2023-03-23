@@ -1,7 +1,11 @@
+import { addNewTarget } from "../../apis/target.js";
+import { suggestUser } from "../../apis/userList.js";
 import InputGroup from "../InputGroup.js";
+import SuggestItem from "../SuggestItem.js";
 
 class AddTarget {
   constructor({ handleAddTarget }) {
+    this.handleAddTarget = handleAddTarget;
     this.$container = document.createElement("div");
     this.$container.className = `modal d-flex align-items-center justify-content-center`;
     this.$container.style.background = "rgba(0,0,0,0.7)";
@@ -25,6 +29,7 @@ class AddTarget {
     this.$closeBtn.className = `btn-close`;
     this.$closeBtn.addEventListener("click", () => {
       handleAddTarget();
+      this.resetInput();
     });
 
     this.$body = document.createElement("div");
@@ -37,30 +42,30 @@ class AddTarget {
     this.$notify.className = "m-0 text-center fst-italic text-danger";
     this.$notify.style.fontSize = "14px";
 
-    this.$targetBox = document.createElement("div");
-    this.$targetBox.className = "targetBox position-relative w-100";
-    this.$targetBox.addEventListener("click", () => {
+    this.$nameBox = document.createElement("div");
+    this.$nameBox.className = "nameBox position-relative w-100";
+    this.$nameBox.addEventListener("click", () => {
       this.handleSuggest();
     });
 
     this.$suggestBox = document.createElement("div");
     this.$suggestBox.className =
-      "position-absolute w-100 top-100 start-0 rounded-1 px-2 py-3";
+      "position-absolute w-100 top-100 start-0 rounded-1 px-2 py-1";
     this.$suggestBox.style.maxHeight = "150px";
     this.$suggestBox.style.overflow = "overlay";
     this.$suggestBox.style.background = "#fff";
     this.$suggestBox.style.zIndex = 1;
     this.$suggestBox.style.boxShadow = "1px 1px 3px 0px rgba(0,0,0,0.2)";
 
-    this.$name = new InputGroup({ placeholder: "Nhân viên" });
-    this.$target = new InputGroup({
-      placeholder: "Mục tiêu",
+    this.$name = new InputGroup({
+      placeholder: "Nhân viên",
       width: "100%",
       isSuggested: true,
       getSuggest: this.getSuggest,
       openSuggest: this.openSuggest,
       closeSuggest: this.closeSuggest
     });
+    this.$target = new InputGroup({ placeholder: "Mục tiêu" });
     this.$date = new InputGroup({ placeholder: "Tháng", type: "date" });
 
     this.$footer = document.createElement("div");
@@ -69,22 +74,76 @@ class AddTarget {
     this.$saveBtn = document.createElement("button");
     this.$saveBtn.className = "btn btn-primary";
     this.$saveBtn.innerHTML = "Thêm mới";
-    this.$saveBtn.addEventListener("click", () => {});
+    this.$saveBtn.addEventListener("click", () => {
+      this.saveTarget();
+    });
+
+    this.getSuggest(this.$name.getValue().value);
   }
+  saveTarget = async () => {
+    if (
+      this.$name.getValue().hideValue === "" ||
+      this.$target.getValue().value === "" ||
+      this.$date.getValue().value === ""
+    ) {
+      this.$notify.innerHTML = "Vui lòng nhập đủ thông tin";
+      return;
+    }
+    const date = new Date(this.$date.getValue().value);
+    if (date.getDate() !== 1) {
+      this.$notify.innerHTML = "Vui lòng chọn ngày đầu tiên của tháng";
+      return;
+    }
+
+    const newData = await addNewTarget({
+      kpiDate: this.$date.getValue().value,
+      kpiTarget: this.$target.getValue().value,
+      userCode: this.$name.getValue().hideValue
+    });
+    if (!newData) {
+      this.$notify.innerHTML = "Tạo mục tiêu không thành công";
+      return;
+    }
+    this.$notify.innerHTML = "Tạo mục tiêu thành công";
+    this.handleAddTarget();
+    this.resetInput();
+  };
+  resetInput = () => {
+    this.$name.reset();
+    this.$target.reset();
+    this.$date.reset();
+    if (this.$nameBox === this.$suggestBox.parentElement) {
+      this.closeSuggest();
+    }
+  };
   openSuggest = () => {
-    this.$targetBox.appendChild(this.$suggestBox);
+    this.$nameBox.appendChild(this.$suggestBox);
   };
   closeSuggest = () => {
-    this.$targetBox.removeChild(this.$suggestBox);
+    this.$nameBox.removeChild(this.$suggestBox);
   };
   handleSuggest = () => {
-    if (this.$targetBox !== this.$suggestBox.parentElement) {
+    if (this.$nameBox !== this.$suggestBox.parentElement) {
       this.openSuggest();
     } else {
       this.closeSuggest();
     }
   };
-  getSuggest = () => {};
+  getSuggest = async (input) => {
+    const getUser = await suggestUser(input);
+    this.$suggestBox.innerHTML = "";
+    for (let i = 1; i < getUser.length; i++) {
+      if (getUser[i].active_user) {
+        this.$suggestItem = new SuggestItem({
+          name: getUser[i].name,
+          code: getUser[i].code_user,
+          setBranchVal: this.$name.setValue
+        });
+        this.$suggestBox.appendChild(this.$suggestItem.render());
+      }
+    }
+  };
+
   render() {
     this.$container.appendChild(this.$dialog);
     this.$dialog.appendChild(this.$content);
@@ -97,11 +156,11 @@ class AddTarget {
     this.$body.appendChild(this.$border);
     this.$body.appendChild(this.$notify);
 
-    this.$border.appendChild(this.$name.render());
-    this.$border.appendChild(this.$targetBox);
+    this.$border.appendChild(this.$nameBox);
+    this.$border.appendChild(this.$target.render());
     this.$border.appendChild(this.$date.render());
 
-    this.$targetBox.appendChild(this.$target.render());
+    this.$nameBox.appendChild(this.$name.render());
 
     this.$content.appendChild(this.$footer);
     this.$footer.appendChild(this.$saveBtn);

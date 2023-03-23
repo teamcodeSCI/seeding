@@ -1,3 +1,4 @@
+import { formatDate } from "../util/util.js";
 class InputGroup {
   constructor({
     placeholder,
@@ -47,7 +48,8 @@ class InputGroup {
     this.$input.style.background = "rgb(235 235 235)";
     this.$input.type = type || "text";
     this.$input.placeholder = placeholder || "";
-    this.$input.value = value || "";
+    this.$input.value =
+      this.$input.type === "date" ? formatDate(value) : value || "";
     this.$input.disabled = isDisabled || false;
     this.$input.addEventListener("input", () => {
       this.$container.appendChild(this.$reset);

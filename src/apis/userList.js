@@ -1,5 +1,6 @@
 import { BASE_URL } from "../util/const.js";
 import { splitStr } from "../util/splitStr.js";
+import { removeAccents } from "../util/util.js";
 
 export const getUser = async ({ userCode }) => {
   try {
@@ -8,7 +9,6 @@ export const getUser = async ({ userCode }) => {
       `${BASE_URL}/get-user?token=${token}&code_user=${userCode}`
     );
     const data = await response.json();
-    console.log("data: ", data);
     return {
       message: "Success",
       data: data.data
@@ -26,9 +26,9 @@ const searchUser = (data, input) => {
 };
 export const suggestUser = async (input) => {
   const token = splitStr(localStorage.getItem("token")).token;
-  const response = await fetch(`${BASE_URL}/get-company?token=${token}`);
+  const response = await fetch(`${BASE_URL}/get-user?token=${token}`);
   const data = await response.json();
-  const newData = search(input, data.data);
+  const newData = searchUser(data.data, input);
   if (!data) {
     console.log("data not found");
     return;
