@@ -100,11 +100,15 @@ class AddTarget {
       kpiTarget: this.$target.getValue().value,
       userCode: this.$name.getValue().hideValue
     });
-    if (!newData) {
-      this.$notify.innerHTML = "Tạo mục tiêu không thành công";
+    if (newData.error) {
+      this.$notify.innerHTML = "Tạo mục tiêu thất bại";
       return;
     }
-    this.$notify.innerHTML = "Tạo mục tiêu thành công";
+    if (newData.status === 1) {
+      this.$notify.innerHTML = newData.message;
+      return;
+    }
+    this.$notify.innerHTML = "";
     this.handleAddTarget();
     this.resetInput();
   };
@@ -112,6 +116,7 @@ class AddTarget {
     this.$name.reset();
     this.$target.reset();
     this.$date.reset();
+    this.$notify.innerHTML = "";
     if (this.$nameBox === this.$suggestBox.parentElement) {
       this.closeSuggest();
     }

@@ -1,5 +1,7 @@
+import { fetchTarget } from "../../apis/target.js";
 import { app } from "../../util/const.js";
 import AddTarget from "./AddTarget.js";
+import TargetList from "./TargetList.js";
 
 class Target {
   constructor() {
@@ -8,7 +10,7 @@ class Target {
 
     this.$header = document.createElement("div");
     this.$header.className =
-      "mb-2 d-flex justify-content-between align-items-center gap-3";
+      "mb-4 d-flex justify-content-between align-items-center gap-3";
 
     this.$title = document.createElement("span");
     this.$title.className = "targetTitle fs-5 fw-bold text-uppercase";
@@ -28,7 +30,16 @@ class Target {
 
     this.$addTarget = new AddTarget({ handleAddTarget: this.closeAddTarget });
     this.$table = document.createElement("table");
+
+    this.$body = document.createElement("div");
+    this.$body.className = "targetBody";
   }
+  getTarget = async () => {
+    this.$body.innerHTML = "";
+    const data = await fetchTarget();
+    this.$targetTable = new TargetList({ data: data });
+    this.$body.appendChild(this.$targetTable.render());
+  };
   openAddTarget = () => {
     app.appendChild(this.$addTarget.render());
   };
@@ -37,11 +48,14 @@ class Target {
   };
 
   render() {
+    this.getTarget();
     this.$container.appendChild(this.$header);
+    this.$container.appendChild(this.$body);
     this.$header.appendChild(this.$title);
     this.$header.appendChild(this.$addBtn);
     this.$addBtn.appendChild(this.$addBtnText);
     this.$addBtn.appendChild(this.$addBtnIcon);
+
     return this.$container;
   }
 }
