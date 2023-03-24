@@ -29,30 +29,30 @@ export const fetchTarget = async () => {
   for (let i = 1; i < data.data.length; i++) {
     newData.push(data.data[i]);
   }
-  const groupByDate = groupBy("user");
-
+  const groupByDate = groupBy("date");
   const groupDate = Object.entries(groupByDate(newData));
-  const monthGroup = [];
-  const today = new Date();
-  for (let i = 1; i < 13; i++) {
-    monthGroup.push(new Date(`${today.getFullYear()}-${i}-01`).getMonth() + 1);
-  }
+  const groupByName = groupBy("user");
+  const groupName = Object.entries(groupByName(newData));
+
+  const user = [""];
+  groupName.sort().forEach((item) => {
+    user.push(item[0]);
+  });
   const render = [];
-  const target = [];
+
   groupDate.forEach((item) => {
-    const sortData = item[1].sort(
-      (a, b) => new Date(a.date) - new Date(b.date)
-    );
     const dataArr = [item[0]];
-    for (let i = 0; i < monthGroup.length; i++) {
-      if (sortData[i] === undefined) {
+    item[1].sort((a, b) => ("" + a.user).localeCompare(b.user));
+
+    for (let i = 0; i < groupName.length; i++) {
+      if (item[1][i] === undefined) {
         dataArr.push(0);
       } else {
-        dataArr.push(sortData[i].target);
+        dataArr.push(item[1][i]);
       }
     }
     render.push(dataArr);
   });
 
-  return render;
+  return { data: render, user: user.sort() };
 };

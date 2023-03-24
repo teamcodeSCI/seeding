@@ -2,12 +2,18 @@ import { getUser } from "../../apis/userList.js";
 import { convertNumber } from "../../util/util.js";
 
 class HeaderItem {
-  constructor({ month }) {
+  constructor({ name }) {
+    this.name = name;
     this.$headerItem = document.createElement("th");
     this.$headerItem.style.width = "calc(100% / 12)";
-    this.$headerItem.innerHTML = month;
+    this.$headerItem.innerHTML = name;
   }
+  getName = async () => {
+    const user = await getUser({ userCode: this.name });
+    this.$headerItem.innerHTML = this.name === "" ? "" : user.data[1].name;
+  };
   render() {
+    this.getName();
     return this.$headerItem;
   }
 }
@@ -19,7 +25,9 @@ class Row {
   renderItem = () => {
     this.$tr.innerHTML = "";
     this.data.forEach((item) => {
-      this.$col = new Col({ data: item });
+      this.$col = new Col({
+        data: typeof item === "object" ? item.target : item
+      });
       this.$tr.appendChild(this.$col.render());
     });
   };
@@ -32,16 +40,13 @@ class Col {
   constructor({ data }) {
     this.data = data;
     this.$td = document.createElement("td");
-    this.$td.innerHTML = convertNumber(data);
+    this.$td.innerHTML =
+      typeof data === "string"
+        ? `Tháng ${new Date(data).getMonth() + 1}`
+        : convertNumber(data);
   }
-  getName = async () => {
-    if (typeof this.data === "string") {
-      const user = await getUser({ userCode: this.data });
-      this.$td.innerHTML = user.data[1].name;
-    }
-  };
+
   render() {
-    this.getName();
     return this.$td;
   }
 }
@@ -50,20 +55,24 @@ class TargetList {
     this.data = data;
     this.$table = document.createElement("table");
     this.$table.className = "targetTable w-100";
+    this.$table.style.fontSize = "14px";
     this.$header = document.createElement("tr");
     this.$body = document.createElement("tbody");
   }
   renderHeader = () => {
     this.$header.innerHTML = "";
-    for (let i = 0; i <= 12; i++) {
-      this.$headerItem = new HeaderItem({ month: i === 0 ? "" : `T${i}` });
+    this.newData = [""];
+    for (let i = 0; i < this.data.user.length; i++) {
+      this.$headerItem = new HeaderItem({ name: this.data.user[i] });
       this.$header.appendChild(this.$headerItem.render());
     }
   };
   renderRow = () => {
     this.$body.innerHTML = "";
-    this.data.forEach((item) => {
-      this.$row = new Row({ data: item });
+    this.data.data.forEach((item) => {
+      this.$row = new Row({
+        data: item
+      });
       this.$body.appendChild(this.$row.render());
     });
   };

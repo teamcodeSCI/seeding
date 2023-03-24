@@ -4,7 +4,8 @@ import InputGroup from "../InputGroup.js";
 import SuggestItem from "../SuggestItem.js";
 
 class AddTarget {
-  constructor({ handleAddTarget }) {
+  constructor({ handleAddTarget, getTarget }) {
+    this.getTarget = getTarget;
     this.handleAddTarget = handleAddTarget;
     this.$container = document.createElement("div");
     this.$container.className = `modal d-flex align-items-center justify-content-center`;
@@ -111,6 +112,7 @@ class AddTarget {
     this.$notify.innerHTML = "";
     this.handleAddTarget();
     this.resetInput();
+    this.getTarget();
   };
   resetInput = () => {
     this.$name.reset();

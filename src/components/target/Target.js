@@ -28,7 +28,10 @@ class Target {
     this.$addBtnIcon = document.createElement("i");
     this.$addBtnIcon.className = "bi bi-plus-lg";
 
-    this.$addTarget = new AddTarget({ handleAddTarget: this.closeAddTarget });
+    this.$addTarget = new AddTarget({
+      handleAddTarget: this.closeAddTarget,
+      getTarget: this.getTarget
+    });
     this.$table = document.createElement("table");
 
     this.$body = document.createElement("div");
