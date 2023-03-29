@@ -131,46 +131,42 @@ class Booking {
     this.getAllBooking();
   };
   getAllBooking = async () => {
-    try {
-      const res = await getBooking({
-        pageNum: this.index,
-        name: this.searchName,
-        phone: this.searchPhone,
-        startDate: this.startDate,
-        endDate: this.endDate,
-        user: this.user,
-        code: ""
-      });
-      if (res.message !== "Success") {
-        this.$table.className = "text-center";
-        this.$table.innerHTML = res.message;
-        this.$pagiBox.innerHTML = "";
-        return;
-      }
-      if (res.pageCount === 0) {
-        this.$table.className = "text-center";
-        this.$table.innerHTML = "Không có dữ liệu";
-        this.$pagiBox.innerHTML = "";
-        return;
-      }
-      this.$bookingList = new BookingList({ data: res.render });
-      this.$pagination = new Pagination({
-        count: res.pageCount,
-        index: this.index,
-        setIndex: this.setIndex,
-        getAllData: this.getAllBooking
-      });
+    const res = await getBooking({
+      pageNum: this.index,
+      name: this.searchName,
+      phone: this.searchPhone,
+      startDate: this.startDate,
+      endDate: this.endDate,
+      user: this.user,
+      code: ""
+    });
 
-      this.$table.innerHTML = "";
-      this.$table.className = "text-start";
-      this.$table.appendChild(this.$bookingList.render());
-
+    if (res.message !== "Success") {
+      this.$table.className = "text-center";
+      this.$table.innerHTML = res.message;
       this.$pagiBox.innerHTML = "";
-      this.$pagiBox.appendChild(this.$pagination.render());
-    } catch (e) {
-      console.log(e);
       return;
     }
+    if (res.pageCount === 0) {
+      this.$table.className = "text-center";
+      this.$table.innerHTML = "Không có dữ liệu";
+      this.$pagiBox.innerHTML = "";
+      return;
+    }
+    this.$bookingList = new BookingList({ data: res.render });
+    this.$pagination = new Pagination({
+      count: res.pageCount,
+      index: this.index,
+      setIndex: this.setIndex,
+      getAllData: this.getAllBooking
+    });
+
+    this.$table.innerHTML = "";
+    this.$table.className = "text-start";
+    this.$table.appendChild(this.$bookingList.render());
+
+    this.$pagiBox.innerHTML = "";
+    this.$pagiBox.appendChild(this.$pagination.render());
   };
 
   render() {

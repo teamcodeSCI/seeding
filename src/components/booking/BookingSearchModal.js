@@ -1,5 +1,8 @@
+import { suggestUser } from "../../apis/userList.js";
 import { role } from "../../util/const.js";
+import { splitStr } from "../../util/splitStr.js";
 import InputGroup from "../InputGroup.js";
+import SuggestItem from "../SuggestItem.js";
 
 class BookingSearchModal {
   constructor({ closeBookingSearchModal, setSearchValue }) {
@@ -28,6 +31,10 @@ class BookingSearchModal {
     this.$closeBtn.className = `btn-close`;
     this.$closeBtn.addEventListener("click", () => {
       this.closeBookingSearchModal();
+      if (this.$userBox === this.$suggestBox.parentElement) {
+        this.closeSuggest();
+      }
+      this.reset();
     });
 
     this.$body = document.createElement("div");
@@ -54,11 +61,32 @@ class BookingSearchModal {
       this.search();
     });
 
+    this.$suggestBox = document.createElement("div");
+    this.$suggestBox.className =
+      "position-absolute w-100 top-100 start-0 rounded-1";
+    this.$suggestBox.style.maxHeight = "150px";
+    this.$suggestBox.style.overflow = "overlay";
+    this.$suggestBox.style.background = "#fff";
+    this.$suggestBox.style.zIndex = 1;
+    this.$suggestBox.style.boxShadow = "1px 1px 3px 0px rgba(0,0,0,0.2)";
+
     this.$searchName = new InputGroup({ placeholder: "Họ Tên" });
     this.$phone = new InputGroup({ placeholder: "Số điện thoại" });
     this.$bookingCode = new InputGroup({ placeholder: "Mã booking" });
 
-    this.$user = new InputGroup({ placeholder: "Nhân viên" });
+    this.$userBox = document.createElement("div");
+    this.$userBox.className = "userBox position-relative";
+
+    this.$userBox.addEventListener("click", () => {
+      this.handleSuggest();
+    });
+    this.$user = new InputGroup({
+      placeholder: "Nhân viên",
+      isSuggested: true,
+      getSuggest: this.getSuggest,
+      openSuggest: this.openSuggest,
+      closeSuggest: this.closeSuggest
+    });
 
     this.$startDate = new InputGroup({
       placeholder: "Từ",
@@ -72,14 +100,49 @@ class BookingSearchModal {
       type: "date",
       width: "48%"
     });
+    this.getSuggest(this.$user.getValue().value);
   }
-
+  reset() {
+    this.$searchName.reset();
+    this.$phone.reset();
+    this.$bookingCode.reset();
+    this.$user.reset();
+    this.$startDate.reset();
+    this.$endDate.reset();
+  }
+  openSuggest = () => {
+    this.$userBox.appendChild(this.$suggestBox);
+  };
+  closeSuggest = () => {
+    this.$userBox.removeChild(this.$suggestBox);
+  };
+  handleSuggest = () => {
+    if (this.$userBox !== this.$suggestBox.parentElement) {
+      this.openSuggest();
+    } else {
+      this.closeSuggest();
+    }
+  };
+  getSuggest = async (input) => {
+    const getUser = await suggestUser(input);
+    this.$suggestBox.innerHTML = "";
+    for (let i = 1; i < getUser.length; i++) {
+      if (getUser[i].active_user) {
+        this.$suggestItem = new SuggestItem({
+          name: getUser[i].name,
+          code: getUser[i].code_user,
+          setBranchVal: this.$user.setValue
+        });
+        this.$suggestBox.appendChild(this.$suggestItem.render());
+      }
+    }
+  };
   search = () => {
     this.setSearchValue(
       this.$searchName.getValue().value,
       this.$phone.getValue().value,
       this.$bookingCode.getValue().value,
-      this.$user.getValue().value,
+      this.$user.getValue().hideValue,
       this.$startDate.getValue().value,
       this.$endDate.getValue().value
     );
@@ -100,7 +163,10 @@ class BookingSearchModal {
     this.$border.appendChild(this.$phone.render());
     this.$border.appendChild(this.$bookingCode.render());
 
-    if (role === "admin") this.$border.appendChild(this.$user.render());
+    if (role === "admin") {
+      this.$border.appendChild(this.$userBox);
+      this.$userBox.appendChild(this.$user.render());
+    }
 
     this.$advance.appendChild(this.$startDate.render());
     this.$advance.appendChild(this.$endDate.render());

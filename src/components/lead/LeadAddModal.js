@@ -32,6 +32,10 @@ class LeadAddModal {
     this.$closeBtn.className = `btn-close`;
     this.$closeBtn.addEventListener("click", () => {
       this.closeLeadAddModal();
+      this.reset();
+      if (this.$branchBox === this.$suggestBox.parentElement) {
+        this.closeSuggest();
+      }
     });
 
     this.$body = document.createElement("div");
@@ -123,6 +127,9 @@ class LeadAddModal {
       note: this.$note.getValue(),
       interactive: this.$interactive.getValue().value
     });
+    if (this.$branchBox === this.$suggestBox.parentElement) {
+      this.closeSuggest();
+    }
     this.reset();
     this.closeLeadAddModal();
     this.getAllLead();

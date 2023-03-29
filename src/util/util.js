@@ -24,7 +24,7 @@ export const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number);
 };
 export const arrToStr = (arr) => {
-  return arr.toString().split(",");
+  if (arr) return arr.toString().split(",");
 };
 export const random = () => {
   return Math.floor(Math.random() * 100);

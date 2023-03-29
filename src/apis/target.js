@@ -43,7 +43,6 @@ export const fetchTarget = async () => {
   groupDate.forEach((item) => {
     const dataArr = [item[0]];
     item[1].sort((a, b) => ("" + a.user).localeCompare(b.user));
-
     for (let i = 0; i < groupName.length; i++) {
       if (item[1][i] === undefined) {
         dataArr.push(0);
@@ -53,6 +52,5 @@ export const fetchTarget = async () => {
     }
     render.push(dataArr);
   });
-
   return { data: render, user: user.sort() };
 };
