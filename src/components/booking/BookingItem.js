@@ -8,6 +8,12 @@ class BookingItem {
     this.$tr = document.createElement("div");
     this.$tr.className = "row mx-0 p-2";
 
+    this.$sale = document.createElement("div");
+    this.$sale.className = "col text-truncate";
+    this.$saleText = document.createElement("p");
+    this.$saleText.className = "m-0";
+    this.$saleText.innerHTML = data.sale_create;
+
     this.$name = document.createElement("div");
     this.$name.className = "col text-truncate";
     this.$nameText = document.createElement("p");
@@ -71,6 +77,9 @@ class BookingItem {
     app.removeChild(this.$bookingDetail.render());
   };
   render() {
+    this.$tr.appendChild(this.$sale);
+    this.$sale.appendChild(this.$saleText);
+
     this.$tr.appendChild(this.$name);
     this.$name.appendChild(this.$nameText);
 

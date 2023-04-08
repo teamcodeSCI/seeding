@@ -134,6 +134,10 @@ class BookingDetail {
       title: "Dịch vụ",
       value: arrToStr(data.line_ids)
     });
+    this.$service = new BookingDetailItem({
+      title: "Trạng thái",
+      value: data.stage_id
+    });
     this.$unitPrice = new BookingDetailItem({
       title: "Đơn giá",
       value: `${data.dongia} đ`

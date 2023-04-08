@@ -31,6 +31,7 @@ export const getBooking = async ({
       renderData.push(data.data[i]);
     }
     const pageCount = Math.ceil(count / paginationLimit);
+    console.log(renderData);
     return {
       message: data.message,
       render: renderData,
