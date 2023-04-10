@@ -84,23 +84,50 @@ export const getNumberBrand = async ({ startDate, endDate }) => {
     return { message: error };
   }
 };
-export const getNumberByDate = async ({ startDate, endDate }) => {
-  for (
-    let i = new Date(startDate).getDate();
-    i <= new Date(endDate).getDate();
-    i++
-  ) {
-    console.log(i);
-  }
-
+export const getNumberByDate = async ({ startDate, endDate }, steps = 1) => {
   const token = splitStr(localStorage.getItem("token")).token;
   const responseLead = await fetch(
-    `${BASE_URL}/get-form?token=${token}&type=seeding&start_date=${formatDate(
-      startDate
-    )}&end_date=${formatDate(endDate)}`
+    `${BASE_URL}/get-form?token=${token}&type=seeding`
   );
+  const dataLead = await responseLead.json();
+  const responseBooking = await fetch(
+    `${BASE_URL}/get-booking?token=${token}&type=opportunity`
+  );
+  const dataBooking = await responseBooking.json();
 
-  // console.log(await responseLead.json());
+  const dateArray = [];
+  let currentDate = new Date(startDate);
+  while (currentDate <= new Date(endDate)) {
+    dateArray.push(new Date(currentDate));
+    currentDate.setUTCDate(currentDate.getUTCDate() + steps);
+  }
+
+  const arrLead = [];
+  const arrBooking = [];
+  dateArray.forEach((item) => {
+    const dateArrLead = [];
+    for (let i = 1; i < dataLead.data.length; i++) {
+      if (
+        new Date(dataLead.data[i].create_date).toDateString() ===
+        new Date(item).toDateString()
+      ) {
+        dateArrLead.push(dataLead.data[i]);
+      }
+    }
+    arrLead.push(dateArrLead.length);
+
+    const dateArrBooking = [];
+    for (let i = 1; i < dataBooking.data.length - 1; i++) {
+      if (
+        new Date(dataBooking.data[i].booking_date).toDateString() ===
+        new Date(item).toDateString()
+      ) {
+        dateArrBooking.push(dataBooking.data[i]);
+      }
+    }
+    arrBooking.push(dateArrBooking.length);
+  });
+  return { lead: arrLead, booking: arrBooking };
 };
 const searchByService = (data, input) => {
   if (input === "") return data;

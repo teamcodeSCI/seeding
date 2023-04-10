@@ -1,4 +1,5 @@
 import { app, role } from "../../util/const.js";
+import { formatDate } from "../../util/util.js";
 import LeadDetailModal from "./LeadDetailModal.js";
 import LeadEditModal from "./LeadEditModal.js";
 
@@ -18,7 +19,7 @@ class LeadItem {
     seeding_user_name,
     getAllLead,
     user,
-    date = new Date().toDateString()
+    create_date
   }) {
     this.data = {
       seedingUserName: seeding_user_name,
@@ -34,7 +35,7 @@ class LeadItem {
       interactive_proof: interactive_proof,
       note: note,
       user: user,
-      date: date
+      date: create_date
     };
     this.getAllLead = getAllLead;
     this.$tr = document.createElement("div");
@@ -74,7 +75,7 @@ class LeadItem {
     this.$date.className = "col text-truncate";
     this.$dateText = document.createElement("p");
     this.$dateText.className = "m-0";
-    this.$dateText.innerHTML = date;
+    this.$dateText.innerHTML = formatDate(create_date);
 
     this.$viewmore = document.createElement("div");
     this.$viewmore.className = "col text-truncate";
