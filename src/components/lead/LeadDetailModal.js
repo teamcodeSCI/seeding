@@ -1,3 +1,4 @@
+import { formatDateTime } from "../../util/util.js";
 import LeadDetailItem from "./LeadDetailItem.js";
 
 class LeadDetailModal {
@@ -79,7 +80,7 @@ class LeadDetailModal {
     });
     this.$date = new LeadDetailItem({
       title: "Thời gian",
-      value: data.date
+      value: formatDateTime(data.date, true)
     });
     this.$note = new LeadDetailItem({
       title: "Ghi chú",

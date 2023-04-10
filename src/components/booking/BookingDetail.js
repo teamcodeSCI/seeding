@@ -1,4 +1,4 @@
-import { arrToStr, formatDate, formatNumber } from "../../util/util.js";
+import { arrToStr, formatDateTime, formatNumber } from "../../util/util.js";
 import BookingDetailItem from "./BookingDetailItem.js";
 
 class BookingDetail {
@@ -115,11 +115,11 @@ class BookingDetail {
     this.$city = new BookingDetailItem({ title: "Tỉnh/TP", value: data.city });
     this.$appointmentDate = new BookingDetailItem({
       title: "Ngày hẹn lịch",
-      value: formatDate(data.booking_date)
+      value: formatDateTime(data.booking_date)
     });
     this.$validDate = new BookingDetailItem({
       title: "Hiệu lực đến ngày",
-      value: formatDate(data.day_expire)
+      value: formatDateTime(data.day_expire)
     });
     this.$validStatus = new BookingDetailItem({
       title: "Trạng thái hiệu lực",

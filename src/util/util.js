@@ -20,12 +20,17 @@ export const formatDate = (date) => {
   }
   return "";
 };
-export const formatDateTime = (date) => {
+export const formatDateTime = (date, isShowTime) => {
   if (date) {
     const newDate = new Date(date);
-    return `${newDate.getFullYear()}-${
-      newDate.getMonth() + 1
-    }-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
+    const showTime = false || isShowTime;
+    return showTime
+      ? `${newDate.getDate()}/${
+          newDate.getMonth() + 1
+        }/${newDate.getFullYear()} - ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`
+      : `${newDate.getDate()}/${
+          newDate.getMonth() + 1
+        }/${newDate.getFullYear()}`;
   }
   return "";
 };

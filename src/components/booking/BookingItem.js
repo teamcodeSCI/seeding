@@ -1,5 +1,5 @@
 import { app, role } from "../../util/const.js";
-import { formatDate } from "../../util/util.js";
+import { formatDateTime } from "../../util/util.js";
 import BookingDetail from "./BookingDetail.js";
 
 class BookingItem {
@@ -36,13 +36,13 @@ class BookingItem {
     this.$appointmentDate.className = "col text-truncate";
     this.$appointmentDateText = document.createElement("p");
     this.$appointmentDateText.className = "m-0";
-    this.$appointmentDateText.innerHTML = formatDate(data.booking_date);
+    this.$appointmentDateText.innerHTML = formatDateTime(data.booking_date);
 
     this.$validDate = document.createElement("div");
     this.$validDate.className = "col text-truncate";
     this.$validDateText = document.createElement("p");
     this.$validDateText.className = "m-0";
-    this.$validDateText.innerHTML = formatDate(data.day_expire);
+    this.$validDateText.innerHTML = formatDateTime(data.day_expire);
 
     this.$validStatus = document.createElement("div");
     this.$validStatus.className = "col text-truncate";
