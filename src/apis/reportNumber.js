@@ -120,7 +120,7 @@ export const getNumberByDate = async ({ startDate, endDate }, steps = 1) => {
     const dateArrBooking = [];
     for (let i = 1; i < dataBooking.data.length - 1; i++) {
       if (
-        new Date(dataBooking.data[i].booking_date).toDateString() ===
+        new Date(dataBooking.data[i].create_date).toDateString() ===
         new Date(item).toDateString()
       ) {
         dateArrBooking.push(dataBooking.data[i]);
@@ -166,7 +166,7 @@ export const getNumberByYear = async ({ startDate, endDate }, steps = 1) => {
 
     const dateArrBooking = [];
     for (let i = 1; i < dataBooking.data.length - 1; i++) {
-      if (new Date(dataBooking.data[i].booking_date).getMonth() + 1 === item) {
+      if (new Date(dataBooking.data[i].create_date).getMonth() + 1 === item) {
         dateArrBooking.push(dataBooking.data[i]);
       }
     }

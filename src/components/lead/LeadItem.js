@@ -1,5 +1,5 @@
 import { app, role } from "../../util/const.js";
-import { formatDate } from "../../util/util.js";
+import { formatDate, formatDateTime } from "../../util/util.js";
 import LeadDetailModal from "./LeadDetailModal.js";
 import LeadEditModal from "./LeadEditModal.js";
 
@@ -75,7 +75,7 @@ class LeadItem {
     this.$date.className = "col text-truncate";
     this.$dateText = document.createElement("p");
     this.$dateText.className = "m-0";
-    this.$dateText.innerHTML = formatDate(create_date);
+    this.$dateText.innerHTML = formatDateTime(create_date);
 
     this.$viewmore = document.createElement("div");
     this.$viewmore.className = "col text-truncate";

@@ -20,6 +20,15 @@ export const formatDate = (date) => {
   }
   return "";
 };
+export const formatDateTime = (date) => {
+  if (date) {
+    const newDate = new Date(date);
+    return `${newDate.getFullYear()}-${
+      newDate.getMonth() + 1
+    }-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
+  }
+  return "";
+};
 export const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number);
 };
