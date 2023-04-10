@@ -13,7 +13,6 @@ import TargetMonth from "../components/reportCost/TargetMonth.js";
 import TargetYear from "../components/reportCost/TargetYear.js";
 import { splitStr } from "./splitStr.js";
 import User from "../components/user/User.js";
-import Target from "../components/target/Target.js";
 
 export const app = document.getElementById("root");
 export const BASE_URL = "https://scigroup.com.vn/cp/seeding/api";
@@ -23,7 +22,6 @@ const booking = new Booking();
 const reportLB = new ReportLB();
 const cost = new ReportCost();
 const user = new User();
-const target = new Target();
 
 const reportLeadWeek = new ReportLeadWeek();
 const reportLeadMonth = new ReportLeadMonth();
@@ -52,8 +50,7 @@ export const menu =
           component: reportLB
         },
         { title: "Báo cáo Chi phí", link: "[report] cost", component: cost },
-        { title: "Nhân viên", link: "[report] user", component: user },
-        { title: "Mục tiêu", link: "[report] target", component: target }
+        { title: "Nhân viên", link: "[report] user", component: user }
       ]
     : [
         { title: "Lead", link: "lead", component: lead },

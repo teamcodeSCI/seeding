@@ -84,6 +84,24 @@ export const getNumberBrand = async ({ startDate, endDate }) => {
     return { message: error };
   }
 };
+export const getNumberByDate = async ({ startDate, endDate }) => {
+  for (
+    let i = new Date(startDate).getDate();
+    i <= new Date(endDate).getDate();
+    i++
+  ) {
+    console.log(i);
+  }
+
+  const token = splitStr(localStorage.getItem("token")).token;
+  const responseLead = await fetch(
+    `${BASE_URL}/get-form?token=${token}&type=seeding&start_date=${formatDate(
+      startDate
+    )}&end_date=${formatDate(endDate)}`
+  );
+
+  // console.log(await responseLead.json());
+};
 const searchByService = (data, input) => {
   if (input === "") return data;
   return data.filter(

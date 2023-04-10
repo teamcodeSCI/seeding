@@ -140,7 +140,7 @@ class BookingDetail {
     });
     this.$unitPrice = new BookingDetailItem({
       title: "Đơn giá",
-      value: `${data.dongia} đ`
+      value: `${formatNumber(data.dongia)} đ`
     });
     this.$prepayment = new BookingDetailItem({
       title: "Tiền trước giảm",

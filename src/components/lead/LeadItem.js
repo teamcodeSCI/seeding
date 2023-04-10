@@ -1,4 +1,5 @@
 import { app, role } from "../../util/const.js";
+import LeadDetailModal from "./LeadDetailModal.js";
 import LeadEditModal from "./LeadEditModal.js";
 
 class LeadItem {
@@ -16,7 +17,8 @@ class LeadItem {
     code_form,
     seeding_user_name,
     getAllLead,
-    user
+    user,
+    date = new Date().toDateString()
   }) {
     this.data = {
       seedingUserName: seeding_user_name,
@@ -31,7 +33,8 @@ class LeadItem {
       script: script,
       interactive_proof: interactive_proof,
       note: note,
-      user: user
+      user: user,
+      date: date
     };
     this.getAllLead = getAllLead;
     this.$tr = document.createElement("div");
@@ -49,14 +52,6 @@ class LeadItem {
     this.$phonenumberText.className = "m-0";
     this.$phonenumberText.innerHTML = phone;
 
-    this.$linkFb = document.createElement("div");
-    this.$linkFb.className = "col text-truncate";
-    this.$linkFbText = document.createElement("a");
-    this.$linkFbText.className = "m-0";
-    this.$linkFbText.target = "_blank";
-    this.$linkFbText.href = link_fb;
-    this.$linkFbText.innerHTML = name_fb;
-
     this.$service = document.createElement("div");
     this.$service.className = "col text-truncate";
     this.$serviceText = document.createElement("p");
@@ -69,32 +64,26 @@ class LeadItem {
     this.$branchText.className = "m-0";
     this.$branchText.innerHTML = company_name;
 
-    this.$script = document.createElement("div");
-    this.$script.className = "col text-truncate";
-    this.$scriptText = document.createElement("p");
-    this.$scriptText.className = "m-0";
-    this.$scriptText.innerHTML = script;
-
-    this.$interactive = document.createElement("div");
-    this.$interactive.className = "col text-truncate";
-    this.$interactiveText = document.createElement("a");
-    this.$interactiveText.href = interactive_proof;
-    this.$interactiveText.className = "m-0";
-    this.$interactiveText.target = "_blank";
-    this.$interactiveText.innerHTML =
-      interactive_proof === "" ? "" : "Link ảnh";
-
     this.$user = document.createElement("div");
     this.$user.className = "col text-truncate";
     this.$userText = document.createElement("p");
     this.$userText.className = "m-0";
     this.$userText.innerHTML = seeding_user_name;
 
-    this.$note = document.createElement("div");
-    this.$note.className = "col text-truncate";
-    this.$noteText = document.createElement("p");
-    this.$noteText.className = "m-0";
-    this.$noteText.innerHTML = note;
+    this.$date = document.createElement("div");
+    this.$date.className = "col text-truncate";
+    this.$dateText = document.createElement("p");
+    this.$dateText.className = "m-0";
+    this.$dateText.innerHTML = date;
+
+    this.$viewmore = document.createElement("div");
+    this.$viewmore.className = "col text-truncate";
+    this.$viewmoreText = document.createElement("button");
+    this.$viewmoreText.className = "p-0 btn btn-link";
+    this.$viewmoreText.innerHTML = "Xem thêm";
+    this.$viewmore.addEventListener("click", () => {
+      this.openLeadDetail();
+    });
 
     this.$editBtn = document.createElement("button");
     this.$editBtn.className =
@@ -113,7 +102,17 @@ class LeadItem {
       data: this.data,
       getAllLead: this.getAllLead
     });
+    this.$leadDetail = new LeadDetailModal({
+      closeLeadDetail: this.closeLeadDetail,
+      data: this.data
+    });
   }
+  openLeadDetail = () => {
+    app.appendChild(this.$leadDetail.render());
+  };
+  closeLeadDetail = () => {
+    app.removeChild(this.$leadDetail.render());
+  };
   openLeadEditModal = () => {
     app.appendChild(this.$leadEditModal.render());
   };
@@ -127,28 +126,21 @@ class LeadItem {
     this.$tr.appendChild(this.$phonenumber);
     this.$phonenumber.appendChild(this.$phonenumberText);
 
-    this.$tr.appendChild(this.$linkFb);
-    this.$linkFb.appendChild(this.$linkFbText);
-
     this.$tr.appendChild(this.$service);
     this.$service.appendChild(this.$serviceText);
 
     this.$tr.appendChild(this.$branch);
     this.$branch.appendChild(this.$branchText);
 
-    this.$tr.appendChild(this.$script);
-    this.$script.appendChild(this.$scriptText);
-
-    this.$tr.appendChild(this.$interactive);
-    this.$interactive.appendChild(this.$interactiveText);
-
     if (role === "admin") {
       this.$tr.appendChild(this.$user);
       this.$user.appendChild(this.$userText);
     }
+    this.$tr.appendChild(this.$date);
+    this.$date.appendChild(this.$dateText);
 
-    this.$tr.appendChild(this.$note);
-    this.$note.appendChild(this.$noteText);
+    this.$tr.appendChild(this.$viewmore);
+    this.$viewmore.appendChild(this.$viewmoreText);
 
     this.$tr.appendChild(this.$editBtn);
     this.$editBtn.appendChild(this.$editIcon);

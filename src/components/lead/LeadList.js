@@ -25,12 +25,6 @@ class LeadList {
     this.$phonenumberText.className = "m-0 fw-bold";
     this.$phonenumberText.innerHTML = `Điện thoại`;
 
-    this.$linkFb = document.createElement("div");
-    this.$linkFb.className = "col text-truncate";
-    this.$linkFbText = document.createElement("p");
-    this.$linkFbText.className = "m-0 fw-bold";
-    this.$linkFbText.innerHTML = `Link Facebook`;
-
     this.$service = document.createElement("div");
     this.$service.className = "col text-truncate";
     this.$serviceText = document.createElement("p");
@@ -43,29 +37,23 @@ class LeadList {
     this.$branchText.className = "m-0 fw-bold";
     this.$branchText.innerHTML = `Chi nhánh`;
 
-    this.$script = document.createElement("div");
-    this.$script.className = "col text-truncate";
-    this.$scriptText = document.createElement("p");
-    this.$scriptText.className = "m-0 fw-bold";
-    this.$scriptText.innerHTML = `Kịch bản`;
-
-    this.$interactive = document.createElement("div");
-    this.$interactive.className = "col text-truncate";
-    this.$interactiveText = document.createElement("p");
-    this.$interactiveText.className = "m-0 fw-bold";
-    this.$interactiveText.innerHTML = `Tương tác`;
-
     this.$user = document.createElement("div");
     this.$user.className = "col text-truncate";
     this.$userText = document.createElement("p");
     this.$userText.className = "m-0 fw-bold";
     this.$userText.innerHTML = `Nhân viên`;
 
-    this.$note = document.createElement("div");
-    this.$note.className = "col text-truncate";
-    this.$noteText = document.createElement("p");
-    this.$noteText.className = "m-0 fw-bold";
-    this.$noteText.innerHTML = `Ghi chú`;
+    this.$date = document.createElement("div");
+    this.$date.className = "col text-truncate";
+    this.$dateText = document.createElement("p");
+    this.$dateText.className = "m-0 fw-bold";
+    this.$dateText.innerHTML = `Ngày tạo`;
+
+    this.$viewmore = document.createElement("div");
+    this.$viewmore.className = "col text-truncate";
+    this.$viewmoreText = document.createElement("p");
+    this.$viewmoreText.className = "m-0 fw-bold";
+    this.$viewmoreText.innerHTML = "Xem thêm";
 
     this.$tbody = document.createElement("div");
     this.$tbody.className = "bg-item";
@@ -94,29 +82,22 @@ class LeadList {
     this.$theadTr.appendChild(this.$phonenumber);
     this.$phonenumber.appendChild(this.$phonenumberText);
 
-    this.$theadTr.appendChild(this.$linkFb);
-    this.$linkFb.appendChild(this.$linkFbText);
-
     this.$theadTr.appendChild(this.$service);
     this.$service.appendChild(this.$serviceText);
 
     this.$theadTr.appendChild(this.$branch);
     this.$branch.appendChild(this.$branchText);
 
-    this.$theadTr.appendChild(this.$script);
-    this.$script.appendChild(this.$scriptText);
-
-    this.$theadTr.appendChild(this.$interactive);
-    this.$interactive.appendChild(this.$interactiveText);
-
     if (role === "admin") {
       this.$theadTr.appendChild(this.$user);
       this.$user.appendChild(this.$userText);
     }
 
-    this.$theadTr.appendChild(this.$note);
-    this.$note.appendChild(this.$noteText);
+    this.$theadTr.appendChild(this.$date);
+    this.$date.appendChild(this.$dateText);
 
+    this.$theadTr.appendChild(this.$viewmore);
+    this.$viewmore.appendChild(this.$viewmoreText);
     return this.$container;
   }
 }

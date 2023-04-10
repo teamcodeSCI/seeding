@@ -1,5 +1,4 @@
-import { getNumberBrand } from "../../apis/reportNumber.js";
-import { app } from "../../util/const.js";
+import { getNumberBrand, getNumberByDate } from "../../apis/reportNumber.js";
 import BarChart from "../BarChart.js";
 
 import ReportTable from "./ReportTable.js";
@@ -41,6 +40,10 @@ class ReportLeadWeek {
     const firstday = new Date(curr.setDate(first));
     const lastday = new Date(curr.setDate(last));
     const brandData = await getNumberBrand({
+      startDate: firstday,
+      endDate: lastday
+    });
+    const weekData = await getNumberByDate({
       startDate: firstday,
       endDate: lastday
     });

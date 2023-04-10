@@ -1,3 +1,4 @@
+import { fetchTarget } from "../../apis/target.js";
 import UserItem from "./UserItem.js";
 
 class UserList {
@@ -30,11 +31,11 @@ class UserList {
     this.$phonenumberText.className = "m-0 fw-bold";
     this.$phonenumberText.innerHTML = `Số điện thoại`;
 
-    this.$birthday = document.createElement("div");
-    this.$birthday.className = "col text-truncate";
-    this.$birthdayText = document.createElement("p");
-    this.$birthdayText.className = "m-0 fw-bold";
-    this.$birthdayText.innerHTML = `Ngày sinh`;
+    this.$target = document.createElement("div");
+    this.$target.className = "col text-truncate";
+    this.$targetText = document.createElement("p");
+    this.$targetText.className = "m-0 fw-bold";
+    this.$targetText.innerHTML = `Mục tiêu`;
 
     this.$status = document.createElement("div");
     this.$status.className = "col text-truncate";
@@ -73,8 +74,8 @@ class UserList {
     this.$theadTr.appendChild(this.$phonenumber);
     this.$phonenumber.appendChild(this.$phonenumberText);
 
-    this.$theadTr.appendChild(this.$birthday);
-    this.$birthday.appendChild(this.$birthdayText);
+    this.$theadTr.appendChild(this.$target);
+    this.$target.appendChild(this.$targetText);
 
     this.$theadTr.appendChild(this.$status);
     this.$status.appendChild(this.$statusText);
