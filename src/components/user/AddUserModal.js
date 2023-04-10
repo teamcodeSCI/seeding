@@ -53,14 +53,27 @@ class AddUserModal {
     this.$saveBtn.addEventListener("click", () => {
       this.save();
     });
+    this.$pendingBtn = document.createElement("button");
+    this.$pendingBtn.className = "btn btn-secondary";
+    this.$pendingBtn.innerHTML = "Vui lòng chờ ...";
   }
+  pending = () => {
+    this.$footer.innerHTML = "";
+    this.$footer.appendChild(this.$pendingBtn);
+  };
+  unPending = () => {
+    this.$footer.innerHTML = "";
+    this.$footer.appendChild(this.$saveBtn);
+  };
   save = async () => {
+    this.pending();
     if (
       this.$name.getValue().value === "" ||
       this.$phonenumber1.getValue().value === "" ||
       this.$birthday.getValue().value === ""
     ) {
       this.$notify.innerHTML = "Vui lòng nhập đủ thông tin";
+      this.unPending();
       return;
     }
     const addNew = await createUser({
@@ -71,6 +84,7 @@ class AddUserModal {
     });
     if (addNew.type !== 0) {
       this.$notify.innerHTML = addNew.message;
+      this.unPending();
       return;
     }
     this.closeUserAddModal();
@@ -79,6 +93,7 @@ class AddUserModal {
     this.$phonenumber1.reset();
     this.$phonenumber2.reset();
     this.$birthday.reset();
+    this.unPending();
   };
   render() {
     this.$container.appendChild(this.$dialog);
