@@ -53,6 +53,10 @@ class LeadAddModal {
     this.$saveBtn.addEventListener("click", () => {
       this.clickSave();
     });
+    this.$pendingBtn = document.createElement("button");
+    this.$pendingBtn.className = "btn btn-secondary";
+    this.$pendingBtn.innerHTML = "Vui lòng chờ ...";
+
     this.$name = new InputGroup({ placeholder: "Họ và tên" });
     this.$phone = new InputGroup({ placeholder: "Điện thoại" });
     this.$nameFb = new InputGroup({ placeholder: "Tên FB" });
@@ -103,7 +107,16 @@ class LeadAddModal {
       this.$note.reset(),
       this.$interactive.reset();
   };
+  pending = () => {
+    this.$footer.innerHTML = "";
+    this.$footer.appendChild(this.$pendingBtn);
+  };
+  unPending = () => {
+    this.$footer.innerHTML = "";
+    this.$footer.appendChild(this.$saveBtn);
+  };
   clickSave = async () => {
+    this.pending();
     if (
       this.$name.getValue().value === "" ||
       this.$phone.getValue().value === "" ||
@@ -133,6 +146,7 @@ class LeadAddModal {
     this.reset();
     this.closeLeadAddModal();
     this.getAllLead();
+    this.unPending();
   };
   handleSuggest = () => {
     if (this.$branchBox !== this.$suggestBox.parentElement) {
