@@ -1,5 +1,4 @@
-import { getNumberBrand } from "../../apis/reportNumber.js";
-import { app } from "../../util/const.js";
+import { getNumberBrand, getNumberByYear } from "../../apis/reportNumber.js";
 
 import BarChart from "../BarChart.js";
 
@@ -44,11 +43,9 @@ class ReportLeadYear {
     this.$box = document.createElement("div");
     this.$box.className = "d-flex gap-3 align-items-start";
     this.$chartBox = document.createElement("div");
-    this.$chartBox.style.width = "65%";
+    this.$chartBox.style.width = "70%";
     this.$tableBox = document.createElement("div");
-    this.$tableBox.style.width = "35%";
-
-    this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet });
+    this.$tableBox.style.width = "30%";
   }
   getBrandData = async () => {
     const date = new Date();
@@ -64,11 +61,32 @@ class ReportLeadYear {
     this.$tableBox.innerHTML = "";
     this.$tableBox.appendChild(this.$serviceBookingRp.render());
   };
+  getDateData = async () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const firstDay = new Date(year, 0, 1);
+    const lastDay = new Date(year, 11, 31);
+    const weekData = await getNumberByYear({
+      startDate: firstDay,
+      endDate: lastDay
+    });
+
+    this.labels = weekData.labels;
+    this.dataSet[0].data = weekData.lead;
+    this.dataSet[1].data = weekData.booking;
+    this.$chartBox.innerHTML = "";
+    this.$chart = new BarChart({
+      labels: this.labels,
+      dataSet: this.dataSet
+    });
+    this.$chartBox.appendChild(this.$chart.render());
+  };
   render() {
     this.$box.appendChild(this.$chartBox);
-    this.$chartBox.appendChild(this.$chart.render());
+
     this.$box.appendChild(this.$tableBox);
     this.getBrandData();
+    this.getDateData();
 
     return this.$box;
   }

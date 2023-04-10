@@ -101,10 +101,11 @@ export const getNumberByDate = async ({ startDate, endDate }, steps = 1) => {
     dateArray.push(new Date(currentDate));
     currentDate.setUTCDate(currentDate.getUTCDate() + steps);
   }
-
+  const dayArr = [];
   const arrLead = [];
   const arrBooking = [];
   dateArray.forEach((item) => {
+    dayArr.push(new Date(item).getDate());
     const dateArrLead = [];
     for (let i = 1; i < dataLead.data.length; i++) {
       if (
@@ -127,7 +128,51 @@ export const getNumberByDate = async ({ startDate, endDate }, steps = 1) => {
     }
     arrBooking.push(dateArrBooking.length);
   });
-  return { lead: arrLead, booking: arrBooking };
+  return { labels: dayArr, lead: arrLead, booking: arrBooking };
+};
+
+export const getNumberByYear = async ({ startDate, endDate }, steps = 1) => {
+  const token = splitStr(localStorage.getItem("token")).token;
+  const responseLead = await fetch(
+    `${BASE_URL}/get-form?token=${token}&type=seeding`
+  );
+  const dataLead = await responseLead.json();
+  const responseBooking = await fetch(
+    `${BASE_URL}/get-booking?token=${token}&type=opportunity`
+  );
+  const dataBooking = await responseBooking.json();
+  const labelArr = [];
+  const dateArray = [];
+  let currentDate = new Date(startDate);
+  for (
+    let i = currentDate.getMonth() + 1;
+    i <= new Date(endDate).getMonth() + 1;
+    i++
+  ) {
+    dateArray.push(i);
+    labelArr.push("Tháng " + i);
+  }
+
+  const arrLead = [];
+  const arrBooking = [];
+  dateArray.forEach((item) => {
+    const dateArrLead = [];
+    for (let i = 1; i < dataLead.data.length; i++) {
+      if (new Date(dataLead.data[i].create_date).getMonth() + 1 === item) {
+        dateArrLead.push(dataLead.data[i]);
+      }
+    }
+    arrLead.push(dateArrLead.length);
+
+    const dateArrBooking = [];
+    for (let i = 1; i < dataBooking.data.length - 1; i++) {
+      if (new Date(dataBooking.data[i].booking_date).getMonth() + 1 === item) {
+        dateArrBooking.push(dataBooking.data[i]);
+      }
+    }
+    arrBooking.push(dateArrBooking.length);
+  });
+  return { labels: labelArr, lead: arrLead, booking: arrBooking };
 };
 const searchByService = (data, input) => {
   if (input === "") return data;
