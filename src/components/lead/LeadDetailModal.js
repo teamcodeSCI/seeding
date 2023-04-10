@@ -1,4 +1,4 @@
-import BookingDetailItem from "../booking/BookingDetailItem.js";
+import LeadDetailItem from "./LeadDetailItem.js";
 
 class LeadDetailModal {
   constructor({ closeLeadDetail, data }) {
@@ -44,44 +44,44 @@ class LeadDetailModal {
     this.$doneBtn.addEventListener("click", () => {
       closeLeadDetail();
     });
-    this.$codeForm = new BookingDetailItem({
+    this.$codeForm = new LeadDetailItem({
       title: "Mã",
       value: data.codeForm
     });
-    this.$name = new BookingDetailItem({
+    this.$name = new LeadDetailItem({
       title: "Họ và tên",
       value: data.name
     });
-    this.$phone = new BookingDetailItem({
+    this.$phone = new LeadDetailItem({
       title: "Số điện thoại",
       value: data.phone
     });
-    this.$fb = new BookingDetailItem({
+    this.$fb = new LeadDetailItem({
       title: "Facebook",
       value: data.name_fb,
       link: data.link_fb
     });
-    this.$service = new BookingDetailItem({
+    this.$service = new LeadDetailItem({
       title: "Dịch vụ đăng ký",
       value: data.service
     });
-    this.$branch = new BookingDetailItem({
+    this.$branch = new LeadDetailItem({
       title: "Chi nhánh",
       value: data.company_name
     });
-    this.$script = new BookingDetailItem({
+    this.$script = new LeadDetailItem({
       title: "Kịch bản",
       value: data.script
     });
-    this.$interactive = new BookingDetailItem({
+    this.$interactive = new LeadDetailItem({
       title: "Tương tác",
       value: data.interactive_proof
     });
-    this.$date = new BookingDetailItem({
+    this.$date = new LeadDetailItem({
       title: "Thời gian",
       value: data.date
     });
-    this.$note = new BookingDetailItem({
+    this.$note = new LeadDetailItem({
       title: "Ghi chú",
       value: data.note
     });
