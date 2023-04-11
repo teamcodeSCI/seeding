@@ -6,7 +6,7 @@ export const login = async (info) => {
       `${BASE_URL}/get-token?login=${info.login}&password=${info.password}`
     );
     const data = await response.json();
-    console.log("data: ", data);
+
     return {
       type: data.type,
       message: data.message,

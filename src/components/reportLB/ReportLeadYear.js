@@ -87,7 +87,7 @@ class ReportLeadYear {
     const brandData = await getNumberBrand({
       startDate: firstDay,
       endDate: lastDay,
-      user: this.user
+      userCode: this.user
     });
     this.$serviceBookingRp = new ReportTable({ data: brandData.data });
     this.$tableBox.innerHTML = "";

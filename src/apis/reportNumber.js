@@ -1,19 +1,19 @@
-import { BASE_URL } from "../util/const.js";
+import { BASE_URL, role } from "../util/const.js";
 import { splitStr } from "../util/splitStr.js";
 import { formatDate, getDuplicate, removeAccents } from "../util/util.js";
 
-export const getNumberBrand = async ({ startDate, endDate, user }) => {
+export const getNumberBrand = async ({ startDate, endDate, userCode }) => {
   try {
     const token = splitStr(localStorage.getItem("token")).token;
     const responseLead = await fetch(
       `${BASE_URL}/get-form?token=${token}&type=seeding&start_date=${formatDate(
         startDate
-      )}&end_date=${formatDate(endDate)}&user_seeding=${user}`
+      )}&end_date=${formatDate(endDate)}&user_seeding=${userCode}`
     );
     const responseBooking = await fetch(
       `${BASE_URL}/get-booking?token=${token}&type=opportunity&start_date=${formatDate(
         startDate
-      )}&end_date=${formatDate(endDate)}&user_seeding=${user}`
+      )}&end_date=${formatDate(endDate)}&user_seeding=${userCode}`
     );
     const dataBooking = await responseBooking.json();
     const dataLead = await responseLead.json();

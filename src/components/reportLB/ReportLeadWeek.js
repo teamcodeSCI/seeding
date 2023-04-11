@@ -72,7 +72,7 @@ class ReportLeadWeek {
     const brandData = await getNumberBrand({
       startDate: firstday,
       endDate: lastday,
-      user: this.user
+      userCode: this.user
     });
 
     this.$serviceBookingRp = new ReportTable({ data: brandData.data });
