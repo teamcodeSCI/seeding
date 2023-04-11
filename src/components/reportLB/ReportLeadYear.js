@@ -101,7 +101,7 @@ class ReportLeadYear {
     const weekData = await getNumberByYear({
       startDate: firstDay,
       endDate: lastDay,
-      user: this.user
+      userCode: this.user
     });
 
     this.labels = weekData.labels;
