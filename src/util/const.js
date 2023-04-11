@@ -13,6 +13,7 @@ import TargetMonth from "../components/reportCost/TargetMonth.js";
 import TargetYear from "../components/reportCost/TargetYear.js";
 import { splitStr } from "./splitStr.js";
 import User from "../components/user/User.js";
+import ReportLeadRange from "../components/reportLB/ReportLeadRange.js";
 
 export const app = document.getElementById("root");
 export const BASE_URL = "https://scigroup.com.vn/cp/seeding/api";
@@ -26,6 +27,7 @@ const user = new User();
 const reportLeadWeek = new ReportLeadWeek();
 const reportLeadMonth = new ReportLeadMonth();
 const reportLeadYear = new ReportLeadYear();
+const reportLeadRange = new ReportLeadRange();
 
 const reportSuccessWeek = new ReportSuccessWeek();
 const reportSuccessMonth = new ReportSuccessMonth();
@@ -63,18 +65,19 @@ export const menu =
         { title: "Báo cáo Chi phí", link: "[report] cost", component: cost }
       ];
 export const tabLead = [
-  { title: "Ngày", link: "[LB] day", component: reportLeadWeek },
+  { title: "Tuần", link: "[LB] day", component: reportLeadWeek },
   { title: "Tháng", link: "[LB] month", component: reportLeadMonth },
-  { title: "Năm", link: "[LB] year", component: reportLeadYear }
+  { title: "Năm", link: "[LB] year", component: reportLeadYear },
+  { title: "Khoảng ngày", link: "[LB] rangeDate", component: reportLeadRange }
 ];
 
 export const tabSuccess = [
-  { title: "Ngày", link: "[Success] day", component: reportSuccessWeek },
+  { title: "Tuần", link: "[Success] day", component: reportSuccessWeek },
   { title: "Tháng", link: "[Success] month", component: reportSuccessMonth },
   { title: "Năm", link: "[Success] year", component: reportSuccessYear }
 ];
 export const tabTarget = [
-  { title: "Ngày", link: "[Target] day", component: targetDay },
+  { title: "Tuần", link: "[Target] day", component: targetDay },
   { title: "Tháng", link: "[Target] month", component: targetMonth },
   { title: "Năm", link: "[Target] year", component: targetYear }
 ];

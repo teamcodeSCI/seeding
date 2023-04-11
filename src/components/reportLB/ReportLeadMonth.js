@@ -1,6 +1,9 @@
 import { getNumberBrand, getNumberByDate } from "../../apis/reportNumber.js";
+import { getUser } from "../../apis/userList.js";
+import { role } from "../../util/const.js";
 
 import BarChart from "../BarChart.js";
+import Filter from "../Filter.js";
 
 import ReportTable from "./ReportTable.js";
 
@@ -25,6 +28,16 @@ class ReportLeadMonth {
   ];
 
   constructor() {
+    this.user = "";
+    this.$container = document.createElement("div");
+    this.$container.className = "reportLeadWeek";
+
+    this.$control = document.createElement("div");
+    this.$control.className =
+      "d-flex justify-content-end my-3 align-items-end mx-3";
+
+    this.$userBox = document.createElement("div");
+
     this.$box = document.createElement("div");
     this.$box.className = "d-flex gap-3 align-items-start";
     this.$chartBox = document.createElement("div");
@@ -32,6 +45,24 @@ class ReportLeadMonth {
     this.$tableBox = document.createElement("div");
     this.$tableBox.style.width = "30%";
   }
+  filterSearch = () => {
+    this.getDateData();
+    this.getBrandData();
+  };
+  setUser = (val) => {
+    this.user = val;
+  };
+  getAllUser = async () => {
+    const fetchUser = await getUser({ userCode: "" });
+    this.$userBox.innerHTML = "";
+    this.$selectUser = new Filter({
+      data: fetchUser.data,
+      filterSearch: this.filterSearch,
+      setUser: this.setUser,
+      title: "Nhân viên"
+    });
+    this.$userBox.appendChild(this.$selectUser.render());
+  };
   getBrandData = async () => {
     const date = new Date();
     const year = date.getFullYear();
@@ -41,7 +72,8 @@ class ReportLeadMonth {
 
     const brandData = await getNumberBrand({
       startDate: firstDay,
-      endDate: lastDay
+      endDate: lastDay,
+      user: this.user
     });
     this.$serviceBookingRp = new ReportTable({ data: brandData.data });
     this.$tableBox.innerHTML = "";
@@ -55,7 +87,8 @@ class ReportLeadMonth {
     const lastDay = new Date(year, month + 1, 0);
     const weekData = await getNumberByDate({
       startDate: firstDay,
-      endDate: lastDay
+      endDate: lastDay,
+      user: this.user
     });
 
     this.labels = weekData.labels;
@@ -69,11 +102,18 @@ class ReportLeadMonth {
     this.$chartBox.appendChild(this.$chart.render());
   };
   render() {
+    if (role === "admin") {
+      this.getAllUser();
+    }
+    this.$container.appendChild(this.$control);
+    this.$container.appendChild(this.$box);
+    this.$control.appendChild(this.$userBox);
+    this.getBrandData();
+    this.getDateData();
     this.$box.appendChild(this.$chartBox);
     this.$box.appendChild(this.$tableBox);
-    this.getDateData();
-    this.getBrandData();
-    return this.$box;
+
+    return this.$container;
   }
 }
 export default ReportLeadMonth;

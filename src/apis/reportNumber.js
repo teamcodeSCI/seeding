@@ -2,18 +2,18 @@ import { BASE_URL } from "../util/const.js";
 import { splitStr } from "../util/splitStr.js";
 import { formatDate, getDuplicate, removeAccents } from "../util/util.js";
 
-export const getNumberBrand = async ({ startDate, endDate }) => {
+export const getNumberBrand = async ({ startDate, endDate, user }) => {
   try {
     const token = splitStr(localStorage.getItem("token")).token;
     const responseLead = await fetch(
       `${BASE_URL}/get-form?token=${token}&type=seeding&start_date=${formatDate(
         startDate
-      )}&end_date=${formatDate(endDate)}`
+      )}&end_date=${formatDate(endDate)}&user_seeding=${user}`
     );
     const responseBooking = await fetch(
       `${BASE_URL}/get-booking?token=${token}&type=opportunity&start_date=${formatDate(
         startDate
-      )}&end_date=${formatDate(endDate)}`
+      )}&end_date=${formatDate(endDate)}&user_seeding=${user}`
     );
     const dataBooking = await responseBooking.json();
     const dataLead = await responseLead.json();
@@ -105,7 +105,7 @@ export const getNumberByDate = async ({ startDate, endDate }, steps = 1) => {
   const arrLead = [];
   const arrBooking = [];
   dateArray.forEach((item) => {
-    dayArr.push(new Date(item).getDate());
+    dayArr.push(`${new Date(item).getDate()}/${new Date(item).getMonth() + 1}`);
     const dateArrLead = [];
     for (let i = 1; i < dataLead.data.length; i++) {
       if (

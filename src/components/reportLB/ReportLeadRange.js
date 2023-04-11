@@ -1,28 +1,14 @@
-import { getNumberBrand, getNumberByYear } from "../../apis/reportNumber.js";
+import { getNumberBrand, getNumberByDate } from "../../apis/reportNumber.js";
 import { getUser } from "../../apis/userList.js";
 import { role } from "../../util/const.js";
-
 import BarChart from "../BarChart.js";
 import Filter from "../Filter.js";
+import InputGroup from "../InputGroup.js";
 
 import ReportTable from "./ReportTable.js";
 
-class ReportLeadYear {
-  labels = [
-    "Tháng 1",
-    "Tháng 2",
-    "Tháng 3",
-    "Tháng 4",
-    "Tháng 5",
-    "Tháng 6",
-    "Tháng 7",
-    "Tháng 8",
-    "Tháng 9",
-    "Tháng 10",
-    "Tháng 11",
-    "Tháng 12"
-  ];
-
+class ReportLeadRange {
+  today = new Date();
   dataSet = [
     {
       label: "Lead",
@@ -30,7 +16,7 @@ class ReportLeadYear {
       borderColor: "#1a73e8",
       highlightFill: "#1a73e8",
       highlightStroke: "#1a73e8",
-      data: [10, 20, 30, 40, 50, 56, 80, 10, 20, 30, 40, 25]
+      data: []
     },
     {
       label: "Booking",
@@ -38,28 +24,58 @@ class ReportLeadYear {
       borderColor: "red",
       highlightFill: "red",
       highlightStroke: "red",
-      data: [5, 18, 25, 30, 35, 50, 70, 5, 18, 16, 39, 10]
+      data: []
     }
   ];
 
   constructor() {
     this.user = "";
     this.$container = document.createElement("div");
-    this.$container.className = "reportLeadYear";
+    this.$container.className = "reportLeadRange";
 
     this.$control = document.createElement("div");
     this.$control.className =
-      "d-flex justify-content-end my-3 align-items-end mx-3";
+      "d-flex justify-content-between my-3 align-items-end mx-3";
 
     this.$userBox = document.createElement("div");
 
+    this.$inputGroup = document.createElement("div");
+    this.$inputGroup.className = "d-flex gap-2 align-items-end";
+
+    this.$startDate = new InputGroup({
+      title: "Ngày bắt đầu",
+      type: "date",
+      width: "100%",
+      value: this.today
+    });
+
+    this.$endDate = new InputGroup({
+      title: "Ngày kết thúc",
+      type: "date",
+      width: "100%",
+      value: this.today
+    });
+
+    this.$submitBtn = document.createElement("button");
+    this.$submitBtn.className = "btn btn-primary py-1 px-2";
+    this.$submitBtn.style.fontSize = "14px";
+    this.$submitBtn.addEventListener("click", () => {
+      this.filterSearch();
+    });
+
+    this.$searchIcon = document.createElement("i");
+    this.$searchIcon.className = "bi bi-search";
+
     this.$box = document.createElement("div");
     this.$box.className = "d-flex gap-3 align-items-start";
+
     this.$chartBox = document.createElement("div");
     this.$chartBox.style.width = "70%";
+
     this.$tableBox = document.createElement("div");
     this.$tableBox.style.width = "30%";
   }
+
   filterSearch = () => {
     this.getDateData();
     this.getBrandData();
@@ -79,11 +95,8 @@ class ReportLeadYear {
     this.$userBox.appendChild(this.$selectUser.render());
   };
   getBrandData = async () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const firstDay = new Date(year, 0, 1);
-    const lastDay = new Date(year, 11, 31);
-
+    const firstDay = this.$startDate.getValue().value;
+    const lastDay = this.$endDate.getValue().value;
     const brandData = await getNumberBrand({
       startDate: firstDay,
       endDate: lastDay,
@@ -94,14 +107,11 @@ class ReportLeadYear {
     this.$tableBox.appendChild(this.$serviceBookingRp.render());
   };
   getDateData = async () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const firstDay = new Date(year, 0, 1);
-    const lastDay = new Date(year, 11, 31);
-    const weekData = await getNumberByYear({
+    const firstDay = this.$startDate.getValue().value;
+    const lastDay = this.$endDate.getValue().value;
+    const weekData = await getNumberByDate({
       startDate: firstDay,
-      endDate: lastDay,
-      user: this.user
+      endDate: lastDay
     });
 
     this.labels = weekData.labels;
@@ -120,13 +130,20 @@ class ReportLeadYear {
     }
     this.$container.appendChild(this.$control);
     this.$container.appendChild(this.$box);
+    this.$control.appendChild(this.$inputGroup);
     this.$control.appendChild(this.$userBox);
-    this.getBrandData();
-    this.getDateData();
+
+    this.$inputGroup.appendChild(this.$startDate.render());
+    this.$inputGroup.appendChild(this.$endDate.render());
+    this.$inputGroup.appendChild(this.$submitBtn);
+
+    this.$submitBtn.appendChild(this.$searchIcon);
+
     this.$box.appendChild(this.$chartBox);
     this.$box.appendChild(this.$tableBox);
-
+    this.getDateData();
+    this.getBrandData();
     return this.$container;
   }
 }
-export default ReportLeadYear;
+export default ReportLeadRange;
