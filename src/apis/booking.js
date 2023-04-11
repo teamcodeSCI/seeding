@@ -7,7 +7,8 @@ export const getBooking = async ({
   endDate,
   name,
   phone,
-  code
+  code,
+  user
 }) => {
   try {
     const token = splitStr(localStorage.getItem("token")).token;
@@ -18,7 +19,7 @@ export const getBooking = async ({
         pageNum > 0
           ? (pageNum - 1) * paginationLimit
           : pageNum * paginationLimit
-      }&start_date=${startDate}&end_date=${endDate}&name=${name}&phone=${phone}&code=${code}`
+      }&start_date=${startDate}&end_date=${endDate}&name=${name}&phone=${phone}&code=${code}&user_seeding=${user}`
     );
     const data = await response.json();
 

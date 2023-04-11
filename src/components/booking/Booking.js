@@ -116,7 +116,7 @@ class Booking {
             this.tagTitle = `Ngày kết thúc: ${this.inputGroup[i]}`;
             break;
           case 5:
-            this.tagTitle = `Nnân viên: ${this.inputGroup[i]}`;
+            this.tagTitle = `Nhân viên: ${this.inputGroup[i]}`;
             break;
           default:
             break;
@@ -137,7 +137,7 @@ class Booking {
       phone: this.searchPhone,
       startDate: this.startDate,
       endDate: this.endDate,
-      user: this.user,
+      user: this.searchUser,
       code: ""
     });
 

@@ -6,7 +6,7 @@ import { getLead } from "../../apis/lead.js";
 import AddLead from "./AddLead.js";
 import LeadSearchModal from "./LeadSearchModal.js";
 import Tag from "../Tag.js";
-import { app } from "../../util/const.js";
+import { app, role } from "../../util/const.js";
 
 class Lead {
   tagTitle = "";
@@ -216,9 +216,7 @@ class Lead {
     this.$dataTable.appendChild(this.$desc);
     this.$action.appendChild(this.$actionLeft);
     this.$actionLeft.appendChild(this.$searchBtn);
-
-    this.$action.appendChild(this.$addLead.render());
-
+    if (role === "user") this.$action.appendChild(this.$addLead.render());
     this.$dataTable.appendChild(this.$table);
     this.$dataTable.appendChild(this.$pagiBox);
 

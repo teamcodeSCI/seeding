@@ -111,7 +111,8 @@ class ReportLeadRange {
     const lastDay = this.$endDate.getValue().value;
     const weekData = await getNumberByDate({
       startDate: firstDay,
-      endDate: lastDay
+      endDate: lastDay,
+      userCode: this.user
     });
 
     this.labels = weekData.labels;

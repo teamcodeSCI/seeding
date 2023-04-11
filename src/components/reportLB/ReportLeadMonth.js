@@ -88,7 +88,7 @@ class ReportLeadMonth {
     const weekData = await getNumberByDate({
       startDate: firstDay,
       endDate: lastDay,
-      user: this.user
+      userCode: this.user
     });
 
     this.labels = weekData.labels;

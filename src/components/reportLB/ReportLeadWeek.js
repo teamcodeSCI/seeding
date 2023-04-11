@@ -88,7 +88,7 @@ class ReportLeadWeek {
     const weekData = await getNumberByDate({
       startDate: firstday,
       endDate: lastday,
-      user: this.user
+      userCode: this.user
     });
     this.dataSet[0].data = weekData.lead;
     this.dataSet[1].data = weekData.booking;

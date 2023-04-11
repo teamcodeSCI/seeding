@@ -84,14 +84,17 @@ export const getNumberBrand = async ({ startDate, endDate, userCode }) => {
     return { message: error };
   }
 };
-export const getNumberByDate = async ({ startDate, endDate }, steps = 1) => {
+export const getNumberByDate = async (
+  { startDate, endDate, userCode },
+  steps = 1
+) => {
   const token = splitStr(localStorage.getItem("token")).token;
   const responseLead = await fetch(
-    `${BASE_URL}/get-form?token=${token}&type=seeding`
+    `${BASE_URL}/get-form?token=${token}&type=seeding&user_seeding=${userCode}`
   );
   const dataLead = await responseLead.json();
   const responseBooking = await fetch(
-    `${BASE_URL}/get-booking?token=${token}&type=opportunity`
+    `${BASE_URL}/get-booking?token=${token}&type=opportunity&user_seeding=${userCode}`
   );
   const dataBooking = await responseBooking.json();
 
