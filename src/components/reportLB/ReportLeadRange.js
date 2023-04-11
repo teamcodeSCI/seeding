@@ -35,7 +35,7 @@ class ReportLeadRange {
 
     this.$control = document.createElement("div");
     this.$control.className =
-      "d-flex justify-content-between my-3 align-items-end mx-3";
+      "d-flex justify-content-between my-3 align-items-end mx-1";
 
     this.$userBox = document.createElement("div");
 
