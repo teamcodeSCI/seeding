@@ -14,8 +14,23 @@ export const addNewTarget = async ({ kpiDate, kpiTarget, userCode }) => {
   };
 };
 
-export const fetchTarget = async () => {
+export const fetchTarget = async (user) => {
   const token = splitStr(localStorage.getItem("token")).token;
-  const response = await fetch(`${BASE_URL}/get-target?token=${token}`);
+  const response = await fetch(
+    `${BASE_URL}/get-target?token=${token}&user_seeding=${user}`
+  );
+  const data = await response.json();
+
+  return {
+    data: data.data.sort((a, b) => new Date(a.date) - new Date(b.date)),
+    error: data.error,
+    message: data.message
+  };
+};
+export const updateTarget = async ({ target, id }) => {
+  const token = splitStr(localStorage.getItem("token")).token;
+  const response = await fetch(
+    `${BASE_URL}/get-target?token=${token}&user_seeding=${user}`
+  );
   const data = await response.json();
 };

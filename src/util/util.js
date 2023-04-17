@@ -47,7 +47,7 @@ export const random = () => {
 export const getDuplicate = (arr1, arr2) => {
   return arr1.filter((item) => arr2.indexOf(item) > -1);
 };
-export const convertNumber = (number) => {
+export const formatMoney = (number) => {
   if (typeof number == "number") {
     if (number / 1000000 < 1000 && number !== 0) {
       return `${Math.floor(number / 1000000)} tr`;

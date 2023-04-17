@@ -116,7 +116,6 @@ class LeadAddModal {
     this.$footer.appendChild(this.$saveBtn);
   };
   clickSave = async () => {
-    this.pending();
     if (
       this.$name.getValue().value === "" ||
       this.$phone.getValue().value === "" ||
@@ -127,8 +126,10 @@ class LeadAddModal {
       this.$phone.fail();
       this.$service.fail();
       this.$branch.fail();
+
       return;
     }
+    this.pending();
     await createLead({
       name: this.$name.getValue().value,
       phone: this.$phone.getValue().value,
