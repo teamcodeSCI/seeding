@@ -93,7 +93,11 @@ class ReportLeadWeek {
     this.dataSet[0].data = weekData.lead;
     this.dataSet[1].data = weekData.booking;
     this.$chartBox.innerHTML = "";
-    this.$chart = new BarChart({ labels: this.labels, dataSet: this.dataSet });
+    this.$chart = new BarChart({
+      labels: this.labels,
+      dataSet: this.dataSet,
+      max: 40
+    });
     this.$chartBox.appendChild(this.$chart.render());
   };
   render() {

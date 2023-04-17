@@ -1,5 +1,6 @@
 class BarChart {
-  constructor({ labels, dataSet }) {
+  constructor({ labels, dataSet, max }) {
+    this.max = max;
     this.labels = labels;
     this.dataSet = dataSet;
     this.$chart;
@@ -25,7 +26,7 @@ class BarChart {
               ticks: {
                 beginAtZero: true,
                 min: 0,
-                max: 50
+                max: this.max || 50
               }
             }
           ]

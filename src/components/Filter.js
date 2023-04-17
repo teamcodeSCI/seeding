@@ -26,7 +26,7 @@ class Filter {
       "position-absolute w-100 list-group list-group-flush";
     this.$filterBox.style.top = "31px";
     this.$filterBox.style.fontSize = "14px";
-    this.$filterBox.style.boxShadow = "1px 1px 2px 0px rgba(0,0,0,0.2)";
+    this.$filterBox.style.boxShadow = "1px 2px 3px 1px rgba(0,0,0,0.2)";
     this.renderItem();
   }
   selectItem = (val, hideVal) => {

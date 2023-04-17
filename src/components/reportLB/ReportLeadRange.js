@@ -121,7 +121,8 @@ class ReportLeadRange {
     this.$chartBox.innerHTML = "";
     this.$chart = new BarChart({
       labels: this.labels,
-      dataSet: this.dataSet
+      dataSet: this.dataSet,
+      max: 40
     });
     this.$chartBox.appendChild(this.$chart.render());
   };
