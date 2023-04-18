@@ -1,5 +1,6 @@
 import { createUser } from "../../apis/userList.js";
 import InputGroup from "../InputGroup.js";
+import PendingBtn from "../PendingBtn.js";
 class AddUserModal {
   constructor({ closeUserAddModal, getAllUser }) {
     this.getAllUser = getAllUser;
@@ -53,27 +54,18 @@ class AddUserModal {
     this.$saveBtn.addEventListener("click", () => {
       this.save();
     });
-    this.$pendingBtn = document.createElement("button");
-    this.$pendingBtn.className = "btn btn-secondary";
-    this.$pendingBtn.innerHTML = "Vui lòng chờ ...";
+    this.$pendingBtn = new PendingBtn(this.$footer, this.$saveBtn);
   }
-  pending = () => {
-    this.$footer.innerHTML = "";
-    this.$footer.appendChild(this.$pendingBtn);
-  };
-  unPending = () => {
-    this.$footer.innerHTML = "";
-    this.$footer.appendChild(this.$saveBtn);
-  };
+
   save = async () => {
-    this.pending();
+    this.$pendingBtn.pending();
     if (
       this.$name.getValue().value === "" ||
       this.$phonenumber1.getValue().value === "" ||
       this.$birthday.getValue().value === ""
     ) {
       this.$notify.innerHTML = "Vui lòng nhập đủ thông tin";
-      this.unPending();
+      this.$pendingBtn.unPending();
       return;
     }
     const addNew = await createUser({
@@ -84,7 +76,7 @@ class AddUserModal {
     });
     if (addNew.type !== 0) {
       this.$notify.innerHTML = addNew.message;
-      this.unPending();
+      this.$pendingBtn.unPending();
       return;
     }
     this.closeUserAddModal();
@@ -93,7 +85,7 @@ class AddUserModal {
     this.$phonenumber1.reset();
     this.$phonenumber2.reset();
     this.$birthday.reset();
-    this.unPending();
+    this.$pendingBtn.unPending();
   };
   render() {
     this.$container.appendChild(this.$dialog);

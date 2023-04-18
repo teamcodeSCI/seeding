@@ -52,12 +52,18 @@ class TargetModal {
   }
   getTarget = async () => {
     const target = await fetchTarget(this.codeUser);
+
     this.$body.innerHTML = "";
     this.$note.innerHTML = "";
     for (let i = 1; i < target.data.length; i++) {
       this.$targetItem = new LeadDetailItem({
+        id: target.data[i].id,
         title: target.data[i].month,
-        value: `${formatNumber(target.data[i].target)} Đ`
+        value: target.data[i].target,
+        date: target.data[i].date,
+        getTarget: this.getTarget,
+        isUpdateTarget: true,
+        codeUser: this.codeUser
       });
 
       this.$body.appendChild(this.$targetItem.render());

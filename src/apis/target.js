@@ -27,10 +27,16 @@ export const fetchTarget = async (user) => {
     message: data.message
   };
 };
-export const updateTarget = async ({ target, id }) => {
+export const updateTarget = async ({ target, id, date, codeUser }) => {
+  console.log({ target, id, date, codeUser });
   const token = splitStr(localStorage.getItem("token")).token;
   const response = await fetch(
-    `${BASE_URL}/get-target?token=${token}&user_seeding=${user}`
+    `${BASE_URL}/update-target?token=${token}&id=${id}&kpi_date=${date}&kpi_target=${target}&user_seeding=${codeUser}`
   );
   const data = await response.json();
+  return {
+    error: data.error,
+    message: data.result.message.content,
+    status: data.result.status
+  };
 };

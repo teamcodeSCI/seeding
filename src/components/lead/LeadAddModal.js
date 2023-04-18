@@ -2,6 +2,7 @@ import { getBranch } from "../../apis/getInfo.js";
 import { createLead } from "../../apis/lead.js";
 import { splitStr } from "../../util/splitStr.js";
 import InputGroup from "../InputGroup.js";
+import PendingBtn from "../PendingBtn.js";
 import SuggestItem from "../SuggestItem.js";
 import Textarea from "../Textarea.js";
 
@@ -53,9 +54,7 @@ class LeadAddModal {
     this.$saveBtn.addEventListener("click", () => {
       this.clickSave();
     });
-    this.$pendingBtn = document.createElement("button");
-    this.$pendingBtn.className = "btn btn-secondary";
-    this.$pendingBtn.innerHTML = "Vui lòng chờ ...";
+    this.$pendingBtn = new PendingBtn(this.$footer, this.$saveBtn);
 
     this.$name = new InputGroup({ placeholder: "Họ và tên" });
     this.$phone = new InputGroup({ placeholder: "Điện thoại" });
@@ -107,14 +106,7 @@ class LeadAddModal {
       this.$note.reset(),
       this.$interactive.reset();
   };
-  pending = () => {
-    this.$footer.innerHTML = "";
-    this.$footer.appendChild(this.$pendingBtn);
-  };
-  unPending = () => {
-    this.$footer.innerHTML = "";
-    this.$footer.appendChild(this.$saveBtn);
-  };
+
   clickSave = async () => {
     if (
       this.$name.getValue().value === "" ||
@@ -129,7 +121,7 @@ class LeadAddModal {
 
       return;
     }
-    this.pending();
+    this.$pendingBtn.pending();
     await createLead({
       name: this.$name.getValue().value,
       phone: this.$phone.getValue().value,
@@ -147,7 +139,7 @@ class LeadAddModal {
     this.reset();
     this.closeLeadAddModal();
     this.getAllLead();
-    this.unPending();
+    this.$pendingBtn.unPending();
   };
   handleSuggest = () => {
     if (this.$branchBox !== this.$suggestBox.parentElement) {
@@ -170,7 +162,6 @@ class LeadAddModal {
       token: splitStr(localStorage.getItem("token")).token,
       input: input
     });
-
     if (!suggest) {
       console.log("data not found");
       return;

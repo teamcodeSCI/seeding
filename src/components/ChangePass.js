@@ -2,6 +2,7 @@ import { updatePassword } from "../apis/user.js";
 import { getPage } from "../util/getPage.js";
 import { splitStr } from "../util/splitStr.js";
 import InputGroup from "./InputGroup.js";
+import PendingBtn from "./PendingBtn.js";
 
 export default class ChangePass {
   constructor({ closeChangePass }) {
@@ -51,23 +52,13 @@ export default class ChangePass {
     this.$submitBtn.addEventListener("click", () => {
       this.changePass();
     });
-    this.$pendingBtn = document.createElement("button");
-    this.$pendingBtn.className = "btn btn-secondary";
-    this.$pendingBtn.innerHTML = "Vui lòng chờ ...";
-
+    this.$pendingBtn = new PendingBtn(this.$footer, this.$submitBtn);
     this.$noteBox = document.createElement("div");
     this.$note = document.createElement("p");
     this.$note.className = `text-center m-0`;
     this.$note.style.cssText = `color:red; font-style:italic;font-size:14px`;
   }
-  pending = () => {
-    this.$footer.innerHTML = "";
-    this.$footer.appendChild(this.$pendingBtn);
-  };
-  unPending = () => {
-    this.$footer.innerHTML = "";
-    this.$footer.appendChild(this.$submitBtn);
-  };
+
   showNote = (note) => {
     this.$note.innerHTML = "";
     this.$note.innerHTML = note;
@@ -75,7 +66,7 @@ export default class ChangePass {
   };
 
   changePass = async () => {
-    this.pending();
+    this.$pendingBtn.pending();
     if (
       this.$newPass.getValue().value === "" ||
       this.$retypePass.getValue().value === ""
@@ -85,7 +76,7 @@ export default class ChangePass {
     }
     if (this.$newPass.getValue().value !== this.$retypePass.getValue().value) {
       this.showNote("Mật khẩu không khớp!");
-      this.unPending();
+      this.$pendingBtn.unPending();
       return;
     }
     const update = await updatePassword({
@@ -94,7 +85,7 @@ export default class ChangePass {
     });
     if (update.type !== 0) {
       this.showNote(update.message);
-      this.unPending();
+      this.$pendingBtn.unPending();
       return;
     }
     this.showNote("Đổi mật khẩu thành công !");
@@ -104,7 +95,7 @@ export default class ChangePass {
       localStorage.removeItem("token");
       getPage();
     }, 1500);
-    this.unPending();
+    this.$pendingBtn.unPending();
   };
   render() {
     this.$container.appendChild(this.$dialog);

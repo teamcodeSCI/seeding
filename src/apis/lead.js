@@ -60,7 +60,6 @@ export const createLead = async ({
       `${BASE_URL}/create-form?token=${token}&name=${name}&phone=${phone}&link_fb=${linkFb}&name_fb=${nameFb}&service=${service}&note=${note}&script=${script}&interactive_proof=${interactive}&company_id=${branch}&type=seeding`
     );
     const data = await response.json();
-    console.log("data: ", data);
   } catch (e) {
     console.log(e);
     return {
