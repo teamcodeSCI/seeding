@@ -23,6 +23,9 @@ class InputGroup {
     this.$label.style.fontSize = "14px";
     this.$label.innerHTML = `${title}:` || "";
 
+    this.$box = document.createElement("div");
+    this.$box.className = "position-relative";
+
     this.$reset = document.createElement("i");
     this.$reset.className = "bi bi-x position-absolute";
     this.$reset.style.right = "5px";
@@ -40,8 +43,7 @@ class InputGroup {
     this.$hideInput.value = hideValue || "";
 
     this.$input = document.createElement("input");
-    this.$input.className =
-      "form-control w-100 fst-italic py-1 ps-2 pe-3 position-relative";
+    this.$input.className = "form-control w-100 fst-italic py-1 ps-2 pe-3 ";
     this.$input.style.border = "1px solid transparent";
     this.$input.style.borderRadius = "4px";
     this.$input.style.fontSize = "14px";
@@ -52,7 +54,7 @@ class InputGroup {
       this.$input.type === "date" ? formatDate(value) : value || "";
     this.$input.disabled = isDisabled || false;
     this.$input.addEventListener("input", () => {
-      this.$container.appendChild(this.$reset);
+      this.$box.appendChild(this.$reset);
       if (this.isSuggested) {
         getSuggest(this.$input.value);
         openSuggest();
@@ -84,12 +86,13 @@ class InputGroup {
     this.$input.style.border = "1px solid transparent";
     this.$input.value = "";
     this.$hideInput.value = "";
-    if (this.$reset.parentElement === this.$container)
-      this.$container.removeChild(this.$reset);
+    if (this.$reset.parentElement === this.$box)
+      this.$box.removeChild(this.$reset);
   };
   render() {
     this.$container.appendChild(this.$label);
-    this.$container.appendChild(this.$input);
+    this.$container.appendChild(this.$box);
+    this.$box.appendChild(this.$input);
 
     return this.$container;
   }

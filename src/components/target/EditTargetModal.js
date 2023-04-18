@@ -12,7 +12,7 @@ class EditTargetModal {
     codeUser,
     month
   }) {
-    console.log(date);
+    this.date = date;
     this.codeUser = codeUser;
     this.getTarget = getTarget;
     this.targetId = targetId;
@@ -46,13 +46,9 @@ class EditTargetModal {
     this.$border = document.createElement("div");
     this.$border.className = `bg-white d-flex justify-content-between gap-2 flex-column mb-2`;
 
-    this.$date = new InputGroup({
-      placeholder: "",
-      type: "date",
-      value: date
-    });
     this.$target = new InputGroup({
       placeholder: "Nhập mục tiêu",
+      title: "Mục tiêu",
       value: target
     });
 
@@ -73,24 +69,17 @@ class EditTargetModal {
     this.pendingBtn = new PendingBtn(this.$footer, this.$saveBtn);
   }
   save = async () => {
-    if (
-      this.$date.getValue().value === "" ||
-      this.$target.getValue().value === ""
-    ) {
+    if (this.$target.getValue().value === "") {
       this.$notify.innerHTML = "Hãy nhập đầy đủ thông tin!";
       return;
     }
-    const date = new Date(this.$date.getValue().value);
-    if (date.getDate() !== 1) {
-      this.$notify.innerHTML = "Vui lòng chọn ngày đầu tiên của tháng";
-      return;
-    }
+
     this.pendingBtn.pending();
     this.$notify.innerHTML = "";
     const update = await updateTarget({
       target: this.$target.getValue().value,
       id: this.targetId,
-      date: this.$date.getValue().value,
+      date: this.date,
       codeUser: this.codeUser
     });
 
@@ -114,7 +103,6 @@ class EditTargetModal {
     this.$body.appendChild(this.$border);
     this.$body.appendChild(this.$notify);
 
-    this.$border.appendChild(this.$date.render());
     this.$border.appendChild(this.$target.render());
 
     this.$footer.appendChild(this.$saveBtn);
