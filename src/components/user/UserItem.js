@@ -57,7 +57,8 @@ class UserItem {
 
     this.$targetModal = new TargetModal({
       closeTargetModal: this.closeTargetModal,
-      codeUser: code_user
+      codeUser: code_user,
+      name: name
     });
 
     this.$passwordBtn = document.createElement("button");

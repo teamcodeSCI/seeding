@@ -44,7 +44,8 @@ class LeadDetailItem {
         target: value,
         targetId: id,
         getTarget: getTarget,
-        codeUser: codeUser
+        codeUser: codeUser,
+        month: title
       });
     }
   }

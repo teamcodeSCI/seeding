@@ -3,7 +3,7 @@ import { formatNumber } from "../../util/util.js";
 import LeadDetailItem from "../lead/LeadDetailItem.js";
 
 class TargetModal {
-  constructor({ closeTargetModal, codeUser }) {
+  constructor({ closeTargetModal, codeUser, name }) {
     this.codeUser = codeUser;
     this.$container = document.createElement("div");
     this.$container.className = `modal d-flex align-items-center justify-content-center`;
@@ -23,7 +23,7 @@ class TargetModal {
 
     this.$title = document.createElement("h5");
     this.$title.className = `modal-title`;
-    this.$title.innerHTML = `Chi tiết`;
+    this.$title.innerHTML = name;
 
     this.$closeBtn = document.createElement("button");
     this.$closeBtn.className = `btn-close`;
@@ -52,7 +52,6 @@ class TargetModal {
   }
   getTarget = async () => {
     const target = await fetchTarget(this.codeUser);
-
     this.$body.innerHTML = "";
     this.$note.innerHTML = "";
     for (let i = 1; i < target.data.length; i++) {

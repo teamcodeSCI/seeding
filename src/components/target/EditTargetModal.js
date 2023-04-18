@@ -3,7 +3,16 @@ import InputGroup from "../InputGroup.js";
 import PendingBtn from "../PendingBtn.js";
 
 class EditTargetModal {
-  constructor({ closeModal, date, target, targetId, getTarget, codeUser }) {
+  constructor({
+    closeModal,
+    date,
+    target,
+    targetId,
+    getTarget,
+    codeUser,
+    month
+  }) {
+    console.log(date);
     this.codeUser = codeUser;
     this.getTarget = getTarget;
     this.targetId = targetId;
@@ -25,7 +34,7 @@ class EditTargetModal {
 
     this.$title = document.createElement("h5");
     this.$title.className = `modal-title`;
-    this.$title.innerHTML = `Sửa thông tin`;
+    this.$title.innerHTML = month;
 
     this.$notify = document.createElement("p");
     this.$notify.className = "m-0 text-center fst-italic text-danger";
@@ -69,6 +78,11 @@ class EditTargetModal {
       this.$target.getValue().value === ""
     ) {
       this.$notify.innerHTML = "Hãy nhập đầy đủ thông tin!";
+      return;
+    }
+    const date = new Date(this.$date.getValue().value);
+    if (date.getDate() !== 1) {
+      this.$notify.innerHTML = "Vui lòng chọn ngày đầu tiên của tháng";
       return;
     }
     this.pendingBtn.pending();
