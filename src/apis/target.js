@@ -28,7 +28,6 @@ export const fetchTarget = async (user) => {
   };
 };
 export const updateTarget = async ({ target, id, date, codeUser }) => {
-  console.log({ target, id, date, codeUser });
   const token = splitStr(localStorage.getItem("token")).token;
   const response = await fetch(
     `${BASE_URL}/update-target?token=${token}&id=${id}&kpi_date=${date}&kpi_target=${target}&user_seeding=${codeUser}`

@@ -1,6 +1,8 @@
 import { fetchTarget } from "../../apis/target.js";
-import { formatNumber } from "../../util/util.js";
+import { app } from "../../util/const.js";
+
 import LeadDetailItem from "../lead/LeadDetailItem.js";
+import AddTarget from "./AddTarget.js";
 
 class TargetModal {
   constructor({ closeTargetModal, codeUser, name }) {
@@ -11,7 +13,7 @@ class TargetModal {
 
     this.$dialog = document.createElement("div");
     this.$dialog.className = `modal-dialog`;
-    this.$dialog.style.maxWidth = "500px";
+    this.$dialog.style.maxWidth = "600px";
 
     this.$dialog.style.width = "90%";
 
@@ -40,16 +42,28 @@ class TargetModal {
     this.$footer = document.createElement("div");
     this.$footer.className = `modal-footer`;
 
-    this.$doneBtn = document.createElement("button");
-    this.$doneBtn.className = "btn btn-primary";
-    this.$doneBtn.innerHTML = "Xong";
-    this.$doneBtn.addEventListener("click", () => {
-      closeTargetModal();
+    this.$addBtn = document.createElement("button");
+    this.$addBtn.className = "btn btn-primary";
+    this.$addBtn.innerHTML = "Thêm mới";
+    this.$addBtn.addEventListener("click", () => {
+      this.openTarget();
     });
 
     this.$note = document.createElement("p");
     this.$note.className = "m-0 text-center fst-italic";
+
+    this.$addTarget = new AddTarget({
+      codeUser: this.codeUser,
+      closeTarget: this.closeTarget,
+      getTarget: this.getTarget
+    });
   }
+  closeTarget = () => {
+    app.removeChild(this.$addTarget.render());
+  };
+  openTarget = () => {
+    app.appendChild(this.$addTarget.render());
+  };
   getTarget = async () => {
     const target = await fetchTarget(this.codeUser);
     this.$body.innerHTML = "";
@@ -85,7 +99,7 @@ class TargetModal {
     this.$header.appendChild(this.$closeBtn);
 
     this.$content.appendChild(this.$footer);
-    this.$footer.appendChild(this.$doneBtn);
+    this.$footer.appendChild(this.$addBtn);
     return this.$container;
   }
 }

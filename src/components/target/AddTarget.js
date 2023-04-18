@@ -1,12 +1,13 @@
 import { addNewTarget } from "../../apis/target.js";
-import { suggestUser } from "../../apis/userList.js";
+
 import InputGroup from "../InputGroup.js";
-import SuggestItem from "../SuggestItem.js";
+import PendingBtn from "../PendingBtn.js";
 
 class AddTarget {
-  constructor({ handleAddTarget, getTarget }) {
+  constructor({ closeTarget, getTarget, codeUser }) {
+    this.codeUser = codeUser;
     this.getTarget = getTarget;
-    this.handleAddTarget = handleAddTarget;
+    this.closeTarget = closeTarget;
     this.$container = document.createElement("div");
     this.$container.className = `modal d-flex align-items-center justify-content-center`;
     this.$container.style.background = "rgba(0,0,0,0.7)";
@@ -29,8 +30,8 @@ class AddTarget {
     this.$closeBtn = document.createElement("button");
     this.$closeBtn.className = `btn-close`;
     this.$closeBtn.addEventListener("click", () => {
-      handleAddTarget();
       this.resetInput();
+      closeTarget();
     });
 
     this.$body = document.createElement("div");
@@ -43,29 +44,6 @@ class AddTarget {
     this.$notify.className = "m-0 text-center fst-italic text-danger";
     this.$notify.style.fontSize = "14px";
 
-    this.$nameBox = document.createElement("div");
-    this.$nameBox.className = "nameBox position-relative w-100";
-    this.$nameBox.addEventListener("click", () => {
-      this.handleSuggest();
-    });
-
-    this.$suggestBox = document.createElement("div");
-    this.$suggestBox.className =
-      "position-absolute w-100 top-100 start-0 rounded-1 px-2 py-1";
-    this.$suggestBox.style.maxHeight = "150px";
-    this.$suggestBox.style.overflow = "overlay";
-    this.$suggestBox.style.background = "#fff";
-    this.$suggestBox.style.zIndex = 1;
-    this.$suggestBox.style.boxShadow = "1px 1px 3px 0px rgba(0,0,0,0.2)";
-
-    this.$name = new InputGroup({
-      placeholder: "Nhân viên",
-      width: "100%",
-      isSuggested: true,
-      getSuggest: this.getSuggest,
-      openSuggest: this.openSuggest,
-      closeSuggest: this.closeSuggest
-    });
     this.$target = new InputGroup({ placeholder: "Mục tiêu" });
     this.$date = new InputGroup({ placeholder: "Tháng", type: "date" });
 
@@ -78,12 +56,10 @@ class AddTarget {
     this.$saveBtn.addEventListener("click", () => {
       this.saveTarget();
     });
-
-    this.getSuggest(this.$name.getValue().value);
+    this.$pendingBtn = new PendingBtn(this.$footer, this.$saveBtn);
   }
   saveTarget = async () => {
     if (
-      this.$name.getValue().hideValue === "" ||
       this.$target.getValue().value === "" ||
       this.$date.getValue().value === ""
     ) {
@@ -95,60 +71,32 @@ class AddTarget {
       this.$notify.innerHTML = "Vui lòng chọn ngày đầu tiên của tháng";
       return;
     }
-
+    this.$pendingBtn.pending();
     const newData = await addNewTarget({
       kpiDate: this.$date.getValue().value,
       kpiTarget: this.$target.getValue().value,
-      userCode: this.$name.getValue().hideValue
+      userCode: this.codeUser
     });
     if (newData.error) {
       this.$notify.innerHTML = "Tạo mục tiêu thất bại";
+      this.$pendingBtn.unPending();
       return;
     }
     if (newData.status === 1) {
       this.$notify.innerHTML = newData.message;
+      this.$pendingBtn.unPending();
       return;
     }
     this.$notify.innerHTML = "";
-    this.handleAddTarget();
     this.resetInput();
     this.getTarget();
+    this.$pendingBtn.unPending();
+    this.closeTarget();
   };
   resetInput = () => {
-    this.$name.reset();
     this.$target.reset();
     this.$date.reset();
     this.$notify.innerHTML = "";
-    if (this.$nameBox === this.$suggestBox.parentElement) {
-      this.closeSuggest();
-    }
-  };
-  openSuggest = () => {
-    this.$nameBox.appendChild(this.$suggestBox);
-  };
-  closeSuggest = () => {
-    this.$nameBox.removeChild(this.$suggestBox);
-  };
-  handleSuggest = () => {
-    if (this.$nameBox !== this.$suggestBox.parentElement) {
-      this.openSuggest();
-    } else {
-      this.closeSuggest();
-    }
-  };
-  getSuggest = async (input) => {
-    const getUser = await suggestUser(input);
-    this.$suggestBox.innerHTML = "";
-    for (let i = 1; i < getUser.length; i++) {
-      if (getUser[i].active_user) {
-        this.$suggestItem = new SuggestItem({
-          name: getUser[i].name,
-          code: getUser[i].code_user,
-          setBranchVal: this.$name.setValue
-        });
-        this.$suggestBox.appendChild(this.$suggestItem.render());
-      }
-    }
   };
 
   render() {
@@ -163,11 +111,8 @@ class AddTarget {
     this.$body.appendChild(this.$border);
     this.$body.appendChild(this.$notify);
 
-    this.$border.appendChild(this.$nameBox);
     this.$border.appendChild(this.$target.render());
     this.$border.appendChild(this.$date.render());
-
-    this.$nameBox.appendChild(this.$name.render());
 
     this.$content.appendChild(this.$footer);
     this.$footer.appendChild(this.$saveBtn);

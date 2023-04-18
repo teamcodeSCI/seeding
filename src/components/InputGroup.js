@@ -35,7 +35,7 @@ class InputGroup {
     this.$reset.style.zIndex = "10";
     this.$reset.addEventListener("click", () => {
       this.$input.value = "";
-      this.$container.removeChild(this.$reset);
+      this.$box.removeChild(this.$reset);
     });
 
     this.$hideInput = document.createElement("input");
@@ -60,7 +60,7 @@ class InputGroup {
         openSuggest();
       }
       if (this.$input.value === "" || type === "date") {
-        this.$container.removeChild(this.$reset);
+        this.$box.removeChild(this.$reset);
         if (this.isSuggested) {
           closeSuggest();
         }
