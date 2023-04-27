@@ -8,14 +8,15 @@ export const getBooking = async ({
   name,
   phone,
   code,
-  user
+  user,
+  type
 }) => {
   try {
     const token = splitStr(localStorage.getItem("token")).token;
     const paginationLimit = 15;
     // Call API
     const response = await fetch(
-      `${BASE_URL}/get-booking?token=${token}&limit=${paginationLimit}&type=opportunity&offset=${
+      `${BASE_URL}/get-booking?token=${token}&limit=${paginationLimit}&type=${type}&offset=${
         pageNum > 0
           ? (pageNum - 1) * paginationLimit
           : pageNum * paginationLimit

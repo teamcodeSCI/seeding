@@ -6,6 +6,7 @@ import { app } from "../../util/const.js";
 import BookingSearchModal from "../booking/BookingSearchModal.js";
 import Tag from "../Tag.js";
 import { getBooking } from "../../apis/booking.js";
+import DropdownBooking from "../DropdownBooking.js";
 
 class Booking {
   tagTitle = "";
@@ -16,7 +17,7 @@ class Booking {
   startDate = "";
   endDate = "";
   index = 1;
-
+  filter = "opportunity";
   constructor() {
     this.$dataTable = document.createElement("div");
     this.$dataTable.className = `datatable px-3 py-4 bg-white`;
@@ -26,6 +27,8 @@ class Booking {
 
     this.$actionLeft = document.createElement("div");
     this.$actionLeft.className = `d-flex gap-2`;
+
+    this.$actionRight = document.createElement("div");
 
     this.$searchBtn = document.createElement("button");
     this.$searchBtn.className = `btn btn-primary d-flex gap-2 justify-content-between`;
@@ -60,12 +63,23 @@ class Booking {
       reset: this.reset,
       setSearchValue: this.setSearchValue
     });
-
+    this.$dropdown = new DropdownBooking({
+      title: "Kiểm tra trùng dữ liệu",
+      filterSearch: this.getAllBooking,
+      setFilter: this.setFilter,
+      data: [
+        { name: "Booking", value: "opportunity" },
+        { name: "Kiểm tra trùng dữ liệu", value: "lead" }
+      ]
+    });
     this.$pagiBox = document.createElement("div");
     this.$pagiBox.className = `mt-3`;
 
     this.getAllBooking();
   }
+  setFilter = (val) => {
+    this.filter = val;
+  };
   openBookingSearchModal = () => {
     app.appendChild(this.$searchModal.render());
   };
@@ -138,7 +152,8 @@ class Booking {
       startDate: this.startDate,
       endDate: this.endDate,
       user: this.searchUser,
-      code: ""
+      code: "",
+      type: this.filter
     });
 
     if (res.message !== "Success") {
@@ -179,6 +194,9 @@ class Booking {
     this.$dataTable.appendChild(this.$action);
     this.$dataTable.appendChild(this.$desc);
     this.$action.appendChild(this.$actionLeft);
+    this.$action.appendChild(this.$actionRight);
+    this.$actionRight.appendChild(this.$dropdown.render());
+
     this.$actionLeft.appendChild(this.$searchBtn);
 
     this.$dataTable.appendChild(this.$table);
