@@ -32,6 +32,7 @@ export const getBooking = async ({
     for (let i = 1; i < data.data.length - 1; i++) {
       renderData.push(data.data[i]);
     }
+
     const pageCount = Math.ceil(count / paginationLimit);
     return {
       message: data.message,
