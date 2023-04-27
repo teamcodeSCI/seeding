@@ -193,6 +193,7 @@ export const getCustomerSuccess = async ({
   user
 }) => {
   try {
+    user = "";
     const token = splitStr(localStorage.getItem("token")).token;
     const response =
       await fetch(`https://scigroup.com.vn/cp/seeding/api/get-report?
@@ -203,8 +204,9 @@ export const getCustomerSuccess = async ({
     offset=&
     start_date=${formatDate(startDate)}&
     end_date=${formatDate(endDate)}&
-    user_seeding=${user || ""}`);
+    user_seeding=${user}`);
     const data = await response.json();
+
     data.data.pop();
     const renderData = searchByName(data.data, search);
     return {

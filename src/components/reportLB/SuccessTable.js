@@ -3,6 +3,7 @@ import SuccessTableItem from "./SuccessTableItem.js";
 class SuccessTable {
   constructor({ data }) {
     this.data = data;
+
     this.$table = document.createElement("table");
     this.$table.className = "table w-100";
     this.$table.style.fontSize = "14px";

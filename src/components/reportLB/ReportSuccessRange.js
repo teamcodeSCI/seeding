@@ -1,30 +1,19 @@
 import { getBrand } from "../../apis/getInfo.js";
 import { getCustomerSuccess } from "../../apis/reportNumber.js";
-import { app } from "../../util/const.js";
+import { getUser } from "../../apis/userList.js";
+
 import { random } from "../../util/util.js";
 import Filter from "../Filter.js";
+
 import FilterByBrand from "../FilterByBrand.js";
+import InputGroup from "../InputGroup.js";
 import LineChart from "../LineChart.js";
 
 import SearchInput from "../SearchInput.js";
 import SuccessTable from "./SuccessTable.js";
 
-class ReportSuccessYear {
-  labels = [
-    "Tháng 1",
-    "Tháng 2",
-    "Tháng 3",
-    "Tháng 4",
-    "Tháng 5",
-    "Tháng 6",
-    "Tháng 7",
-    "Tháng 8",
-    "Tháng 9",
-    "Tháng 10",
-    "Tháng 11",
-    "Tháng 12"
-  ];
-
+class ReportSuccessRange {
+  labels = ["Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4"];
   dataSet = [
     {
       label: "Tất cả",
@@ -32,20 +21,7 @@ class ReportSuccessYear {
       backgroundColor: "rgba(209, 237, 228,0.3)",
       borderWidth: 3,
       pointRadius: 2,
-      data: [
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random()
-      ]
+      data: [random(), random(), random(), random()]
     },
     {
       label: "Paris",
@@ -54,20 +30,7 @@ class ReportSuccessYear {
       borderWidth: 2,
       pointRadius: 1,
       hidden: true,
-      data: [
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random()
-      ]
+      data: [random(), random(), random(), random()]
     },
     {
       label: "Kangnam",
@@ -76,20 +39,7 @@ class ReportSuccessYear {
       borderWidth: 2,
       pointRadius: 1,
       hidden: true,
-      data: [
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random()
-      ]
+      data: [random(), random(), random(), random()]
     },
     {
       label: "Đông Á",
@@ -98,20 +48,7 @@ class ReportSuccessYear {
       borderWidth: 2,
       pointRadius: 1,
       hidden: true,
-      data: [
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random()
-      ]
+      data: [random(), random(), random(), random()]
     },
     {
       label: "Hồng Hà",
@@ -120,30 +57,54 @@ class ReportSuccessYear {
       borderWidth: 2,
       pointRadius: 1,
       hidden: true,
-      data: [
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random(),
-        random()
-      ]
+      data: [random(), random(), random(), random()]
     }
   ];
   search = "";
   filter = "";
+  user = "";
   constructor() {
+    this.$container = document.createElement("div");
+    this.$container.className = "reportsuccessRange";
+
+    this.$control = document.createElement("div");
+    this.$control.className =
+      "d-flex justify-content-between my-3 align-items-end mx-1";
+
+    this.$userBox = document.createElement("div");
+
     this.$box = document.createElement("div");
     this.$box.className = "d-flex gap-3 align-items-start";
 
     this.$filterSearch = document.createElement("div");
     this.$filterSearch.className = "mb-2 d-flex justify-content-end gap-3";
+
+    this.$inputGroup = document.createElement("div");
+    this.$inputGroup.className = "d-flex gap-2 align-items-end";
+
+    this.$startDate = new InputGroup({
+      title: "Ngày bắt đầu",
+      type: "date",
+      width: "100%",
+      value: this.today
+    });
+
+    this.$endDate = new InputGroup({
+      title: "Ngày kết thúc",
+      type: "date",
+      width: "100%",
+      value: this.today
+    });
+
+    this.$submitBtn = document.createElement("button");
+    this.$submitBtn.className = "btn btn-primary py-1 px-2";
+    this.$submitBtn.style.fontSize = "14px";
+    this.$submitBtn.addEventListener("click", () => {
+      this.filterSearch();
+    });
+
+    this.$searchIcon = document.createElement("i");
+    this.$searchIcon.className = "bi bi-search";
 
     this.$filterBox = document.createElement("div");
     this.$chartBox = document.createElement("div");
@@ -170,6 +131,20 @@ class ReportSuccessYear {
     this.search = this.$searchService.getValue();
     this.getCustomer();
   };
+  setUser = (val) => {
+    this.user = val;
+  };
+  getAllUser = async () => {
+    const fetchUser = await getUser({ userCode: "" });
+    this.$userBox.innerHTML = "";
+    this.$selectUser = new Filter({
+      data: fetchUser.data,
+      filterSearch: this.filterSearch,
+      setUser: this.setUser,
+      title: "Nhân viên"
+    });
+    this.$userBox.appendChild(this.$selectUser.render());
+  };
   setFilter = (val) => {
     this.filter = val;
   };
@@ -185,17 +160,16 @@ class ReportSuccessYear {
     this.$filterBox.appendChild(this.$selectBrand.render());
   };
   getCustomer = async () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const firstDay = new Date(year, 0, 1);
-    const lastDay = new Date(year, 11, 31);
-
+    const firstDay = this.$startDate.getValue().value;
+    const lastDay = this.$endDate.getValue().value;
     const getData = await getCustomerSuccess({
       search: this.search,
       filter: this.filter,
       startDate: firstDay,
-      endDate: lastDay
+      endDate: lastDay,
+      user: this.user
     });
+
     this.$serviceBookingRp = new SuccessTable({
       data: getData.data
     });
@@ -203,8 +177,16 @@ class ReportSuccessYear {
     this.$table.appendChild(this.$serviceBookingRp.render());
   };
   render() {
-    this.getAllBrand();
-    this.getCustomer();
+    this.$container.appendChild(this.$control);
+    this.$container.appendChild(this.$box);
+    this.$control.appendChild(this.$inputGroup);
+    this.$control.appendChild(this.$userBox);
+
+    this.$inputGroup.appendChild(this.$startDate.render());
+    this.$inputGroup.appendChild(this.$endDate.render());
+    this.$inputGroup.appendChild(this.$submitBtn);
+
+    this.$submitBtn.appendChild(this.$searchIcon);
     this.$box.appendChild(this.$tableBox);
     this.$box.appendChild(this.$chartBox);
     this.$chartBox.appendChild(this.$lineChart.render());
@@ -212,8 +194,10 @@ class ReportSuccessYear {
     this.$filterSearch.appendChild(this.$searchService.render());
     this.$tableBox.appendChild(this.$filterSearch);
     this.$tableBox.appendChild(this.$table);
-
-    return this.$box;
+    this.getAllBrand();
+    this.getCustomer();
+    this.getAllUser();
+    return this.$container;
   }
 }
-export default ReportSuccessYear;
+export default ReportSuccessRange;

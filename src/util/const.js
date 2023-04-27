@@ -14,6 +14,7 @@ import TargetYear from "../components/reportCost/TargetYear.js";
 import { splitStr } from "./splitStr.js";
 import User from "../components/user/User.js";
 import ReportLeadRange from "../components/reportLB/ReportLeadRange.js";
+import ReportSuccessRange from "../components/reportLB/ReportSuccessRange.js";
 
 export const app = document.getElementById("root");
 export const BASE_URL = "https://scigroup.com.vn/cp/seeding/api";
@@ -34,6 +35,7 @@ const reportLeadRange = new ReportLeadRange();
 const reportSuccessWeek = new ReportSuccessWeek();
 const reportSuccessMonth = new ReportSuccessMonth();
 const reportSuccessYear = new ReportSuccessYear();
+const reportSuccessRange = new ReportSuccessRange();
 
 const targetDay = new TargetDay();
 const targetMonth = new TargetMonth();
@@ -80,7 +82,7 @@ export const tabSuccess = [
   {
     title: "Khoảng ngày",
     link: "[Success] rangeDate",
-    component: reportSuccessYear
+    component: reportSuccessRange
   }
 ];
 export const tabTarget = [
