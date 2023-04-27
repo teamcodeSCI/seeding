@@ -14,6 +14,12 @@ class SearchInput {
     this.$input.type = type || "text";
     this.$input.placeholder = placeholder || "";
     this.$input.value = value || "";
+    this.$input.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        filterSearch();
+      }
+    });
 
     this.$icon = document.createElement("i");
     this.$icon.className = "bi bi-search position-absolute";

@@ -1,7 +1,9 @@
+import { getBrand } from "../../apis/getInfo.js";
 import { getCustomerSuccess } from "../../apis/reportNumber.js";
-import { app } from "../../util/const.js";
+
 import { random } from "../../util/util.js";
-import Filter from "../Filter.js";
+
+import FilterByBrand from "../FilterByBrand.js";
 import LineChart from "../LineChart.js";
 
 import SearchInput from "../SearchInput.js";
@@ -65,6 +67,7 @@ class ReportSuccessMonth {
     this.$filterSearch = document.createElement("div");
     this.$filterSearch.className = "mb-2 d-flex justify-content-end gap-3";
 
+    this.$filterBox = document.createElement("div");
     this.$chartBox = document.createElement("div");
     this.$chartBox.style.width = "50%";
 
@@ -84,28 +87,50 @@ class ReportSuccessMonth {
       width: "20%",
       filterSearch: this.filterSearch
     });
-    this.$filterService = new Filter({ filterSearch: this.filterSearch });
   }
   filterSearch = () => {
     this.search = this.$searchService.getValue();
-    this.filter = this.$filterService.getValue();
     this.getCustomer();
   };
+  setFilter = (val) => {
+    this.filter = val;
+  };
+  getAllBrand = async () => {
+    const fetchBrand = await getBrand({ input: "" });
+    this.$filterBox.innerHTML = "";
+    this.$selectBrand = new FilterByBrand({
+      data: fetchBrand,
+      filterSearch: this.filterSearch,
+      setFilter: this.setFilter,
+      title: "Thương hiệu"
+    });
+    this.$filterBox.appendChild(this.$selectBrand.render());
+  };
   getCustomer = async () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
     const getData = await getCustomerSuccess({
       search: this.search,
-      filter: this.filter
+      filter: this.filter,
+      startDate: firstDay,
+      endDate: lastDay
     });
-    this.$serviceBookingRp = new SuccessTable({ data: getData.data });
+    this.$serviceBookingRp = new SuccessTable({
+      data: getData.data
+    });
     this.$table.innerHTML = "";
     this.$table.appendChild(this.$serviceBookingRp.render());
   };
   render() {
+    this.getAllBrand();
     this.getCustomer();
     this.$box.appendChild(this.$tableBox);
     this.$box.appendChild(this.$chartBox);
     this.$chartBox.appendChild(this.$lineChart.render());
-    this.$filterSearch.appendChild(this.$filterService.render());
+    this.$filterSearch.appendChild(this.$filterBox);
     this.$filterSearch.appendChild(this.$searchService.render());
     this.$tableBox.appendChild(this.$filterSearch);
     this.$tableBox.appendChild(this.$table);

@@ -1,4 +1,4 @@
-import { BASE_URL, role } from "../util/const.js";
+import { BASE_URL, groupService, role } from "../util/const.js";
 import { splitStr } from "../util/splitStr.js";
 import { formatDate, getDuplicate, removeAccents } from "../util/util.js";
 
@@ -177,30 +177,42 @@ export const getNumberByYear = async ({ startDate, endDate, userCode }) => {
   });
   return { labels: labelArr, lead: arrLead, booking: arrBooking };
 };
-const searchByService = (data, input) => {
-  if (input === "") return data;
-  return data.filter(
-    (item) => removeAccents(item.service).search(removeAccents(input)) !== -1
-  );
+const searchByName = (data, input) => {
+  return input === ""
+    ? data
+    : data.filter(
+        (item) =>
+          removeAccents(item.group_service).search(removeAccents(input)) !== -1
+      );
 };
-const searchByBrand = (data, input) => {
-  if (input === "Tất cả" || input === "Thương hiệu") return data;
-  return data.filter(
-    (item) => removeAccents(item.brand).search(removeAccents(input)) !== -1
-  );
-};
-
-export const getCustomerSuccess = async ({ search, filter }) => {
+export const getCustomerSuccess = async ({
+  search,
+  filter,
+  startDate,
+  endDate,
+  user
+}) => {
   try {
-    const response = await fetch("src/apis/customerSuccess.json");
+    const token = splitStr(localStorage.getItem("token")).token;
+    const response =
+      await fetch(`https://scigroup.com.vn/cp/seeding/api/get-report?
+    token=${token}&
+    brand_id=${filter}&
+    group_service=${groupService}&
+    limit=&
+    offset=&
+    start_date=${formatDate(startDate)}&
+    end_date=${formatDate(endDate)}&
+    user_seeding=${user || ""}`);
     const data = await response.json();
-    const searchData = searchByService(data, search);
-    const filterData = searchByBrand(data, filter);
-    const renderData = getDuplicate(searchData, filterData);
-
+    data.data.pop();
+    const renderData = searchByName(data.data, search);
     return {
-      message: "Success",
-      data: renderData.sort((a, b) => b.number - a.number)
+      error: data.error,
+      message: data.message,
+      data: renderData.sort(
+        (a, b) => a.so_luong_thanh_cong - b.so_luong_thanh_cong
+      )
     };
   } catch (error) {
     return { message: error };

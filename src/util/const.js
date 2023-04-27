@@ -17,6 +17,8 @@ import ReportLeadRange from "../components/reportLB/ReportLeadRange.js";
 
 export const app = document.getElementById("root");
 export const BASE_URL = "https://scigroup.com.vn/cp/seeding/api";
+export const groupService =
+  "PR000003, PRP00002, PR000005, PR000006, PR000007, PRP00004, PRP00006, PRP00007, DAP00010, DAP00007, DAP00014, DAP00005, DAP00017, DAP00015, DAP00011, DAP00012, DAPL0002, DAPL0003, DAP00008, KNP00001, KNP00002, KNP00003, KNP00004, KNP00005, KNP00006, KNP00007, KNP00008, KNP00009, KNP00010, KNP00011, KNP00013, KNPL0027, HP011, HP013, HP002, HP014, HP005, HP007, HP012, HP018, HP008, HP030, HP031, HP032, KN00S046, PRP00005";
 
 const lead = new Lead();
 const booking = new Booking();
@@ -74,7 +76,12 @@ export const tabLead = [
 export const tabSuccess = [
   { title: "Tuần", link: "[Success] day", component: reportSuccessWeek },
   { title: "Tháng", link: "[Success] month", component: reportSuccessMonth },
-  { title: "Năm", link: "[Success] year", component: reportSuccessYear }
+  { title: "Năm", link: "[Success] year", component: reportSuccessYear },
+  {
+    title: "Khoảng ngày",
+    link: "[Success] rangeDate",
+    component: reportSuccessYear
+  }
 ];
 export const tabTarget = [
   { title: "Tuần", link: "[Target] day", component: targetDay },

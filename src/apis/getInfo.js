@@ -1,3 +1,4 @@
+import { splitStr } from "../util/splitStr.js";
 import { removeAccents } from "../util/util.js";
 
 const url = "https://scigroup.com.vn/cp/seeding/api";
@@ -32,8 +33,9 @@ export const getBranch = async ({ token, input }) => {
     return e;
   }
 };
-export const getBrand = async ({ token, input }) => {
+export const getBrand = async ({ input }) => {
   try {
+    const token = splitStr(localStorage.getItem("token")).token;
     const response = await fetch(`${url}/get-brand?token=${token}`);
     const data = await response.json();
     const newData = search(input, data.data);
