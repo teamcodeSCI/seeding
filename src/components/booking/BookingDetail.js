@@ -134,7 +134,7 @@ class BookingDetail {
       title: "Dịch vụ",
       value: arrToStr(data.line_ids)
     });
-    this.$service = new BookingDetailItem({
+    this.$status = new BookingDetailItem({
       title: "Trạng thái",
       value: data.stage_id
     });
@@ -201,6 +201,7 @@ class BookingDetail {
 
     this.$booking.appendChild(this.$bookingCode.render());
     this.$booking.appendChild(this.$service.render());
+    this.$booking.appendChild(this.$status.render());
     this.$booking.appendChild(this.$unitPrice.render());
     this.$booking.appendChild(this.$prepayment.render());
     this.$booking.appendChild(this.$receivable.render());
