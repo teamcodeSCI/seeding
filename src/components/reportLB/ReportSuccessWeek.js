@@ -9,6 +9,7 @@ import { getCustomerSuccess } from "../../apis/reportNumber.js";
 import { app } from "../../util/const.js";
 import { getBrand } from "../../apis/getInfo.js";
 import FilterByBrand from "../FilterByBrand.js";
+import { getUser } from "../../apis/userList.js";
 
 class ReportSuccessWeek {
   labels = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"];
@@ -100,7 +101,17 @@ class ReportSuccessWeek {
   ];
   search = "";
   filter = "";
+  user = "";
   constructor() {
+    this.$container = document.createElement("div");
+    this.$container.className = "reportsuccessWeek";
+
+    this.$control = document.createElement("div");
+    this.$control.className =
+      "d-flex justify-content-end my-3 align-items-end mx-3";
+
+    this.$userBox = document.createElement("div");
+
     this.$box = document.createElement("div");
     this.$box.className = "d-flex gap-3 align-items-start";
 
@@ -133,6 +144,20 @@ class ReportSuccessWeek {
     this.search = this.$searchService.getValue();
     this.getCustomer();
   };
+  setUser = (val) => {
+    this.user = val;
+  };
+  getAllUser = async () => {
+    const fetchUser = await getUser({ userCode: "" });
+    this.$userBox.innerHTML = "";
+    this.$selectUser = new Filter({
+      data: fetchUser.data,
+      filterSearch: this.filterSearch,
+      setUser: this.setUser,
+      title: "Nhân viên"
+    });
+    this.$userBox.appendChild(this.$selectUser.render());
+  };
   setFilter = (val) => {
     this.filter = val;
   };
@@ -157,7 +182,8 @@ class ReportSuccessWeek {
       search: this.search,
       filter: this.filter,
       startDate: firstday,
-      endDate: lastday
+      endDate: lastday,
+      user: this.user
     });
     this.$serviceBookingRp = new SuccessTable({
       data: getData.data
@@ -168,6 +194,11 @@ class ReportSuccessWeek {
   render() {
     this.getAllBrand();
     this.getCustomer();
+    this.getAllUser();
+    this.$container.appendChild(this.$control);
+    this.$container.appendChild(this.$box);
+
+    this.$control.appendChild(this.$userBox);
     this.$box.appendChild(this.$tableBox);
     this.$box.appendChild(this.$chartBox);
     this.$chartBox.appendChild(this.$lineChart.render());
@@ -176,7 +207,7 @@ class ReportSuccessWeek {
     this.$tableBox.appendChild(this.$filterSearch);
     this.$tableBox.appendChild(this.$table);
 
-    return this.$box;
+    return this.$container;
   }
 }
 export default ReportSuccessWeek;

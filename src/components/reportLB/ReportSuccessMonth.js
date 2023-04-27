@@ -1,7 +1,9 @@
 import { getBrand } from "../../apis/getInfo.js";
 import { getCustomerSuccess } from "../../apis/reportNumber.js";
+import { getUser } from "../../apis/userList.js";
 
 import { random } from "../../util/util.js";
+import Filter from "../Filter.js";
 
 import FilterByBrand from "../FilterByBrand.js";
 import LineChart from "../LineChart.js";
@@ -59,8 +61,17 @@ class ReportSuccessMonth {
   ];
   search = "";
   filter = "";
-
+  ussr = "";
   constructor() {
+    this.$container = document.createElement("div");
+    this.$container.className = "reportsuccessWeek";
+
+    this.$control = document.createElement("div");
+    this.$control.className =
+      "d-flex justify-content-end my-3 align-items-end mx-3";
+
+    this.$userBox = document.createElement("div");
+
     this.$box = document.createElement("div");
     this.$box.className = "d-flex gap-3 align-items-start";
 
@@ -92,6 +103,20 @@ class ReportSuccessMonth {
     this.search = this.$searchService.getValue();
     this.getCustomer();
   };
+  setUser = (val) => {
+    this.user = val;
+  };
+  getAllUser = async () => {
+    const fetchUser = await getUser({ userCode: "" });
+    this.$userBox.innerHTML = "";
+    this.$selectUser = new Filter({
+      data: fetchUser.data,
+      filterSearch: this.filterSearch,
+      setUser: this.setUser,
+      title: "Nhân viên"
+    });
+    this.$userBox.appendChild(this.$selectUser.render());
+  };
   setFilter = (val) => {
     this.filter = val;
   };
@@ -116,7 +141,8 @@ class ReportSuccessMonth {
       search: this.search,
       filter: this.filter,
       startDate: firstDay,
-      endDate: lastDay
+      endDate: lastDay,
+      user: this.user
     });
     this.$serviceBookingRp = new SuccessTable({
       data: getData.data
@@ -127,15 +153,22 @@ class ReportSuccessMonth {
   render() {
     this.getAllBrand();
     this.getCustomer();
+    this.getAllUser();
+    this.$container.appendChild(this.$control);
+    this.$container.appendChild(this.$box);
+
+    this.$control.appendChild(this.$userBox);
+
     this.$box.appendChild(this.$tableBox);
     this.$box.appendChild(this.$chartBox);
+
     this.$chartBox.appendChild(this.$lineChart.render());
     this.$filterSearch.appendChild(this.$filterBox);
     this.$filterSearch.appendChild(this.$searchService.render());
     this.$tableBox.appendChild(this.$filterSearch);
     this.$tableBox.appendChild(this.$table);
 
-    return this.$box;
+    return this.$container;
   }
 }
 export default ReportSuccessMonth;
