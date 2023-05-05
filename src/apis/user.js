@@ -30,6 +30,7 @@ export const getUser = async (token) => {
       "token",
       `${token}/${data.data.username}/${data.data.rule}`
     );
+
     return data.data;
   } catch (e) {
     console.log(e);

@@ -28,8 +28,8 @@ class SuccessTable {
       this.$item = new SuccessTableItem({
         stt: i + 1,
         service: this.data[i].group_service,
-        number: this.data[i].so_luong_thanh_cong,
-        highest: this.data[0].so_luong_thanh_cong
+        number: this.data[i].tong_tien,
+        highest: this.data[0].tong_tien
       });
 
       this.$tbody.appendChild(this.$item.render());
