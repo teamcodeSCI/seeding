@@ -186,7 +186,8 @@ class TargetDay {
 
     this.$revenueBrandChart = new BarChart({
       labels: this.revenueBrandLabels,
-      dataSet: this.revenueBrandDataSet
+      dataSet: this.revenueBrandDataSet,
+      max: 100000000
     });
   }
   setUser = (val) => {

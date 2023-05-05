@@ -41,7 +41,7 @@ export const arrToStr = (arr) => {
   if (arr) return arr.toString().split(",");
 };
 export const random = () => {
-  return Math.floor(Math.random() * 100);
+  return Math.floor(Math.random() * 100000000);
 };
 
 export const getDuplicate = (arr1, arr2) => {
