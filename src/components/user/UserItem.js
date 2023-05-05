@@ -4,7 +4,15 @@ import Select from "../Select.js";
 import EditUserModal from "./EditUserModal.js";
 import TargetModal from "../target/TargetModal.js";
 class UserItem {
-  constructor({ getAllUser, code_user, name, phone, active_user, kpi_target }) {
+  constructor({
+    getAllUser,
+    code_user,
+    name,
+    phone,
+    active_user,
+    kpi_target,
+    kpi_now
+  }) {
     this.data = [
       { value: false, text: "Vô hiệu hóa" },
       { value: true, text: "Đang hoạt động" }
@@ -31,6 +39,13 @@ class UserItem {
     this.$phonenumberText = document.createElement("p");
     this.$phonenumberText.className = "m-0";
     this.$phonenumberText.innerHTML = phone;
+
+    this.$targetNow = document.createElement("div");
+    this.$targetNow.className = "col text-truncate";
+    this.$targetNowText = document.createElement("p");
+    this.$targetNowText.className = "m-0";
+    this.$targetNowText.innerHTML =
+      kpi_now === undefined ? "Vô hiệu hóa" : `${formatNumber(kpi_now)} Đ`;
 
     this.$target = document.createElement("div");
     this.$target.className = "col text-truncate";
@@ -104,6 +119,9 @@ class UserItem {
 
     this.$tr.appendChild(this.$phonenumber);
     this.$phonenumber.appendChild(this.$phonenumberText);
+
+    this.$tr.appendChild(this.$targetNow);
+    this.$targetNow.appendChild(this.$targetNowText);
 
     this.$tr.appendChild(this.$target);
     this.$target.appendChild(this.$targetText);

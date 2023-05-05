@@ -31,6 +31,12 @@ class UserList {
     this.$phonenumberText.className = "m-0 fw-bold";
     this.$phonenumberText.innerHTML = `Số điện thoại`;
 
+    this.$targetNow = document.createElement("div");
+    this.$targetNow.className = "col text-truncate";
+    this.$targetNowText = document.createElement("p");
+    this.$targetNowText.className = "m-0 fw-bold";
+    this.$targetNowText.innerHTML = `Tiến trình`;
+
     this.$target = document.createElement("div");
     this.$target.className = "col text-truncate";
     this.$targetText = document.createElement("p");
@@ -73,6 +79,9 @@ class UserList {
 
     this.$theadTr.appendChild(this.$phonenumber);
     this.$phonenumber.appendChild(this.$phonenumberText);
+
+    this.$theadTr.appendChild(this.$targetNow);
+    this.$targetNow.appendChild(this.$targetNowText);
 
     this.$theadTr.appendChild(this.$target);
     this.$target.appendChild(this.$targetText);

@@ -61,7 +61,7 @@ class ReportSuccessMonth {
   ];
   search = "";
   filter = "";
-  ussr = "";
+  user = "";
   constructor() {
     this.$container = document.createElement("div");
     this.$container.className = "reportsuccessWeek";
@@ -137,6 +137,7 @@ class ReportSuccessMonth {
     const month = date.getMonth();
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
+
     const getData = await getCustomerSuccess({
       search: this.search,
       filter: this.filter,
@@ -144,6 +145,7 @@ class ReportSuccessMonth {
       endDate: lastDay,
       user: this.user
     });
+
     this.$serviceBookingRp = new SuccessTable({
       data: getData.data
     });
