@@ -137,7 +137,10 @@ class TargetMonth {
     setFilter = (val) => {
         this.filter = val;
     };
-    filterSearch = () => {};
+    filterSearch = () => {
+        this.search = this.$searchService.getValue();
+        this.getCustomer()
+    };
     getAllBrand = async() => {
         const fetchBrand = await getBrand({ input: "" });
         this.$filterBox.innerHTML = "";
