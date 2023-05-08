@@ -173,45 +173,7 @@ export const getNumberByYear = async({ startDate, endDate, userCode }) => {
     });
     return { labels: labelArr, lead: arrLead, booking: arrBooking };
 };
-export const getNumberChartYear = async({ startDate, endDate, userCode }) => {
-    userCode = ''
 
-    const token = splitStr(localStorage.getItem("token")).token;
-    const response = await fetch(`
-    https://scigroup.com.vn/cp/seeding/api/get-report-booking?
-    token=${token}&
-    start_date=${formatDate(startDate)}&
-    end_date=${formatDate(endDate)}&
-    user_seeding=${formatDate(userCode)}
-`);
-    const dataLead = await response.json();
-    console.log("dataLead: ", dataLead);
-
-    const labelArr = [];
-    const dateArray = [];
-    let currentDate = new Date(startDate);
-    for (
-        let i = currentDate.getMonth() + 1; i <= new Date(endDate).getMonth() + 1; i++
-    ) {
-        dateArray.push(i);
-        labelArr.push("Tháng " + i);
-    }
-
-    const arrLead = [];
-
-    dateArray.forEach((item) => {
-        const dateArrLead = [];
-        for (let i = 1; i < dataLead.data.length; i++) {
-            if (new Date(dataLead.data[i].create_date).getMonth() + 1 === item) {
-                dateArrLead.push(dataLead.data[i]);
-            }
-        }
-        arrLead.push(dateArrLead.length);
-
-
-    });
-    return { labels: labelArr, lead: arrLead };
-}
 const searchByName = (data, input) => {
     return input === "" ?
         data :
@@ -252,3 +214,12 @@ export const getCustomerSuccess = async({
         return { message: error };
     }
 };
+// export const getRevenue = async() => {
+//     const token = splitStr(localStorage.getItem("token")).token;
+//     const response = await fetch(`
+//     https://scigroup.com.vn/cp/seeding/api/get-report-booking?
+//     token=${token}start_date=2023-04-30&end_date=2023-04-01`);
+//     const data = await response.json()
+//     console.log("data: ", data);
+// }
+// getRevenue()

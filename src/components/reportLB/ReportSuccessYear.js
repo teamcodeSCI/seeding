@@ -1,5 +1,5 @@
 import { getBrand } from "../../apis/getInfo.js";
-import { getCustomerSuccess, getNumberChartYear } from "../../apis/reportNumber.js";
+import { getCustomerSuccess } from "../../apis/reportNumber.js";
 import { getUser } from "../../apis/userList.js";
 import { app } from "../../util/const.js";
 import { random } from "../../util/util.js";
@@ -221,7 +221,7 @@ class ReportSuccessYear {
             endDate: lastDay,
             user: this.user
         });
-        const dataYear = await getNumberChartYear({ startDate: firstDay, endDate: lastDay })
+
         this.$serviceBookingRp = new SuccessTable({
             data: getData.so_luong
         });
