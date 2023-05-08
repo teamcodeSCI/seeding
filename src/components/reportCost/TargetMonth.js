@@ -177,7 +177,7 @@ class TargetMonth {
             user: this.user
         });
         this.$revenueTable = new RevenueTable({
-            data: getData.data
+            data: getData.tong_tien
         });
         this.$revenueOverflow.innerHTML = ''
         this.$revenueOverflow.appendChild(this.$revenueTable.render());
