@@ -214,12 +214,11 @@ export const getCustomerSuccess = async({
         return { message: error };
     }
 };
-// export const getRevenue = async() => {
-//     const token = splitStr(localStorage.getItem("token")).token;
-//     const response = await fetch(`
-//     https://scigroup.com.vn/cp/seeding/api/get-report-booking?
-//     token=${token}start_date=2023-04-30&end_date=2023-04-01`);
-//     const data = await response.json()
-//     console.log("data: ", data);
-// }
-// getRevenue()
+export const getRevenue = async() => {
+    const token = splitStr(localStorage.getItem("token")).token;
+    const response = await fetch(`
+    https://scigroup.com.vn/cp/seeding/api/get-report-booking?
+    token=${token}&start_date=2023-04-30&end_date=2023-04-01`);
+    const data = await response.json()
+
+}

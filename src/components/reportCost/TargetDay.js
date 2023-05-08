@@ -193,6 +193,7 @@ class TargetDay {
     };
     getAllBrand = async() => {
         const fetchBrand = await getBrand({ input: "" });
+
         this.$filterBox.innerHTML = "";
         this.$selectBrand = new FilterByBrand({
             data: fetchBrand,
@@ -211,6 +212,7 @@ class TargetDay {
             setUser: this.setUser,
             title: "Nhân viên"
         });
+
         this.$userBox.appendChild(this.$selectUser.render());
     };
     getCustomer = async() => {
