@@ -1,15 +1,18 @@
 import { getBrand } from "../../apis/getInfo.js";
 import { getCustomerSuccess, getRevenue } from "../../apis/reportNumber.js";
 import { getUser } from "../../apis/userList.js";
+import { role } from "../../util/const.js";
 
 import BarChart from "../BarChart.js";
 import DoughnutChart from "../DoughnutChart.js";
 import Filter from "../Filter.js";
 import FilterByBrand from "../FilterByBrand.js";
+import InputGroup from "../InputGroup.js";
 import SearchInput from "../SearchInput.js";
 import RevenueTable from "./RevenueTable.js";
 
-class TargetMonth {
+class TargetRange {
+    today = new Date();
     targetLabels = ["Doanh số", "Chưa đạt"];
     targetDataSet = [{
         data: [70000000, 30000000],
@@ -67,10 +70,36 @@ class TargetMonth {
 
         this.$control = document.createElement("div");
         this.$control.className =
-            "d-flex justify-content-end my-3 align-items-end mx-3";
+            "d-flex justify-content-between my-3 align-items-end mx-1";
 
         this.$userBox = document.createElement("div");
         this.$userBox.style.zIndex = "11";
+
+        this.$inputGroup = document.createElement("div");
+        this.$inputGroup.className = "d-flex gap-2 align-items-end";
+
+        this.$startDate = new InputGroup({
+            title: "Ngày bắt đầu",
+            type: "date",
+            width: "100%",
+            value: this.today
+        });
+
+        this.$endDate = new InputGroup({
+            title: "Ngày kết thúc",
+            type: "date",
+            width: "100%",
+            value: this.today
+        });
+
+        this.$submitBtn = document.createElement("button");
+        this.$submitBtn.className = "btn btn-primary py-1 px-2";
+        this.$submitBtn.style.fontSize = "14px";
+        this.$submitBtn.addEventListener("click", () => {
+            this.filterSearch();
+        });
+        this.$searchIcon = document.createElement("i");
+        this.$searchIcon.className = "bi bi-search";
 
         this.$container = document.createElement("div");
         this.$container.className = "d-flex gap-5 mb-4 align-items-start";
@@ -138,7 +167,7 @@ class TargetMonth {
         this.filter = val;
     };
     filterSearch = () => {
-        this.search = this.$searchService.getValue();
+        this.getRevenueBrand()
         this.getCustomer()
     };
     getAllBrand = async() => {
@@ -164,11 +193,9 @@ class TargetMonth {
         this.$userBox.appendChild(this.$selectUser.render());
     };
     getCustomer = async() => {
-        const date = new Date();
-        const year = date.getFullYear();
-        const month = date.getMonth();
-        const firstDay = new Date(year, month, 1);
-        const lastDay = new Date(year, month + 1, 0);
+        const firstDay = this.$startDate.getValue().value;
+        const lastDay = this.$endDate.getValue().value;
+
         const getData = await getCustomerSuccess({
             search: this.search,
             filter: this.filter,
@@ -184,16 +211,14 @@ class TargetMonth {
 
     };
     getRevenueBrand = async() => {
-        const date = new Date();
-        const year = date.getFullYear();
-        const month = date.getMonth();
-        const firstDay = new Date(year, month, 1);
-        const lastDay = new Date(year, month + 1, 0);
+        const firstDay = this.$startDate.getValue().value;
+        const lastDay = this.$endDate.getValue().value;
         const getData = await getRevenue({
             startDate: firstDay,
             endDate: lastDay,
             user: this.user
         });
+
         this.revenueBrandLabels = getData.data.date
         this.revenueBrandDataSet[0].data = getData.data.all
         this.revenueBrandDataSet[1].data = getData.data.pr
@@ -212,11 +237,18 @@ class TargetMonth {
     render() {
         this.getRevenueBrand()
         this.getCustomer()
-        this.getAllUser();
         this.getAllBrand();
-
+        if (role === "admin") {
+            this.getAllUser();
+        }
         this.$wrapper.appendChild(this.$control);
+        this.$control.appendChild(this.$inputGroup);
         this.$control.appendChild(this.$userBox);
+
+        this.$inputGroup.appendChild(this.$startDate.render());
+        this.$inputGroup.appendChild(this.$endDate.render());
+        this.$inputGroup.appendChild(this.$submitBtn);
+        this.$submitBtn.appendChild(this.$searchIcon);
 
         this.$wrapper.appendChild(this.$container);
         this.$wrapper.appendChild(this.$revenueBrandBox);
@@ -239,4 +271,4 @@ class TargetMonth {
         return this.$wrapper;
     }
 }
-export default TargetMonth;
+export default TargetRange

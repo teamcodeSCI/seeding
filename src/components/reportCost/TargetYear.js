@@ -1,5 +1,5 @@
 import { getBrand } from "../../apis/getInfo.js";
-import { getCustomerSuccess } from "../../apis/reportNumber.js";
+import { getCustomerSuccess, getRevenueByYear } from "../../apis/reportNumber.js";
 import { getUser } from "../../apis/userList.js";
 import { random } from "../../util/util.js";
 import BarChart from "../BarChart.js";
@@ -15,134 +15,47 @@ class TargetYear {
         data: [70000000, 30000000],
         backgroundColor: ["#0d6efd", "#e3e3e3"]
     }];
-    revenueBrandLabels = [
-        "Tháng 1",
-        "Tháng 2",
-        "Tháng 3",
-        "Tháng 4",
-        "Tháng 5",
-        "Tháng 6",
-        "Tháng 7",
-        "Tháng 8",
-        "Tháng 9",
-        "Tháng 10",
-        "Tháng 11",
-        "Tháng 12"
-    ];
+    revenueBrandLabels = [];
     revenueBrandDataSet = [{
             label: "Tất cả",
-            backgroundColor: "#ff6a00",
-            borderColor: "#ff6a00",
-            highlightFill: "#ff6a00",
-            highlightStroke: "#ff6a00",
-            data: [
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random()
-            ]
+            backgroundColor: "rgb(255, 106, 0,0.5)",
+            borderColor: "rgb(255, 106, 0,0.5)",
+            highlightFill: "rgb(255, 106, 0,0.5)",
+            highlightStroke: "rgb(255, 106, 0,0.5)",
+            data: []
         },
         {
             label: "Paris",
-            backgroundColor: "rgb(0, 86, 162)",
-            borderColor: "rgb(0, 86, 162)",
-            highlightFill: "rgb(0, 86, 162)",
-            highlightStroke: "rgb(0, 86, 162)",
-            data: [
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random()
-            ]
+            backgroundColor: "rgba(0, 86, 162,0.5)",
+            borderColor: "rgba(0, 86, 162,0.5)",
+            highlightFill: "rgba(0, 86, 162,0.5)",
+            highlightStroke: "rgba(0, 86, 162,0.5)",
+            data: []
         },
         {
             label: "Kangnam",
-            backgroundColor: "rgb(183, 44, 38)",
-            borderColor: "rgb(183, 44, 38)",
-            highlightFill: "rgb(183, 44, 38)",
-            highlightStroke: "rgb(183, 44, 38)",
-            data: [
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random()
-            ]
+            backgroundColor: "rgba(183, 44, 38,0.5)",
+            borderColor: "rgba(183, 44, 38,0.5)",
+            highlightFill: "rgba(183, 44, 38,0.5)",
+            highlightStroke: "rgba(183, 44, 38,0.5)",
+            data: []
         },
         {
             label: "Đông Á",
-            backgroundColor: "#009f97",
-            borderColor: "#009f97",
-            highlightFill: "#009f97",
-            highlightStroke: "#009f97",
-            data: [
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random()
-            ]
+            backgroundColor: "rgba(0, 159, 151,0.5)",
+            borderColor: "rgba(0, 159, 151,0.5)",
+            highlightFill: "rgba(0, 159, 151,0.5)",
+            highlightStroke: "rgba(0, 159, 151,0.5)",
+            data: []
         },
         {
             label: "Hồng Hà",
-            backgroundColor: "#a100f3",
-            borderColor: "#a100f3",
-            highlightFill: "#a100f3",
-            highlightStroke: "#a100f3",
-            data: [
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random()
-            ]
+            backgroundColor: "rgba(161, 0, 243,0.5)",
+            borderColor: "rgba(161, 0, 243,0.5)",
+            highlightFill: "rgba(161, 0, 243,0.5)",
+            highlightStroke: "rgba(161, 0, 243,0.5)",
+            data: []
         }
-    ];
-    revenueData = [
-        { service: "Implant", brand: "Paris", revenue: 10000000 },
-        { service: "Niềng răng", brand: "Paris", revenue: 15000000 },
-        { service: "Cắt mí", brand: "Paris", revenue: 5000000 },
-        { service: "Cắt mí", brand: "Kangnam", revenue: 6000000 },
-        { service: "Nâng mũi", brand: "Đông Á", revenue: 10000000 },
-        { service: "Nâng mũi", brand: "Kangnam", revenue: 12000000 },
-        { service: "Nâng ngực", brand: "Hồng Hà", revenue: 20000000 }
     ];
     user = "";
     filter = "";
@@ -269,7 +182,33 @@ class TargetYear {
         this.$revenueOverflow.appendChild(this.$revenueTable.render());
 
     };
+    getRevenueBrand = async() => {
+        const date = new Date();
+        const year = date.getFullYear();
+        const firstDay = new Date(year, 0, 1);
+        const lastDay = new Date(year, 11, 31);
+        const getData = await getRevenueByYear({
+            startDate: firstDay,
+            endDate: lastDay,
+            user: this.user
+        });
+        this.revenueBrandLabels = getData.data.labels
+        this.revenueBrandDataSet[0].data = getData.data.all
+        this.revenueBrandDataSet[1].data = getData.data.pr
+        this.revenueBrandDataSet[2].data = getData.data.kn
+        this.revenueBrandDataSet[3].data = getData.data.da
+        this.revenueBrandDataSet[4].data = getData.data.hh
+        this.$revenueBrandChart = new BarChart({
+            labels: this.revenueBrandLabels,
+            dataSet: this.revenueBrandDataSet,
+            max: 100000000
+        });
+        this.$revenueBrandBox.innerHTML = ''
+        this.$revenueBrandBox.appendChild(this.$revenueBrandTitle);
+        this.$revenueBrandBox.appendChild(this.$revenueBrandChart.render());
+    }
     render() {
+        this.getRevenueBrand()
         this.getCustomer()
         this.getAllUser();
         this.getAllBrand();
@@ -290,8 +229,7 @@ class TargetYear {
         this.$revenueServiceBox.appendChild(this.$filterSearch);
         this.$revenueServiceBox.appendChild(this.$revenueOverflow);
 
-        this.$revenueBrandBox.appendChild(this.$revenueBrandTitle);
-        this.$revenueBrandBox.appendChild(this.$revenueBrandChart.render());
+
 
         this.$filterSearch.appendChild(this.$filterBox);
         this.$filterSearch.appendChild(this.$searchService.render());

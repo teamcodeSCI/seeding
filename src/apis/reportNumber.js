@@ -214,11 +214,82 @@ export const getCustomerSuccess = async({
         return { message: error };
     }
 };
-export const getRevenue = async() => {
+export const getRevenue = async({ startDate, endDate, user }) => {
     const token = splitStr(localStorage.getItem("token")).token;
     const response = await fetch(`
-    https://scigroup.com.vn/cp/seeding/api/get-report-booking?
-    token=${token}&start_date=2023-04-30&end_date=2023-04-01`);
+    https://scigroup.com.vn/cp/seeding/api/get-report-brand?
+    token=${token}&start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&user_seeding=${user}`);
     const data = await response.json()
+    data.data.pop()
+    const all = []
+    const kn = []
+    const pr = []
+    const da = []
+    const hh = []
+    const date = []
+    for (let i = 0; i < data.data.length; i++) {
+        all.push(data.data[i].tong_tien_all_day)
+        kn.push(data.data[i].tong_tien_KN)
+        pr.push(data.data[i].tong_tien_PR)
+        da.push(data.data[i].tong_tien_DA)
+        hh.push(data.data[i].tong_tien_HN)
+        date.push(`${new Date(data.data[i].date).getDate()}/${new Date(data.data[i].date).getMonth() + 1}`)
+    }
+    return {
+        data: {
+            all,
+            kn,
+            pr,
+            da,
+            hh,
+            date
+        }
+    }
 
+}
+export const getRevenueByYear = async({ startDate, endDate, user }) => {
+    const token = splitStr(localStorage.getItem("token")).token;
+    const response = await fetch(`
+    https://scigroup.com.vn/cp/seeding/api/get-report-brand?
+    token=${token}&start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&user_seeding=${user}`);
+    const data = await response.json()
+    data.data.pop()
+
+    const labelArr = [];
+    const dateArray = [];
+    let currentDate = new Date(startDate);
+    for (
+        let i = currentDate.getMonth() + 1; i <= new Date(endDate).getMonth() + 1; i++
+    ) {
+        dateArray.push(i);
+        labelArr.push("Tháng " + i);
+    }
+    const arrAll = [];
+    const arrDA = [];
+    const arrHH = [];
+    const arrKN = [];
+    const arrPR = [];
+    dateArray.forEach(item => {
+        let all = 0
+        let da = 0
+        let hh = 0
+        let kn = 0
+        let pr = 0
+        for (let i = 0; i < data.data.length; i++) {
+            if (new Date(data.data[i].date).getMonth() + 1 === item) {
+                all += data.data[i].tong_tien_all_day
+                da += data.data[i].tong_tien_DA
+                hh += data.data[i].tong_tien_HN
+                kn += data.data[i].tong_tien_KN
+                pr += data.data[i].tong_tien_PR
+            }
+        }
+        arrAll.push(all);
+        arrDA.push(da);
+        arrHH.push(hh);
+        arrKN.push(kn);
+        arrPR.push(pr);
+    })
+
+    return { data: { labels: labelArr, all: arrAll, da: arrDA, hh: arrHH, kn: arrKN, pr: arrPR } };
 }

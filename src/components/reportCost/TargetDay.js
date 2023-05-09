@@ -1,5 +1,5 @@
 import { getBrand } from "../../apis/getInfo.js";
-import { getCustomerSuccess } from "../../apis/reportNumber.js";
+import { getCustomerSuccess, getRevenue } from "../../apis/reportNumber.js";
 import { getUser } from "../../apis/userList.js";
 import { random } from "../../util/util.js";
 import BarChart from "../BarChart.js";
@@ -10,6 +10,11 @@ import SearchInput from "../SearchInput.js";
 import RevenueTable from "./RevenueTable.js";
 
 class TargetDay {
+    all = '';
+    kn = '';
+    pr = '';
+    da = '';
+    hh = ''
     targetLabels = ["Doanh số", "Chưa đạt"];
     targetDataSet = [{
         data: [70000000, 30000000],
@@ -26,83 +31,43 @@ class TargetDay {
     ];
     revenueBrandDataSet = [{
             label: "Tất cả",
-            backgroundColor: "#ff6a00",
-            borderColor: "#ff6a00",
-            highlightFill: "#ff6a00",
-            highlightStroke: "#ff6a00",
-            data: [
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random()
-            ]
+            backgroundColor: "rgb(255, 106, 0,0.5)",
+            borderColor: "rgb(255, 106, 0,0.5)",
+            highlightFill: "rgb(255, 106, 0,0.5)",
+            highlightStroke: "rgb(255, 106, 0,0.5)",
+            data: []
         },
         {
             label: "Paris",
-            backgroundColor: "rgb(0, 86, 162)",
-            borderColor: "rgb(0, 86, 162)",
-            highlightFill: "rgb(0, 86, 162)",
-            highlightStroke: "rgb(0, 86, 162)",
-            data: [
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random()
-            ]
+            backgroundColor: "rgba(0, 86, 162,0.5)",
+            borderColor: "rgba(0, 86, 162,0.5)",
+            highlightFill: "rgba(0, 86, 162,0.5)",
+            highlightStroke: "rgba(0, 86, 162,0.5)",
+            data: []
         },
         {
             label: "Kangnam",
-            backgroundColor: "rgb(183, 44, 38)",
-            borderColor: "rgb(183, 44, 38)",
-            highlightFill: "rgb(183, 44, 38)",
-            highlightStroke: "rgb(183, 44, 38)",
-            data: [
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random()
-            ]
+            backgroundColor: "rgba(183, 44, 38,0.5)",
+            borderColor: "rgba(183, 44, 38,0.5)",
+            highlightFill: "rgba(183, 44, 38,0.5)",
+            highlightStroke: "rgba(183, 44, 38,0.5)",
+            data: []
         },
         {
             label: "Đông Á",
-            backgroundColor: "#009f97",
-            borderColor: "#009f97",
-            highlightFill: "#009f97",
-            highlightStroke: "#009f97",
-            data: [
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random()
-            ]
+            backgroundColor: "rgba(0, 159, 151,0.5)",
+            borderColor: "rgba(0, 159, 151,0.5)",
+            highlightFill: "rgba(0, 159, 151,0.5)",
+            highlightStroke: "rgba(0, 159, 151,0.5)",
+            data: []
         },
         {
             label: "Hồng Hà",
-            backgroundColor: "#a100f3",
-            borderColor: "#a100f3",
-            highlightFill: "#a100f3",
-            highlightStroke: "#a100f3",
-            data: [
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random(),
-                random()
-            ]
+            backgroundColor: "rgba(161, 0, 243,0.5)",
+            borderColor: "rgba(161, 0, 243,0.5)",
+            highlightFill: "rgba(161, 0, 243,0.5)",
+            highlightStroke: "rgba(161, 0, 243,0.5)",
+            data: []
         }
     ];
 
@@ -110,6 +75,7 @@ class TargetDay {
     user = "";
     filter = "";
     search = "";
+
     constructor() {
         this.$wrapper = document.createElement("div");
         this.$wrapper.className = "targetDay";
@@ -175,11 +141,7 @@ class TargetDay {
             "revenueBrandTitle fs-5 fw-bold text-uppercase mb-2 text-center";
         this.$revenueBrandTitle.innerHTML = "Doanh thu theo thương hiệu";
 
-        this.$revenueBrandChart = new BarChart({
-            labels: this.revenueBrandLabels,
-            dataSet: this.revenueBrandDataSet,
-            max: 100000000
-        });
+
     }
     setUser = (val) => {
         this.user = val;
@@ -235,7 +197,33 @@ class TargetDay {
         this.$revenueOverflow.appendChild(this.$revenueTable.render());
 
     };
+    getRevenueBrand = async() => {
+        const curr = new Date(); // get current date
+        const first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week
+        const last = first + 6; // last day is the first day + 6
+        const firstday = new Date(curr.setDate(first));
+        const lastday = new Date(curr.setDate(last));
+        const getData = await getRevenue({
+            startDate: firstday,
+            endDate: lastday,
+            user: this.user
+        });
+        this.revenueBrandDataSet[0].data = getData.data.all
+        this.revenueBrandDataSet[1].data = getData.data.pr
+        this.revenueBrandDataSet[2].data = getData.data.kn
+        this.revenueBrandDataSet[3].data = getData.data.da
+        this.revenueBrandDataSet[4].data = getData.data.hh
+        this.$revenueBrandChart = new BarChart({
+            labels: this.revenueBrandLabels,
+            dataSet: this.revenueBrandDataSet,
+            max: 100000000
+        });
+        this.$revenueBrandBox.innerHTML = ''
+        this.$revenueBrandBox.appendChild(this.$revenueBrandTitle);
+        this.$revenueBrandBox.appendChild(this.$revenueBrandChart.render());
+    }
     render() {
+        this.getRevenueBrand()
         this.getCustomer()
         this.getAllUser();
         this.getAllBrand();
@@ -257,8 +245,7 @@ class TargetDay {
         this.$revenueServiceBox.appendChild(this.$revenueOverflow);
 
 
-        this.$revenueBrandBox.appendChild(this.$revenueBrandTitle);
-        this.$revenueBrandBox.appendChild(this.$revenueBrandChart.render());
+
 
         this.$filterSearch.appendChild(this.$filterBox);
         this.$filterSearch.appendChild(this.$searchService.render());
