@@ -60,7 +60,7 @@ class FilterByBrand {
         for (let i = 1; i < this.data.length; i++) {
             this.$item = new FilterItem({
                 title: this.data[i].name,
-                hideVal: this.data[i].id,
+                hideVal: this.data[i].code,
                 selectItem: this.selectItem
             });
             this.$filterBox.appendChild(this.$item.render());
