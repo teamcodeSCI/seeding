@@ -46,7 +46,9 @@ const targetRange = new TargetRange()
 export const role = localStorage.getItem("token") ?
     splitStr(localStorage.getItem("token")).rule :
     "";
-
+export const seedingCode = localStorage.getItem("token") ?
+    splitStr(localStorage.getItem("token")).code :
+    "";
 export const menu =
     role === "admin" ? [
         { title: "Lead", link: "lead", component: lead },

@@ -1,4 +1,4 @@
-import { BASE_URL, groupService, role } from "../util/const.js";
+import { BASE_URL, groupService, role, seedingCode } from "../util/const.js";
 import { splitStr } from "../util/splitStr.js";
 import { formatDate, getDuplicate, removeAccents } from "../util/util.js";
 
@@ -190,6 +190,7 @@ export const getCustomerSuccess = async({
     user
 }) => {
     try {
+
         const token = splitStr(localStorage.getItem("token")).token;
         const response =
             await fetch(`https://scigroup.com.vn/cp/seeding/api/get-report?
@@ -200,7 +201,7 @@ export const getCustomerSuccess = async({
     offset=&
     start_date=${formatDate(startDate)}&
     end_date=${formatDate(endDate)}&
-    user_seeding=${user}`);
+    user_seeding=${role==='user'?seedingCode:user}`);
         const data = await response.json();
         data.data.pop();
         const renderData = searchByName(data.data, search);
@@ -218,7 +219,7 @@ export const getRevenue = async({ startDate, endDate, user }) => {
     const token = splitStr(localStorage.getItem("token")).token;
     const response = await fetch(`
     https://scigroup.com.vn/cp/seeding/api/get-report-brand?
-    token=${token}&start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&user_seeding=${user}`);
+    token=${token}&start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&user_seeding=${role==='user'?seedingCode:user}`);
     const data = await response.json()
     data.data.pop()
     const all = []
@@ -251,7 +252,7 @@ export const getRevenueByYear = async({ startDate, endDate, user }) => {
     const token = splitStr(localStorage.getItem("token")).token;
     const response = await fetch(`
     https://scigroup.com.vn/cp/seeding/api/get-report-brand?
-    token=${token}&start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&user_seeding=${user}`);
+    token=${token}&start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&user_seeding=${role==='user'?seedingCode:user}`);
     const data = await response.json()
     data.data.pop()
 
