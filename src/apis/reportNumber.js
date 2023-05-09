@@ -1,6 +1,6 @@
 import { BASE_URL, groupService, role, seedingCode } from "../util/const.js";
 import { splitStr } from "../util/splitStr.js";
-import { formatDate, getDuplicate, removeAccents } from "../util/util.js";
+import { formatDate, removeAccents } from "../util/util.js";
 
 export const getNumberBrand = async({ startDate, endDate, userCode }) => {
     try {
@@ -215,6 +215,44 @@ export const getCustomerSuccess = async({
         return { message: error };
     }
 };
+export const getSuccessByBrand = async({ startDate, endDate, userCode }) => {
+
+    const token = splitStr(localStorage.getItem("token")).token;
+    const response =
+        await fetch(`https://scigroup.com.vn/cp/seeding/api/get-report-booking?
+token=${token}&
+start_date=${formatDate(startDate)}&
+end_date=${formatDate(endDate)}&
+user_seeding=${role==='user'?seedingCode:userCode}`);
+    const data = await response.json();
+    data.data.pop()
+
+    const all = []
+    const kn = []
+    const pr = []
+    const da = []
+    const hh = []
+    const date = []
+    for (let i = 0; i < data.data.length; i++) {
+        all.push(data.data[i].sl_ngay)
+        kn.push(data.data[i].kn)
+        pr.push(data.data[i].pr)
+        da.push(data.data[i].da)
+        hh.push(data.data[i].hh)
+        date.push(`${new Date(data.data[i].date).getDate()}/${new Date(data.data[i].date).getMonth() + 1}`)
+    }
+    return {
+        data: {
+            all,
+            kn,
+            pr,
+            da,
+            hh,
+            date
+        }
+    }
+}
+
 export const getRevenue = async({ startDate, endDate, user }) => {
     const token = splitStr(localStorage.getItem("token")).token;
     const response = await fetch(`
