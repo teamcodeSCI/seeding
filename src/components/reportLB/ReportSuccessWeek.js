@@ -6,7 +6,7 @@ import LineChart from "../LineChart.js";
 import { random } from "../../util/util.js";
 import { getCustomerSuccess } from "../../apis/reportNumber.js";
 
-import { app } from "../../util/const.js";
+import { app, role } from "../../util/const.js";
 import { getBrand } from "../../apis/getInfo.js";
 import FilterByBrand from "../FilterByBrand.js";
 import { getUser } from "../../apis/userList.js";
@@ -193,7 +193,9 @@ class ReportSuccessWeek {
     render() {
         this.getAllBrand();
         this.getCustomer();
-        this.getAllUser();
+        if (role === "admin") {
+            this.getAllUser();
+        }
         this.$container.appendChild(this.$control);
         this.$container.appendChild(this.$box);
 

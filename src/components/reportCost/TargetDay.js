@@ -1,6 +1,7 @@
 import { getBrand } from "../../apis/getInfo.js";
 import { getCustomerSuccess, getRevenue } from "../../apis/reportNumber.js";
 import { getUser } from "../../apis/userList.js";
+import { role } from "../../util/const.js";
 import { random } from "../../util/util.js";
 import BarChart from "../BarChart.js";
 import DoughnutChart from "../DoughnutChart.js";
@@ -225,7 +226,9 @@ class TargetDay {
     render() {
         this.getRevenueBrand()
         this.getCustomer()
-        this.getAllUser();
+        if (role === "admin") {
+            this.getAllUser();
+        }
         this.getAllBrand();
         this.$wrapper.appendChild(this.$control);
         this.$control.appendChild(this.$userBox);

@@ -1,6 +1,7 @@
 import { getBrand } from "../../apis/getInfo.js";
 import { getCustomerSuccess } from "../../apis/reportNumber.js";
 import { getUser } from "../../apis/userList.js";
+import { role } from "../../util/const.js";
 
 import { random } from "../../util/util.js";
 import Filter from "../Filter.js";
@@ -154,7 +155,9 @@ class ReportSuccessMonth {
     render() {
         this.getAllBrand();
         this.getCustomer();
-        this.getAllUser();
+        if (role === "admin") {
+            this.getAllUser();
+        }
         this.$container.appendChild(this.$control);
         this.$container.appendChild(this.$box);
 
