@@ -5,6 +5,7 @@ class UserList {
   constructor({ data, getAllUser }) {
     this.getAllUser = getAllUser;
     this.data = data;
+
     this.$container = document.createElement("div");
     this.$container.className = `table-responsive dataTable`;
     this.$container.style.fontSize = "15px";

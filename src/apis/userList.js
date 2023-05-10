@@ -9,6 +9,7 @@ export const getUser = async ({ userCode }) => {
       `${BASE_URL}/get-user?token=${token}&code_user=${userCode}`
     );
     const data = await response.json();
+
     return {
       message: "Success",
       data: data.data
