@@ -102,6 +102,7 @@ class ReportSuccessWeek {
   filterSearch = () => {
     this.search = this.$searchService.getValue();
     this.getCustomer();
+    this.getCusByBrand();
   };
   setUser = (val) => {
     this.user = val;
