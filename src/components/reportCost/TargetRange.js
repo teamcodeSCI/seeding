@@ -2,6 +2,7 @@ import { getBrand } from "../../apis/getInfo.js";
 import { getCustomerSuccess, getRevenue } from "../../apis/reportNumber.js";
 import { getUser } from "../../apis/userList.js";
 import { role } from "../../util/const.js";
+import { splitStr } from "../../util/splitStr.js";
 
 import BarChart from "../BarChart.js";
 import DoughnutChart from "../DoughnutChart.js";

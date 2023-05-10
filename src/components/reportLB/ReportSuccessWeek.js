@@ -161,6 +161,7 @@ class ReportSuccessWeek {
       endDate: lastday,
       userCode: this.user
     });
+
     this.dataSet[0].data = getData.data.all;
     this.dataSet[1].data = getData.data.pr;
     this.dataSet[2].data = getData.data.kn;
