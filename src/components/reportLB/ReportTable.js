@@ -16,7 +16,7 @@ class ReportTable {
         this.$name.innerHTML = 'Thương hiệu'
 
         this.$lead = document.createElement('th')
-        this.$lead.innerHTML = 'Lead'
+        this.$lead.innerHTML = 'Form'
 
         this.$booking = document.createElement('th')
         this.$booking.innerHTML = 'Booking'

@@ -51,8 +51,8 @@ export const seedingCode = localStorage.getItem("token") ?
     "";
 export const menu =
     role === "admin" ? [
-        { title: "Lead", link: "lead", component: lead },
-        { title: "Booking", link: "booking", component: booking },
+        { title: "Form", link: "lead", component: lead },
+        { title: "Lead/Booking", link: "booking", component: booking },
         {
             title: "Báo cáo số lượng",
             link: "[report] lead-booking",
@@ -61,8 +61,8 @@ export const menu =
         { title: "Báo cáo Chi phí", link: "[report] cost", component: cost },
         { title: "Nhân viên", link: "[report] user", component: user }
     ] : [
-        { title: "Lead", link: "lead", component: lead },
-        { title: "Booking", link: "booking", component: booking },
+        { title: "Form", link: "lead", component: lead },
+        { title: "Lead/Booking", link: "booking", component: booking },
         {
             title: "Báo cáo số lượng",
             link: "[report] lead-booking",
