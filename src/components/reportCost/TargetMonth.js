@@ -222,7 +222,10 @@ class TargetMonth {
           : this.user || "US0000015"
     });
     const user = fetchUser.data.pop();
-    this.$targetText.innerHTML = `${(user.kpi_now / user.kpi_target) * 100}%`;
+    this.$targetText.innerHTML = `${(
+      (user.kpi_now / user.kpi_target) *
+      100
+    ).toFixed(1)}%`;
     this.targetDataSet[0].data = [user.kpi_now, user.kpi_target - user.kpi_now];
     this.$targetChart = new DoughnutChart({
       labels: this.targetLabels,
