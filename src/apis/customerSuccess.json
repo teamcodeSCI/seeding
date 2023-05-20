@@ -1,9 +1,0 @@
-[
-    { "service": "Implant", "brand": "Paris", "number": 1000 },
-    { "service": "Niềng răng", "brand": "Paris", "number": 1500 },
-    { "service": "Cắt mí", "brand": "Paris", "number": 500 },
-    { "service": "Cắt mí", "brand": "Kangnam", "number": 600 },
-    { "service": "Nâng mũi", "brand": "Đông Á", "number": 1000 },
-    { "service": "Nâng mũi", "brand": "Kangnam", "number": 1200 },
-    { "service": "Nâng ngực", "brand": "Hồng Hà", "number": 2000 }
-]
