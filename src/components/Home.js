@@ -23,7 +23,7 @@ class Home {
     this.$header = new Header();
 
     this.$container = document.createElement("div");
-    this.$container.className = `container-lg py-4`;
+    this.$container.className = `container-lg pt-4`;
 
     this.$nav = document.createElement("div");
     this.$nav.className = "menu";

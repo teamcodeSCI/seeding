@@ -1,7 +1,8 @@
 import DuplicateItem from "./DuplicateItem.js";
 
 class DuplicateList {
-  constructor() {
+  constructor({ data }) {
+    this.data = data === "" ? [] : data;
     this.$container = document.createElement("div");
     this.$container.className = `table-responsive dataTable`;
     this.$container.style.fontSize = "14px";
@@ -34,34 +35,34 @@ class DuplicateList {
     this.$serviceText.className = "m-0 fw-bold";
     this.$serviceText.innerHTML = `Dịch vụ`;
 
-    this.$seedingUser = document.createElement("div");
-    this.$seedingUser.className = "col text-truncate";
-    this.$seedingUserText = document.createElement("p");
-    this.$seedingUserText.className = "m-0 fw-bold";
-    this.$seedingUserText.innerHTML = `Nhân viên seeding`;
-
     this.$saleUser = document.createElement("div");
     this.$saleUser.className = "col text-truncate";
     this.$saleUserText = document.createElement("p");
     this.$saleUserText.className = "m-0 fw-bold";
     this.$saleUserText.innerHTML = `Nhân viên sale`;
 
-    this.$date = document.createElement("div");
-    this.$date.className = "col text-truncate";
-    this.$dateText = document.createElement("p");
-    this.$dateText.className = "m-0 fw-bold";
-    this.$dateText.innerHTML = `Ngày`;
+    this.$sales = document.createElement("div");
+    this.$sales.className = "col text-truncate";
+    this.$salesText = document.createElement("p");
+    this.$salesText.className = "m-0 fw-bold";
+    this.$salesText.innerHTML = `Doanh số`;
 
     this.$tbody = document.createElement("div");
     this.$tbody.className = "bg-item";
-    this.$tbody.style.maxHeight = "650px";
+    this.$tbody.style.maxHeight = "calc(100vh - 350px)";
     this.$tbody.style.overflowY = "auto";
   }
   renderItem = () => {
     this.$tbody.innerHTML = "";
-    for (let i = 0; i < 20; i++) {
-      this.$item = new DuplicateItem();
-      this.$tbody.appendChild(this.$item.render());
+    if (this.data.length === 0) {
+      this.$tbody.style.marginTop = "20px";
+      this.$tbody.style.textAlign = "center";
+      this.$tbody.innerHTML = "Không có dữ liệu";
+    } else {
+      this.data.forEach((e) => {
+        this.$item = new DuplicateItem({ ...e });
+        this.$tbody.appendChild(this.$item.render());
+      });
     }
   };
   render() {
@@ -78,17 +79,14 @@ class DuplicateList {
     this.$theadTr.appendChild(this.$phonenumber);
     this.$phonenumber.appendChild(this.$phonenumberText);
 
-    this.$theadTr.appendChild(this.$service);
-    this.$service.appendChild(this.$serviceText);
-
-    this.$theadTr.appendChild(this.$seedingUser);
-    this.$seedingUser.appendChild(this.$seedingUserText);
-
     this.$theadTr.appendChild(this.$saleUser);
     this.$saleUser.appendChild(this.$saleUserText);
 
-    this.$theadTr.appendChild(this.$date);
-    this.$date.appendChild(this.$dateText);
+    this.$theadTr.appendChild(this.$sales);
+    this.$sales.appendChild(this.$salesText);
+
+    this.$theadTr.appendChild(this.$service);
+    this.$service.appendChild(this.$serviceText);
 
     return this.$container;
   }

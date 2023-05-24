@@ -1,8 +1,10 @@
+import { duplicate } from "../../apis/duplicate.js";
 import InputGroup from "../InputGroup.js";
 import SearchInput from "../SearchInput.js";
 import DuplicateList from "./DuplicateList.js";
 
 class Duplicate {
+  phone = "";
   constructor() {
     this.$container = document.createElement("div");
     this.$container.className = "duplicate datatable px-3 py-4 bg-white";
@@ -46,8 +48,14 @@ class Duplicate {
     this.$table.className = "table";
   }
   getDuplicate = async () => {
+    const duplicateData = await duplicate({
+      startDate: "2023-05-14",
+      endDate: "2023-05-15",
+      phone: ""
+    });
+
     this.$table.innerHTML = "";
-    this.$duplicateList = new DuplicateList();
+    this.$duplicateList = new DuplicateList({ data: duplicateData.data });
     this.$table.appendChild(this.$duplicateList.render());
   };
   render() {
