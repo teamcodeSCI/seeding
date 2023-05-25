@@ -1,5 +1,6 @@
 import { app, role } from "../../util/const.js";
 import { formatDateTime } from "../../util/util.js";
+import DeleteModal from "./DeleteModal.js";
 import LeadDetailModal from "./LeadDetailModal.js";
 import LeadEditModal from "./LeadEditModal.js";
 
@@ -96,7 +97,19 @@ class LeadItem {
 
     this.$editIcon = document.createElement("i");
     this.$editIcon.className = "bi bi-pencil text-primary";
-    this.$editIcon.style.fontSize = "13px";
+    this.$editIcon.style.fontSize = "14px";
+
+    this.$delBtn = document.createElement("button");
+    this.$delBtn.className =
+      "position-absolute w-auto border-0 p-0 bg-transparent";
+    this.$delBtn.style.right = "35px";
+    this.$delBtn.addEventListener("click", () => {
+      this.openDelModal();
+    });
+
+    this.$delIcon = document.createElement("i");
+    this.$delIcon.className = "bi bi-trash text-danger";
+    this.$delIcon.style.fontSize = "15px";
 
     this.$leadEditModal = new LeadEditModal({
       closeLeadEditModal: this.closeLeadEditModal,
@@ -106,6 +119,11 @@ class LeadItem {
     this.$leadDetail = new LeadDetailModal({
       closeLeadDetail: this.closeLeadDetail,
       data: this.data
+    });
+    this.$delModal = new DeleteModal({
+      closeDelModal: this.closeDelModal,
+      codeForm: code_form,
+      getAllLead: this.getAllLead
     });
   }
   openLeadDetail = () => {
@@ -119,6 +137,12 @@ class LeadItem {
   };
   closeLeadEditModal = () => {
     app.removeChild(this.$leadEditModal.render());
+  };
+  openDelModal = () => {
+    app.appendChild(this.$delModal.render());
+  };
+  closeDelModal = () => {
+    app.removeChild(this.$delModal.render());
   };
   render() {
     this.$tr.appendChild(this.$name);
@@ -145,7 +169,10 @@ class LeadItem {
 
     this.$tr.appendChild(this.$editBtn);
     this.$editBtn.appendChild(this.$editIcon);
-
+    if (role === "admin") {
+      this.$tr.appendChild(this.$delBtn);
+      this.$delBtn.appendChild(this.$delIcon);
+    }
     return this.$tr;
   }
 }

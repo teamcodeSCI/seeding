@@ -98,3 +98,11 @@ export const updateLead = async ({
     };
   }
 };
+export const delLead = async ({ codeForm }) => {
+  const token = splitStr(localStorage.getItem("token")).token;
+  const response = await fetch(
+    `https://scigroup.com.vn/cp/seeding/api/remove-form?token=${token}&code_form=${codeForm}`
+  );
+  const data = await response.json();
+  return data;
+};
