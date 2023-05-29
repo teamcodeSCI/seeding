@@ -117,7 +117,6 @@ class LeadEditModal {
     this.$suggestBox.style.background = "#fff";
     this.$suggestBox.style.zIndex = 1;
     this.$suggestBox.style.boxShadow = "1px 1px 3px 0px rgba(0,0,0,0.2)";
-    this.getSuggest(this.$branch.getValue().value);
   }
   clickSave = async () => {
     if (
@@ -189,6 +188,7 @@ class LeadEditModal {
     });
   };
   render() {
+    this.getSuggest(this.$branch.getValue().value);
     this.$container.appendChild(this.$dialog);
     this.$dialog.appendChild(this.$content);
     this.$content.appendChild(this.$header);
