@@ -56,25 +56,27 @@ export const menu =
     ? [
         { title: "Form", link: "lead", component: lead },
         { title: "Lead/Booking", link: "booking", component: booking },
-        { title: "Kiểm tra dữ liệu", link: "duplicate", component: duplicate },
+
         {
           title: "Báo cáo số lượng",
           link: "[report] lead-booking",
           component: reportLB
         },
         { title: "Báo cáo Chi phí", link: "[report] cost", component: cost },
-        { title: "Nhân viên", link: "[report] user", component: user }
+        { title: "Nhân viên", link: "[report] user", component: user },
+        { title: "Kiểm tra dữ liệu", link: "duplicate", component: duplicate }
       ]
     : [
         { title: "Form", link: "lead", component: lead },
         { title: "Lead/Booking", link: "booking", component: booking },
-        { title: "Kiểm tra dữ liệu", link: "duplicate", component: duplicate },
+
         {
           title: "Báo cáo số lượng",
           link: "[report] lead-booking",
           component: reportLB
         },
-        { title: "Báo cáo Chi phí", link: "[report] cost", component: cost }
+        { title: "Báo cáo Chi phí", link: "[report] cost", component: cost },
+        { title: "Kiểm tra dữ liệu", link: "duplicate", component: duplicate }
       ];
 export const tabLead = [
   { title: "Tuần", link: "[LB] day", component: reportLeadWeek },
