@@ -208,10 +208,13 @@ export const getCustomerSuccess = async ({
     const data = await response.json();
     data.data.pop();
     const renderData = searchByName(data.data, search);
+
     return {
       error: data.error,
       message: data.message,
-      tong_tien: renderData.sort((a, b) => b.tong_tien - a.tong_tien),
+      tong_tien: renderData.sort(
+        (a, b) => Number(b.tong_tien) - Number(a.tong_tien)
+      ),
       so_luong: renderData.sort((a, b) => b.so_luong - a.so_luong)
     };
   } catch (error) {

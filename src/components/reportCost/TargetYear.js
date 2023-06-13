@@ -171,6 +171,7 @@ class TargetYear {
       endDate: lastDay,
       user: this.user
     });
+
     this.$revenueTable = new RevenueTable({
       data: getData.tong_tien
     });
