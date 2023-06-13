@@ -1,5 +1,6 @@
 class BarChart {
-  constructor({ labels, dataSet, max }) {
+  constructor({ labels, dataSet, max, min }) {
+    this.min = min;
     this.max = max;
     this.labels = labels;
     this.dataSet = dataSet;
@@ -19,13 +20,30 @@ class BarChart {
         datasets: this.dataSet
       },
       options: {
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              color: "red"
+            }
+          }
+        },
+        tooltips: {
+          callbacks: {
+            label: (tooltips, data) => {
+              const value =
+                data.datasets[tooltips.datasetIndex].data[tooltips.index];
+              return value.toLocaleString();
+            }
+          }
+        },
         responsive: true,
         scales: {
           yAxes: [
             {
               ticks: {
                 beginAtZero: true,
-                min: 0,
+                min: this.min || 0,
                 max: this.max || 50
               }
             }
