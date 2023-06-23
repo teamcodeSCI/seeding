@@ -36,7 +36,7 @@ class UserList {
         this.$targetNow.className = "col text-truncate";
         this.$targetNowText = document.createElement("p");
         this.$targetNowText.className = "m-0 fw-bold";
-        this.$targetNowText.innerHTML = `Tiến trình`;
+        this.$targetNowText.innerHTML = `Kết quả`;
 
         this.$target = document.createElement("div");
         this.$target.className = "col text-truncate";
